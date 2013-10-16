@@ -1,12 +1,9 @@
-<? $msg=validation_errors(); 
-if ($msg != "") {
-?>
+<? if ($messages != "") { ?>
 <div class="notice">
-		<span class="close">Fermer</a>
-		<?=$msg?>
+		<span class="close">Fermer</span>
+		<p class="warn"> <?=$messages?> </p>
 </div>
 <? } ?>
-
 
 <div class="container">
 		<div class="form-bg">
