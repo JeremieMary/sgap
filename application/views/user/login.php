@@ -1,14 +1,14 @@
 <? if ($messages != "") { ?>
 <div class="notice">
 		<span class="close">Fermer</span>
-		<p class="warn"> <?=$messages?> </p>
+		<?=$messages?> 
 </div>
 <? } ?>
 
 <div class="container">
 		<div class="form-bg">
 			<?php echo form_open('user/checkLogin'); ?>		
-				<h2>Login</h2>
+				<h2>Connexion</h2>
 				<p><input type="text" placeholder="Login" name="login" value="<?= set_value('login'); ?>" /> </p>
 				<p><input type="password" placeholder="Password" name="passwd"  /></p>
 				<label for="remember">

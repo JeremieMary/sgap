@@ -11,7 +11,7 @@ class Enseignant extends CI_Controller {
 		echo $this->session->userdata('id');
 		$data['title']='Enseignant';
 		$this->load->view('templates/header', $data);
-		$this->load->view('eleve/index', $data);
+		$this->load->view('enseignant/index', $data);
 		$this->load->view('templates/footer', $data);
 	}
 

@@ -6,6 +6,8 @@ class User extends CI_Controller {
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->load->helper(array('form'));
+		//$this->lang->load('form_validation','french');
+		//$this->config->set_item('language', 'french');
 	}
 
 	public function index()
@@ -52,7 +54,7 @@ class User extends CI_Controller {
 			}
 			
 		} else {
-			$this->session->set_flashdata('messages', 'Couple login/password incorrect' );
+			$this->session->set_flashdata('messages', '<p>Couple login/password incorrect</p>' );
 			redirect('user/login');
 		}
 	}
