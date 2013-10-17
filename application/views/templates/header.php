@@ -31,10 +31,26 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
 	<script>window.jQuery || document.write("<script src='<?=base_url() ?>public/js/jquery-1.5.1.min.js'>\x3C/script>")</script> 
 	
-	<?if (($this->session->userdata('id'))) {echo anchor('user/logout','Logout');}?>
+	<?if (($this->session->userdata('id'))) { ?>
+		<div id='top'>
+		Bonjour <?= $this->session->userdata('prenom') ?>	
+		<?= anchor('user/logout','Logout') ?>
+		</div>
+	<? }	?>
  
   <!-- <script src="js/script.js"></script> -->
   <!--[if lt IE 7 ]>
   <script src="js/libs/dd_belatedpng.js"></script>
   <script> DD_belatedPNG.fix('img, .png_bg');</script>
   <![endif]-->
+	  
+	  <? if (isset($messages) and ($messages != "")) { ?>
+	  <div class="notice">
+	  		<span class="close">Fermer</span>
+	  		<?=$messages?> 
+	  </div>
+	  <? } ?>
+
+	  <div id="wrapper">
+
+

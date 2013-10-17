@@ -1,10 +1,3 @@
-<? if ($messages != "") { ?>
-<div class="notice">
-		<span class="close">Fermer</span>
-		<?=$messages?> 
-</div>
-<? } ?>
-
 <div class="container">
 		<div class="form-bg">
 			<?php echo form_open('user/checkLogin'); ?>		

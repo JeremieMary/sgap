@@ -206,3 +206,26 @@
 	    font-weight: normal;
 	    font-style: normal; }
 */
+		
+/* Top bar */
+#top{
+	background:#222;
+	text-align:right;
+	color:#eee;
+}		
+#top a {
+	color:#eee;
+	text-decoration:none;
+	margin-right:1.5em;
+	margin-left:1.5em;
+	transition: color 0.5s linear;
+}
+
+#top a:hover {
+	color: #65c4e5;
+}	
+
+#wrapper{
+	padding:2em;
+}
+		

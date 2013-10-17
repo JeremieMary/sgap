@@ -6,8 +6,6 @@ class User extends CI_Controller {
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->load->helper(array('form'));
-		//$this->lang->load('form_validation','french');
-		//$this->config->set_item('language', 'french');
 	}
 
 	public function index()
@@ -21,8 +19,8 @@ class User extends CI_Controller {
 		
 		$data['messages'] = $this->session->flashdata('messages');
 		$this->load->view('templates/header', $data);
-		$this->load->view('user/login', $data);
-		$this->load->view('templates/footer', $data);
+		$this->load->view('user/login');
+		$this->load->view('templates/footer');
 	}
 	
 	public function checkLogin(){
@@ -40,14 +38,14 @@ class User extends CI_Controller {
 			$this->session->set_userdata($user);
 			switch ($user['profil']) {
 				case 1:
-					redirect('eleve/index');
+					redirect('eleve/');
 					break;
 				case 2:
 				case 3:
-					redirect('enseignant/index');
+					redirect('enseignant/');
 					break;
 				case 4:
-					redirect('admin/index');
+					redirect('admin/');
 					break;	
 				default:
 					echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
@@ -64,5 +62,7 @@ class User extends CI_Controller {
 		$this->session->sess_destroy();
 		redirect('user/login');
 	}
+	
+	
 	
 }
