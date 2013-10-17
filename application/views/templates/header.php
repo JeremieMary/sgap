@@ -16,13 +16,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="shortcut icon" href="<?=base_url();?>public/images/favicon.ico">
    
   <?= link_tag(base_url().'public/css/base.css'); ?>
   <?= link_tag(base_url().'public/css/skeleton.css'); ?>
   <?= link_tag(base_url().'public/css/layout.css'); ?>
-   <?= link_tag(base_url().'public/css/main.css'); ?>
+  <?= link_tag(base_url().'public/css/main.css'); ?>
  
  
   <!-- <script src="js/libs/modernizr-1.6.min.js"></script> -->
