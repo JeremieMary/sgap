@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0" class="bordered">
+<table class="bordered">
     <thead>
     <tr>
 		<?

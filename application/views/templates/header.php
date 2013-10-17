@@ -22,6 +22,7 @@
   <?= link_tag(base_url().'public/css/base.css'); ?>
   <?= link_tag(base_url().'public/css/skeleton.css'); ?>
   <?= link_tag(base_url().'public/css/layout.css'); ?>
+   <?= link_tag(base_url().'public/css/main.css'); ?>
  
  
   <!-- <script src="js/libs/modernizr-1.6.min.js"></script> -->
