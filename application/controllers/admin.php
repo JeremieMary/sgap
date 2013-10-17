@@ -36,15 +36,13 @@ class Admin extends CI_Controller {
 					$this->load->view('templates/footer');
 				}
 				else
-				{
-					//For export
-					//$this->load->helper('csv');
-					//echo array_to_csv($array);
-		   	     	
+				{ 	
 					$uploaded =  $this->upload->data();
 		   	     	$this->load->library('csvreader');
 					$result =   $this->csvreader->parse_file($uploaded['full_path']);
 					$data['json'] =  $result;
+					// Supprimer le fichier uploadé ?
+					unlink($uploaded['full_path']);
 					//$this->load->view('templates/json', $data);
 					$this->load->view('templates/header', array("title"=>'CSV '.$type));
 					$this->load->view('templates/array', $data); 
@@ -52,6 +50,11 @@ class Admin extends CI_Controller {
 				}
 	
 	     
+	}
+	
+	public function exportToCSV($type) {
+		//$this->load->helper('csv');
+		//echo array_to_csv($array);
 	}
 
 }
