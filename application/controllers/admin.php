@@ -4,6 +4,7 @@ class Admin extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->helper(array('form'));
 		if ( $this->session->userdata['profil'] > 3 ) {
 			return(true);
 		}  
@@ -21,14 +22,33 @@ class Admin extends CI_Controller {
 	}
 
 
-	function uploadUsersFile()
+	public function uploadUsersFile()
 	{
-	        $this->load->library('csvreader');
-	        $result =   $this->csvreader->parse_file('UsersTest.csv');//path to csv file
-
-	        $data['json'] =  $result;
-	        $this->load->view('view_csv', $data); 
-			$this->load->view('templates/json', $data); 
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'csv';
+		$this->load->library('upload', $config);
+		if ( ! $this->upload->do_upload('userfile'))
+				{
+					$error = array('messages' => $this->upload->display_errors());
+					$error['title']='Administration';
+					$this->load->view('templates/header', $error);
+					$this->load->view('admin/index', $error);
+					$this->load->view('templates/footer');
+				}
+				else
+				{
+					//For export
+					//$this->load->helper('csv');
+					//echo array_to_csv($array);
+		   	     	
+					$uploaded =  $this->upload->data();
+		   	     	$this->load->library('csvreader');
+					$result =   $this->csvreader->parse_file($uploaded['full_path']);
+					$data['json'] =  $result;
+					$this->load->view('templates/json', $data); 
+				}
+	
+	     
 	}
 
 }
