@@ -16,11 +16,10 @@
 				  <span>Se souvenir de moi sur cette machine</span>
 				</label>
 				<button type="submit"></button>
-			<form>
+			</form>
 		</div>
-		<p class="forgot">Mot de passe oublié? <a href="<?= site_url('user/reset') ?>">Demande de réinitialisation.</a></p>
+		<p class="forgot">Mot de passe oublié ? <a href="<?= site_url('user/reset') ?>">Demande de réinitialisation.</a></p>
 	</div>
-</form>
 </div>
 
 

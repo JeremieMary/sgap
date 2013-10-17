@@ -30,6 +30,8 @@
  
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
 	<script>window.jQuery || document.write("<script src='<?=base_url() ?>public/js/jquery-1.5.1.min.js'>\x3C/script>")</script> 
+	
+	<?if (($this->session->userdata('id'))) {echo anchor('user/logout','Logout');}?>
  
   <!-- <script src="js/script.js"></script> -->
   <!--[if lt IE 7 ]>
