@@ -22,12 +22,12 @@ class Admin extends CI_Controller {
 	}
 
 
-	public function uploadFile()
+	public function uploadFile($type)
 	{
 		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'csv';
 		$this->load->library('upload', $config);
-		if ( ! $this->upload->do_upload('userfile'))
+		if ( ! $this->upload->do_upload($type.'file') )
 				{
 					$error = array('messages' => $this->upload->display_errors());
 					$error['title']='Administration';
@@ -45,7 +45,10 @@ class Admin extends CI_Controller {
 		   	     	$this->load->library('csvreader');
 					$result =   $this->csvreader->parse_file($uploaded['full_path']);
 					$data['json'] =  $result;
-					$this->load->view('templates/json', $data); 
+					//$this->load->view('templates/json', $data);
+					$this->load->view('templates/header', array("title"=>'CSV '.$type));
+					$this->load->view('templates/array', $data); 
+					$this->load->view('templates/footer');
 				}
 	
 	     
