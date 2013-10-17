@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
 	}
 
 
-	public function uploadUsersFile()
+	public function uploadFile()
 	{
 		$config['upload_path'] = './uploads/';
 		$config['allowed_types'] = 'csv';
