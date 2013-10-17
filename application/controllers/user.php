@@ -50,7 +50,8 @@ class User extends CI_Controller {
 					redirect('admin/index');
 					break;	
 				default:
-					echo "User sans status... la BD aurait du refuser cette insertion";
+					echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
+					print_r($user);
 			}
 			
 		} else {
