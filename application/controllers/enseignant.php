@@ -4,6 +4,7 @@ class Enseignant extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 1 ) {
 			return(true);
 		}  

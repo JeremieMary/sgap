@@ -5,6 +5,7 @@ class Admin extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(array('form'));
+		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 3 ) {
 			return(true);
 		}  
