@@ -21,7 +21,30 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer');
 	}
+	
+	private function prepareArrayforUsers($tab){
+		$this->load->model('users_model');
+		$data = $this->users_model->check($tab);
+		return($data);
+	}
 
+	private function prepareArrayforCycles($tab){
+		//$this->load->model('cyles_model');
+		$data['desactive']=array();
+		$data['ajouts']=$tab;
+		$data['modifications']=array();
+		$data['errors']=array();
+		return($data);
+	}
+	
+	private function prepareArrayforMatieres($tab){
+		//$this->load->model('matieres_model');
+		$data['ajouts']=$tab;
+		$data['modifications']=array();
+		$data['errors']=array();
+		$data['desactive']=array();	
+		return($data);
+	}
 
 	public function uploadFile($type)
 	{
@@ -41,12 +64,23 @@ class Admin extends CI_Controller {
 					$uploaded =  $this->upload->data();
 		   	     	$this->load->library('csvreader');
 					$result =   $this->csvreader->parse_file($uploaded['full_path']);
-					$data['json'] =  $result;
-					// Supprimer le fichier uploadé ?
+					switch ($type){
+						case 'users':
+							$data = $this->prepareArrayforUsers($result);
+							break;
+						case 'cycles':
+							$data = $this->prepareArrayforCycles($result);
+							break;
+						case 'matieres':
+							$data = $this->prepareArrayforMatieres($result);
+							break;
+					}
+					$data['type']=$type;
+					// Supprimer le fichier uploadé 
 					unlink($uploaded['full_path']);
 					//$this->load->view('templates/json', $data);
 					$this->load->view('templates/header', array("title"=>'CSV '.$type));
-					$this->load->view('templates/array', $data); 
+					$this->load->view('admin/arrayUpdate', $data); 
 					$this->load->view('templates/footer');
 				}
 	
