@@ -29,6 +29,10 @@
 	
 }
 
+h2 {
+	margin-top:1em;
+}
+
 /* Arrays */
 table {
     *border-collapse: collapse; /* IE7 and lower */

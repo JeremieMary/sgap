@@ -17,14 +17,40 @@ class Users_model extends CI_Model {
 			$query = $this -> db -> get_where( 'users', array('login'=> $login ), 1 );
  			return ( $query->row_array() ); 
 		}
+	
+	
+	function commitUser( $user )
+		{
+			//Ajouter des vérifications de cohérence ? 
+			$this->load->helper('string');
+			$user['passwd']=random_string('alnum',8);
+			$user['actif']=1;
+			$dup ='  ON DUPLICATE KEY UPDATE';
+			$fieldsToUpdate = array('prenom','nom','mail','mail_parent','profil','classe','groupe','actif' );
+			foreach ( $fieldsToUpdate as $champ ) $dup .= " `$champ`=VALUES(`$champ`)," ;
+			$dup = rtrim($dup, ",");
+			$dup .= ';';
+			$sql = $this->db->insert_string('users', $user) . $dup;
+			$this->db->query($sql);
+			$id = $this->db->insert_id();
+		}
+		
+	function commitArray($tab)
+		{
+			//Inactive all users not in array. It will temporally blocks logins
+			$this->db->update('users', array('actif'=>0) ); 
+			foreach ($tab as $user ){
+				$this->commitUser($user);
+			}
+		}	
 		
 	function check( $tab )
 		{
+			//Quick and dirty. I just assume it's not used often not for big files
 			$data['ajouts']=array();
 			$data['errors']=array();
 			$data['modifications']=array();
-			$data['desactive']=array();
-			
+			$data['desactive']=array();	
 			$logins = array();
 			foreach ($tab as $row ){
 				array_push( $logins, $row['login'] );
@@ -41,19 +67,13 @@ class Users_model extends CI_Model {
 					array_push( $data['desactive'], $user );
 				}
 			}
-			
-			$n=0;
 			foreach( $tab as $user ){
-				$n += 1;
 				if (  in_array( $user['login'], $dblogins ) ) { 
-					if (!($user == $allUsers[$n])) {
 						array_push( $data['modifications'], $user );
-					}
 				} else {
 					array_push( $data['ajouts'], $user );
 				}
 			}
-			
 			/*
 			$this -> db -> select('*');
 			$this -> db -> from('users');

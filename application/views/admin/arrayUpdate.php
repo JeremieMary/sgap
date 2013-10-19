@@ -1,7 +1,9 @@
-<?= anchor('admin','Annuler la mise à Jour');?><br/>
-<?= anchor('admin/confirm','Confirmer la mise à Jour');?>
+<center>
+<?= anchor('admin/cancelUpload','Annuler la mise à Jour');?><br/>
+<?= anchor('admin/confirm/'.$type,'Confirmer la mise à Jour');?> - ! Irréversible !
+</center>
 <? function table($json) { ?>
-<? if (count($json)==0) {echo "Aucun(e)"; return;} ?>
+<? if (count($json)==0) {echo "Aucun"; return;} ?>
 <table class="bordered">
     <thead>
     <tr>
@@ -24,11 +26,14 @@
  
 </table>
 <?}?>
-<h2>Désactivés</h2>
-<?table($desactive);?>
 <h2>Ajouts</h2>
 <?table($ajouts);?>
-<h2>Modifications</h2>
+<h2>Utilisateurs actifs</h2>
 <?table($modifications);?>
+<h2>Utilisateurs inactifs</h2>
+<?table($desactive);?>
+
+<!--
 <h2>Erreurs</h2>
 <?table($errors);?>
+-->
