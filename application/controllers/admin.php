@@ -53,36 +53,36 @@ class Admin extends CI_Controller {
 		$config['allowed_types'] = 'csv';
 		$this->load->library('upload', $config);
 		if ( ! $this->upload->do_upload($type.'file') )
-				{
-					$error = array('messages' => $this->upload->display_errors());
-					$error['title']='Administration';
-					$this->load->view('templates/header', $error);
-					$this->load->view('admin/index', $error);
-					$this->load->view('templates/footer');
-				}
-				else
-				{ 	
-					$uploaded =  $this->upload->data();
-		   	     	$this->load->library('csvreader');
-					$result =   $this->csvreader->parse_file($uploaded['full_path']);
-					switch ($type){
-						case 'users':
-							$data = $this->prepareArrayforUsers($result);
-							break;
-						case 'cycles':
-							$data = $this->prepareArrayforCycles($result);
-							break;
-						case 'matieres':
-							$data = $this->prepareArrayforMatieres($result);
-							break;
-					}
-					$data['type']=$type;
-					$this->session->set_userdata('file'.$type, $uploaded['full_path'] ); 
-					//$this->load->view('templates/json', $data);
-					$this->load->view('templates/header', array("title"=>'CSV '.$type));
-					$this->load->view('admin/arrayUpdate', $data); 
-					$this->load->view('templates/footer');
-				}
+		{
+			$error = array('messages' => $this->upload->display_errors());
+			$error['title']='Administration';
+			$this->load->view('templates/header', $error);
+			$this->load->view('admin/index', $error);
+			$this->load->view('templates/footer');
+		}
+		else
+		{ 	
+			$uploaded =  $this->upload->data();
+			$this->load->library('csvreader');
+			$result =   $this->csvreader->parse_file($uploaded['full_path']);
+			switch ($type){
+				case 'users':
+				$data = $this->prepareArrayforUsers($result);
+				break;
+				case 'cycles':
+				$data = $this->prepareArrayforCycles($result);
+				break;
+				case 'matieres':
+				$data = $this->prepareArrayforMatieres($result);
+				break;
+			}
+			$data['type']=$type;
+			$this->session->set_userdata('file'.$type, $uploaded['full_path'] ); 
+			//$this->load->view('templates/json', $data);
+			$this->load->view('templates/header', array("title"=>'CSV '.$type));
+			$this->load->view('admin/arrayUpdate', $data); 
+			$this->load->view('templates/footer');
+		}
 	
 	     
 	}
@@ -91,31 +91,31 @@ class Admin extends CI_Controller {
 		// unlink($this->session->userdata['file'.$type]);
 		$files = glob('./uploads/*'); 
 		foreach($files as $file){ 
-		  if(is_file($file))
-		    unlink($file); 
+			if(is_file($file))
+			unlink($file); 
 		}
 		redirect('admin');
 	}
 	
 	public function confirm($type){
 		//print_r($this->session->userdata['commitData'.$type]);
-     	//$result = ( $this->session->userdata['commitData'.$type] );
+		//$result = ( $this->session->userdata['commitData'.$type] );
 		$this->load->library('csvreader');
 		$result = $this->csvreader->parse_file($this->session->userdata['file'.$type]);
 		unlink($this->session->userdata['file'.$type]);
 		switch ($type){
 			case 'users':
-				$this->load->model('users_model');
-				$data = $this->users_model->commitArray($result);
-				break;
+			$this->load->model('users_model');
+			$data = $this->users_model->commitArray($result);
+			break;
 			case 'cycles':
-				$this->load->model('cycles_model');
-				$data = $this->cycles_model->commitArray($result);
-				break;
+			$this->load->model('cycles_model');
+			$data = $this->cycles_model->commitArray($result);
+			break;
 			case 'matieres':
-				$this->load->model('matieres_model');
-				$data = $this->matieres_model->commitArray($result);
-				break;
+			$this->load->model('matieres_model');
+			$data = $this->matieres_model->commitArray($result);
+			break;
 		}
 		$this->session->set_flashdata('messages', 'Fichier des '.$type.' mis à jour');
 		redirect('admin');

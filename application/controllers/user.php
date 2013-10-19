@@ -30,7 +30,7 @@ class User extends CI_Controller {
 		if($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('messages', validation_errors());
 			redirect('user/login');
-	    }
+		}
 		$login = $this->input->post('login');
 		$passwd = $this->input->post('passwd');
 		if ($this->users_model->login($login,$passwd) ) {
@@ -38,20 +38,19 @@ class User extends CI_Controller {
 			$this->session->set_userdata($user);
 			switch ($user['profil']) {
 				case 1:
-					redirect('eleve/');
-					break;
+				redirect('eleve/');
+				break;
 				case 2:
 				case 3:
-					redirect('enseignant/');
-					break;
+				redirect('enseignant/');
+				break;
 				case 4:
-					redirect('admin/');
-					break;	
+				redirect('admin/');
+				break;	
 				default:
-					echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
-					print_r($user);
-			}
-			
+				echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
+				print_r($user);
+			}	
 		} else {
 			$this->session->set_flashdata('messages', '<p>Couple login/password incorrect</p>' );
 			redirect('user/login');
