@@ -28,9 +28,9 @@
 <?}?>
 <h2>Ajouts</h2>
 <?table($ajouts);?>
-<h2>Utilisateurs actifs</h2>
+<h2>Actifs</h2>
 <?table($modifications);?>
-<h2>Utilisateurs inactifs</h2>
+<h2>Inactifs</h2>
 <?table($desactive);?>
 
 <!--

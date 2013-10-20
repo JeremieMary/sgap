@@ -18,9 +18,13 @@ class Users_model extends CI_Model {
 		return ( $query->row_array() ); 
 	}
 	
+	private function sendPasswordMail( $user ) {
+		
+	}
 	
 	function commitUser( $user )
 	{
+		$nb = $this->db->count_all('users');	
 		//Ajouter des vérifications de cohérence ? 
 		$this->load->helper('string');
 		$user['passwd']=random_string('alnum',8);
@@ -32,7 +36,11 @@ class Users_model extends CI_Model {
 		$dup .= ';';
 		$sql = $this->db->insert_string('users', $user) . $dup;
 		$this->db->query($sql);
-		$id = $this->db->insert_id();
+		if ($nb != $this->db->count_all('users') ) { 
+			//This was a new user => send a mail with the password
+			$this->sendPasswordMail( $user );
+		}
+		//$id = $this->db->insert_id();
 	}
 		
 	function commitArray($tab)

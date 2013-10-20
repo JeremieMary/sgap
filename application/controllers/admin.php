@@ -30,20 +30,14 @@ class Admin extends CI_Controller {
 	}
 
 	private function prepareArrayforCycles($tab){
-		//$this->load->model('cyles_model');
-		$data['desactive']=array();
-		$data['ajouts']=$tab;
-		$data['modifications']=array();
-		$data['errors']=array();
+		$this->load->model('cycles_model');
+		$data = $this->cycles_model->check($tab);
 		return($data);
 	}
 	
 	private function prepareArrayforMatieres($tab){
-		//$this->load->model('matieres_model');
-		$data['ajouts']=$tab;
-		$data['modifications']=array();
-		$data['errors']=array();
-		$data['desactive']=array();	
+		$this->load->model('matieres_model');
+		$data = $this->matieres_model->check($tab);
 		return($data);
 	}
 
