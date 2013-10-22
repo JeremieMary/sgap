@@ -116,3 +116,44 @@ table {
     border-radius: 0 0 6px 0;
 }
 
+.cycles li, .matieres li {
+	margin-top:0;
+	margin-bottom:0;
+}
+.cycles, .matieres {
+	float:left;
+	min-width : 8em;
+	margin-right:2em;
+}
+.cycles ul li:hover, .matieres ul li:hover {
+	background:#fbf8e9;
+}
+
+.highlight  {
+	background:#dce9f9 ;
+}
+li.highlight:hover {
+	background:#e1effc !important;
+}
+
+button[disabled]{
+	color:#bbb;
+    background: #eee; /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(150,150,150,.3) 0%, rgba(255,255,255,.3) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(150,150,150,.3)), color-stop(100%,rgba(255,255,255,.3))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(150,150,150,.3) 0%,rgba(255,255,255,.3) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(150,150,150,.3) 0%,rgba(255,255,255,.3) 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgba(150,150,150,.3) 0%,rgba(255,255,255,.3) 100%); /* IE10+ */
+    background: linear-gradient(top, rgba(150,150,150,.3) 0%,rgba(255,255,255,.3) 100%); /* W3C */
+}
+
+button[disabled]:hover{
+  border: 1px solid #aaa;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+	
+	
+	
+	
+	
