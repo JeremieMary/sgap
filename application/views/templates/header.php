@@ -35,8 +35,9 @@
 	
 	<?if (($this->session->userdata('id'))) { ?>
 		<div id='top'>
-		Bonjour <?= $this->session->userdata('prenom') ?>	
-		<?= anchor('user/logout','Logout') ?>
+			<?= anchor('user/changePasswd','Changer mot de passe') ?>
+			Bonjour <?= $this->session->userdata('prenom') ?>	
+			<?= anchor('user/logout','Logout') ?>
 		</div>
 	<? }	?>
  

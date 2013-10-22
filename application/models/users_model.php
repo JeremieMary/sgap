@@ -18,6 +18,11 @@ class Users_model extends CI_Model {
 		return ( $query->row_array() ); 
 	}
 	
+	function updatePassword($login,$passwd){
+		$this->db->where('login', $login);
+		$this->db->update('users', array("passwd"=>$passwd) ); 
+	}
+	
 	private function sendPasswordMail( $user ) {
 		
 	}

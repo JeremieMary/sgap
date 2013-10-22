@@ -36,21 +36,7 @@ class User extends CI_Controller {
 		if ($this->users_model->login($login,$passwd) ) {
 			$user = $this->users_model->getUser($login);
 			$this->session->set_userdata($user);
-			switch ($user['profil']) {
-				case 1:
-				redirect('eleve/');
-				break;
-				case 2:
-				case 3:
-				redirect('enseignant/');
-				break;
-				case 4:
-				redirect('admin/');
-				break;	
-				default:
-				echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
-				print_r($user);
-			}	
+			$this->goToMainPage();
 		} else {
 			$this->session->set_flashdata('messages', '<p>Couple login/password incorrect</p>' );
 			redirect('user/login');
@@ -62,6 +48,52 @@ class User extends CI_Controller {
 		redirect('user/login');
 	}
 	
+	private function goToMainPage(){
+		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
+		$profil = $this->session->userdata['profil'];
+		switch ($profil) {
+			case 1:
+			redirect('eleve/');
+			break;
+			case 2:
+			case 3:
+			redirect('enseignant/');
+			break;
+			case 4:
+			redirect('admin/');
+			break;	
+			default:
+			echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
+			print_r($this->session->userdata['id']);
+		}	
+	}
+	
+	public function changePasswd(){	
+		if (count($_POST) > 0) {
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('opasswd', 'opasswd','trim|required|xss_clean'); 
+			$this->form_validation->set_rules('npasswd', 'npasswd','trim|required|xss_clean'); 
+			if($this->form_validation->run() == FALSE) {
+				$this->session->set_flashdata('messages', validation_errors());
+				redirect('user/changePasswd');
+			}
+			$login = $this->session->userdata('login');
+			$passwd = $this->input->post('opasswd');
+			if ($this->users_model->login($login,$passwd) ) { 
+				$this->users_model->updatePassword($login,  $this->input->post('npasswd') );
+				$this->session->set_flashdata('messages', '<p>Mot de passe modifié.</p>' );
+				$this->goToMainPage();	
+			} else {
+				$this->session->set_flashdata('messages', '<p>Ancien mot de passe incorrect.</p>' );
+				redirect('user/changePasswd');
+			}
+		} 
+		$data['title'] = "Changement de mot de passe";
+		$data['messages'] = $this->session->flashdata('messages');
+		$this->load->view('templates/header', $data);
+		$this->load->view('user/changepasswd');
+		$this->load->view('templates/footer');	
+	}
 	
 	
 }
