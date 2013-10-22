@@ -6,6 +6,15 @@ class Cycles_model extends CI_Model {
 		$this->load->database();
 	}
 	
+	function getAll(){
+		$query = $this -> db -> get( 'cycles' );
+		$cycles = $query->result_array();
+		for ($i=0; $i<count($cycles); $i++) {
+			$cycles[$i]['dates'] = unserialize($cycles[$i]['dates']);
+		}
+		return ( $cycles ); 
+	}
+	
 	function commitCycle( $cycle )
 	{
 		//Ajouter des vérifications de cohérence ? 

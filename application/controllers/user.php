@@ -16,7 +16,6 @@ class User extends CI_Controller {
 	public function login()
 	{		
 		$data['title'] = "SGAP login";	
-		
 		$data['messages'] = $this->session->flashdata('messages');
 		$this->load->view('templates/header', $data);
 		$this->load->view('user/login');
@@ -63,7 +62,7 @@ class User extends CI_Controller {
 			redirect('admin/');
 			break;	
 			default:
-			echo "User sans status. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
+			echo "User avec status incorrect. La BD aurait du refuser cette insertion. Contactez un administateur avec une copie de ce message. ";
 			print_r($this->session->userdata['id']);
 		}	
 	}

@@ -5,8 +5,7 @@
 				<p><input type="password" placeholder="Ancien Password" name="opasswd"  /></p>
 				<p><input type="password" placeholder="Nouveau Password" name="npasswd"  /></p>
 				<p><input type="password" placeholder="Nouveau Password" name="npasswd"  /></p>
-				
-				<button type="submit"></button>
+				<button type="submit" class="confirm"></button>
 			</form>
 		</div>
 	</div>

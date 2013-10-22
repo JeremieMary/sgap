@@ -42,7 +42,7 @@ class Users_model extends CI_Model {
 		$sql = $this->db->insert_string('users', $user) . $dup;
 		$this->db->query($sql);
 		if ($nb != $this->db->count_all('users') ) { 
-			//This was a new user => send a mail with the password
+			//This was a new user 
 			$this->sendPasswordMail( $user );
 		}
 		//$id = $this->db->insert_id();
@@ -50,7 +50,7 @@ class Users_model extends CI_Model {
 		
 	function commitArray($tab)
 	{
-		//Inactive all users not in array. It will temporally blocks logins
+		//Inactive all users not present in array. It will temporally blocks logins
 		$this->db->update('users', array('actif'=>0) ); 
 		foreach ($tab as $user ){
 			$this->commitUser($user);

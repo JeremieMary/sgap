@@ -15,8 +15,9 @@ class Enseignant extends CI_Controller {
 
 	public function index()
 	{
-		echo $this->session->userdata('id');
+		//echo $this->session->userdata('id');
 		$data['title']='Enseignant';
+		$data['messages'] = $this->session->flashdata('messages');
 		$this->load->view('templates/header', $data);
 		$this->load->view('enseignant/index', $data);
 		$this->load->view('templates/footer', $data);

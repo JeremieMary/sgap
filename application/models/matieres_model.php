@@ -6,6 +6,11 @@ class Matieres_model extends CI_Model {
 		$this->load->database();
 	}
 	
+	function getAll(){
+		$query = $this -> db -> get( 'matieres' );
+		return ( $query->result_array() ); 
+	}
+	
 	function commitMatiere( $matiere )
 	{
 		//Ajouter des vérifications de cohérence ? 
