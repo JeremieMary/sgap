@@ -30,10 +30,11 @@ class Eleve extends CI_Controller {
 	public function inscription() {
 		if (count($_POST)==0) redirect('eleve/');
 		// Faire une validation ? Il s'agit de listes déroulantes donc la faire dans le modele est suffisant pour le niveau applicatif, reste à blinder la sécurité.  
-		echo $this->input->post('cycle_id');
-		echo $this->input->post('matiere_id');
-		
-		//TODO
+		$cycle_id = $this->input->post('cycle_id');
+		$matiere_id = $this->input->post('matiere_id');
+		$this->load->model('accompagnement_model');
+		$accompagnement_id = $this->accompagnement_model->getId($cycle_id,$matiere_id);
+		echo $accompagnement_id;
 	}
 
 
