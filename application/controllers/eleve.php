@@ -11,7 +11,6 @@ class Eleve extends CI_Controller {
 			$this->load->helper(array('form'));
 			return(true);
 		}  
-		
 		$this->session->set_flashdata('messages', "<p>Vos droits actuels sont insuffisants pour afficher la page demandée. Vous avez été redirigé vers l'écran d'authentification.</p>" );
 		redirect('user/login');
 	}
@@ -34,7 +33,11 @@ class Eleve extends CI_Controller {
 		$matiere_id = $this->input->post('matiere_id');
 		$this->load->model('accompagnement_model');
 		$accompagnement_id = $this->accompagnement_model->getId($cycle_id,$matiere_id);
-		echo $accompagnement_id;
+		$this->load->model('inscriptions_model');
+		$eleve_id = $this->session->userdata['id'];
+		$ins = $this->inscriptions_model->inscrire($eleve_id,$accompagnement_id); 
+		$this->session->set_flashdata('messages', $ins['message'] );
+		redirect('eleve/');
 	}
 
 

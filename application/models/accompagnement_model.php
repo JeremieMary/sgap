@@ -18,7 +18,7 @@ class Accompagnement_model extends CI_Model {
 			$res = $query->row_array();
 			return( $res['id'] ) ;
 		} else {
-			$sql = $this->db->insert('accompagnement', $accompagnement);
+			$this->db->insert('accompagnement', $accompagnement);
 			return( $this->db->insert_id() );
 		}
 	}
