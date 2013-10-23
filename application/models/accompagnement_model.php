@@ -5,10 +5,21 @@ class Accompagnement_model extends CI_Model {
 	{
 		$this->load->database();
 	}
-	
+
 	function getAll(){
 		$query = $this -> db -> get( 'accompagnement' );
 		return ( $query->result_array() ); 
+	}
+
+	function getNbInscrits($cycle_id,$matiere_id)
+	{	
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
+		$this->db->select('*');
+		$this->db->from('inscriptions');
+		$this->db->where($accompagnement);
+		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');
+		$query=$this->db->get();	
+		return($query->num_rows());	
 	}
 	
 	function getId($cycle_id, $matiere_id){

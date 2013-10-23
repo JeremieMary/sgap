@@ -7,9 +7,16 @@ class Matieres_model extends CI_Model {
 	}
 	
 	function getAll(){
-		$query = $this -> db -> get( 'matieres' );
-		return ( $query->result_array() ); 
+		$query = $this->db->get('matieres');
+		return($query->result_array()); 
 	}
+	
+	function getPlaces($matiere_id)
+	{
+		$query=$this->db->get_where('matieres',array('id'=>$matiere_id),1);
+		$res=$query->row_array();
+		return($res['places']);
+	} 
 	
 	function commitMatiere( $matiere )
 	{
