@@ -29,6 +29,7 @@ class Accompagnement_model extends CI_Model {
 			$res = $query->row_array();
 			return( $res['id'] ) ;
 		} else {
+			//On pourrait vérifier que le cycle et la matière existent bien avant de faire l'insertion
 			$this->db->insert('accompagnement', $accompagnement);
 			return( $this->db->insert_id() );
 		}

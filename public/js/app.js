@@ -1,6 +1,8 @@
 
 function activateSuscribe(){
-	if ($('.highlight').length == 2) $('#inscriptionForm button[name="inscription"]').removeAttr("disabled");
+	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
+		$('#inscriptionForm button[name="inscription"]').removeAttr("disabled");
+	}
 }
 	
 $(document).ready(function() {
