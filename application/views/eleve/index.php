@@ -19,6 +19,14 @@
 </ul>
 </div>
 
+<div class="infos">
+<ul>
+<li> Nombre de places : <span id='nbPlaces'></span> </li>
+<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+</ul>
+</div>
+
+
 <? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
 <input type='hidden' name='matiere_id' value=''>
 <input type='hidden' name='cycle_id' value=''>
