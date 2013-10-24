@@ -16,8 +16,17 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->model('cycles_model');
+		$this->load->model('matieres_model');
+		$this->load->model('inscriptions_model');
+		$this->load->model('accompagnement_model');
+		$this->load->model('users_model');
 		$data['title']='Administration';
 		$data['messages'] = $this->session->flashdata('messages');
+		$data['matieres'] = $this->matieres_model->getAll();
+		$data['cycles']   = $this->cycles_model->getAll();
+		$data['profs']    = $this->users_model->getAllProfs();
+		$data['salles']   = $this->users_model->getAllSalles();
 		$this->load->view('templates/header', $data);
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer');

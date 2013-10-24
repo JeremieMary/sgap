@@ -37,6 +37,10 @@ class Eleve extends CI_Controller {
 		$cycle_id = $this->input->post('cycle_id');
 		$matiere_id = $this->input->post('matiere_id');
 		$accompagnement_id = $this->accompagnement_model->getId($cycle_id,$matiere_id);
+		if ($accompagnement_id<0){
+			$this->session->set_flashdata('messages', 'Accompagnement inconnu' );
+			redirect('eleve/');
+		}
 		$eleve_id = $this->session->userdata['id'];
 		$ins = $this->inscriptions_model->inscrire($eleve_id,$accompagnement_id); 
 		$this->session->set_flashdata('messages', $ins['message'] );

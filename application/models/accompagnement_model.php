@@ -22,19 +22,26 @@ class Accompagnement_model extends CI_Model {
 		return($query->num_rows());	
 	}
 	
-	function getId($cycle_id, $matiere_id){
+	function getId($cycle_id, $matiere_id)
+	{
 		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
 		$query = $this->db->get_where('accompagnement',$accompagnement,1);
 		if ($query->num_rows() == 1 ) { 
 			$res = $query->row_array();
 			return( $res['id'] ) ;
 		} else {
-			//On pourrait vérifier que le cycle et la matière existent bien avant de faire l'insertion
-			$this->db->insert('accompagnement', $accompagnement);
-			return( $this->db->insert_id() );
+			$res = -1; 
+			return($res);
+			//$this->db->insert('accompagnement', $accompagnement);
+			//return( $this->db->insert_id() );
 		}
 	}
-		
+	
+	function creer($cycle_id,$matiere_id,$salle) 
+	{
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'salle'=>$salle);
+		$this->db->insert('accompagnement', $accompagnement);
+	} 	
 	
 	
 }

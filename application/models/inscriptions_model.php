@@ -22,7 +22,6 @@ class Inscriptions_model extends CI_Model {
 		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
 		$query=$this->db->get();
 		$res=$query->result_array();
-			
 		return($res);	
 	}
 	

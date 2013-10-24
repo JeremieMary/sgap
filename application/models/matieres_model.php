@@ -11,6 +11,7 @@ class Matieres_model extends CI_Model {
 		return($query->result_array()); 
 	}
 	
+	
 	function getPlaces($matiere_id)
 	{
 		$query=$this->db->get_where('matieres',array('id'=>$matiere_id),1);

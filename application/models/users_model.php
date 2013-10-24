@@ -11,10 +11,45 @@ class Users_model extends CI_Model {
 		$query = $this -> db -> get_where( 'users', array('login'=> $login, 'passwd'=>$password ), 1 );
 		return ($query->num_rows() == 1 ); 
 	}
+	
+	function getAllSalles()
+	{
+		$this->db->distinct();
+		$this->db->select('classe AS salle');
+		$this->db->from('users');
+		$query=$this->db->get();
+		$res=$query->result_array();
+		return($res);	
+	}
+	
+	function getAllProfs()
+	{
+		$this->db->select('id, nom, prenom, mail');
+		$this->db->from('users');
+		$this->db->where(array('profil'=>2));
+		$this->db->or_where(array('profil'=>3));
+		$query=$this->db->get();
+		$res=$query->result_array();
+		return($res);	
+	}
+	
+	function getAllEleves()
+	{
+		$this->db->select('id, nom, prenom,classe, profil, groupe, mail, mail_parent');
+		$this->db->from('users');
+		$this->db->where(array('profil'=>1));
+		$query=$this->db->get();
+		$res=$query->result_array();
+		return($res);	
+	}
 		
 	function getUser( $login ) 
 	{
-		$query = $this -> db -> get_where( 'users', array('login'=> $login ), 1 );
+		$this->db->select('id, nom, prenom, login, classe, profil, groupe, mail, mail_parent');
+		$this->db->from('users');
+		$this->db->where( array('login'=> $login ) );
+		$this->db->limit(1);
+		$query=$this->db->get();
 		return ( $query->row_array() ); 
 	}
 	

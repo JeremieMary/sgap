@@ -116,17 +116,21 @@ table {
     border-radius: 0 0 6px 0;
 }
 
-.cycles li, .matieres li {
+.cycles li, .matieres li, .profs li, .salles li {
 	margin-top:0;
 	margin-bottom:0;
 }
-.cycles, .matieres {
+.cycles, .matieres, .profs, .salles {
 	float:left;
 	min-width : 8em;
 	margin-right:2em;
 }
-.cycles ul li:hover, .matieres ul li:hover {
+.cycles ul li:hover, .matieres ul li:hover,  .profs ul li:hover,.salles ul li:hover {
 	background:#fbf8e9;
+}
+
+label {
+	margin-left:0;
 }
 
 .highlight  {
