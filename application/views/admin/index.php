@@ -30,8 +30,12 @@
 <div class="cycles">
 	<label> Cycles </label>
 <ul>
+	<?setlocale(LC_TIME, "fr_FR"); ?>
 	<? foreach ($cycles as $cycle){?>
-		<li name='<?=$cycle["id"]?>'> <?=$cycle['debut']?>
+		<li name='<?=$cycle["id"]?>'> <?
+			$date =date_create_from_format("d/m/Y",$cycle['debut']);
+			$timestamp = $date->getTimestamp(); 
+			echo strftime( "%a %d/%m/%Y", $timestamp ); ?>
 	<?}?>
 </ul>
 </div>
@@ -137,11 +141,11 @@ $(document).ready(function() {
 				context: document.body 
 			}).done(function(data) {
 				that.remove()
+				/*
+				that.fadeOut(1000,function(){that.remove()});
+				*/
 			});
 		}
-		/*
-		that=$(this).closest('tr')
-		that.fadeOut(1000,function(){that.remove()});*/
 	})
 	
 	$(".inactivate").click(function(){
