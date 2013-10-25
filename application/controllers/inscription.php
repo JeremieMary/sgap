@@ -28,7 +28,7 @@ class Inscription extends CI_Controller {
 			$nb_inscrits = $this->accompagnement_model->getNbInscrits($cycle_id,$matiere_id);
 			$json=array('places'=>$nb_dispo, 'nb_inscrits'=>$nb_inscrits );
 		} else {
-			$json = array('places'=>'Couple cycle / matière non disponible.', 'nb_inscrits'=>'Couple cycle / matière non disponible.' );
+			$json = array('places'=>'Couple cycle/matière non disponible.', 'nb_inscrits'=>'Couple cycle/matière non disponible.' );
 		}
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);

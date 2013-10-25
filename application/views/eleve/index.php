@@ -73,7 +73,7 @@ function unactivateCycles(matiere_id){
 
 function activateSuscribe(){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
-		$('#inscriptionForm button[name="inscription"]').removeAttr("disabled");
+		$('#inscriptionForm button[name="inscription"]').prop("disabled", false);;
 		cycle_id=$('#inscriptionForm input[name="cycle_id"]').val();
 		matiere_id=$('#inscriptionForm input[name="matiere_id"]').val();
 		myurl = '<?=site_url()?>/inscription/getNbPlacesRestantes/'+cycle_id+'/'+matiere_id;
@@ -83,6 +83,7 @@ function activateSuscribe(){
 		}).done(function(data) {
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
+			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);;
 		});
 			
 	}

@@ -35,9 +35,12 @@
 	
 	<?if (($this->session->userdata('id'))) { ?>
 		<div id='top'>
-			<?= anchor('user/changePasswd','Changer mot de passe') ?>
-			Bonjour <?= $this->session->userdata('prenom') ?>	
-			<?= anchor('user/logout','Logout') ?>
+			<ul>
+			<li>Connecté en tant que  <?= strtoupper($this->session->userdata('nom')) ?> <?= $this->session->userdata('prenom') ?>
+			
+			<li ><?= anchor('user/changePasswd','Changer mot de passe') ?>
+			<li>	<?= anchor('user/logout','Logout') ?>
+		</ul>
 		</div>
 	<? }	?>
  
@@ -53,7 +56,6 @@
 	  		<?=$messages?> 
 	  </div>
 	  <? } ?>
-
 	  <div id="wrapper">
-
+	
 

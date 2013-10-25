@@ -17,8 +17,19 @@
 	color: #65c4e5;
 }	
 
+#top li{
+	display:inline-block;
+	margin-bottom:0;
+}
+
+#top li:first-child{
+	margin-left:1em;
+	float:left;
+}
+
 #wrapper{
 	padding:2em;
+	
 }
 .upload_form form {
 	margin-bottom:0;

@@ -21,7 +21,7 @@ class Eleve extends CI_Controller {
 	public function index()
 	{
 		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
-		$data['title']='Eleve';
+		$data['title']='Élève';
 		$data['messages'] = $this->session->flashdata('messages');
 		$eleve_id = $this->session->userdata['id'];
 		$data['historiques'] = $this->inscriptions_model->getHistory($eleve_id);
