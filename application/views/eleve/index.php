@@ -50,11 +50,23 @@
 var accompagnement=<?=json_encode( $accompagnement )?>	
 
 function unactivateMatieres(cycle_id){
+	//$(".cycles ul li").removeClass('unactivated')
 	$(".matieres ul li").addClass('unactivated')
 	for (var i in accompagnement) {
 		if (accompagnement[i].cycle_id == cycle_id) {
 			matiere_id=accompagnement[i].matiere_id
-			//$(".matieres ul li[name=]").removeClass('unactivated')
+			$('.matieres ul li[name="'+matiere_id+'"]').removeClass('unactivated')
+		} 
+	}
+}
+
+function unactivateCycles(matiere_id){
+	//$(".matieres ul li").removeClass('unactivated')
+	$(".cycles ul li").addClass('unactivated')
+	for (var i in accompagnement) {
+		if (accompagnement[i].matiere_id == matiere_id) {
+			cycle_id=accompagnement[i].cycle_id
+			$('.cycles ul li[name="'+cycle_id+'"]').removeClass('unactivated')
 		} 
 	}
 }
@@ -90,7 +102,9 @@ $(document).ready(function() {
 	$(".matieres ul li").click(function(){
 		$('.matieres .highlight').removeClass('highlight')
 		$(this).toggleClass('highlight')
-		$('#inscriptionForm input[name="matiere_id"]').val( $(this).attr('name') )
+		var matiere_id=$(this).attr('name')
+		$('#inscriptionForm input[name="matiere_id"]').val(matiere_id)
+		unactivateCycles(matiere_id)
 		activateSuscribe()
 	})
 	
