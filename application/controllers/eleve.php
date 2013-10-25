@@ -6,8 +6,8 @@ class Eleve extends CI_Controller {
 		parent::__construct();
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 0 ) {
-			$this->load->model('cycles_model');
-			$this->load->model('matieres_model');
+			//$this->load->model('cycles_model');
+			//$this->load->model('matieres_model');
 			$this->load->model('inscriptions_model');
 			$this->load->model('accompagnement_model');
 			$this->load->helper(array('form'));
@@ -20,10 +20,9 @@ class Eleve extends CI_Controller {
 
 	public function index()
 	{
+		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
 		$data['title']='Eleve';
 		$data['messages'] = $this->session->flashdata('messages');
-		$data['matieres'] = $this->matieres_model->getAll();
-		$data['cycles']   = $this->cycles_model->getAll();
 		$eleve_id = $this->session->userdata['id'];
 		$data['historiques'] = $this->inscriptions_model->getHistory($eleve_id);
 		$this->load->view('templates/header', $data);
@@ -38,7 +37,7 @@ class Eleve extends CI_Controller {
 		$matiere_id = $this->input->post('matiere_id');
 		$accompagnement_id = $this->accompagnement_model->getId($cycle_id,$matiere_id);
 		if ($accompagnement_id<0){
-			$this->session->set_flashdata('messages', 'Accompagnement inconnu' );
+			$this->session->set_flashdata('messages', 'Accompagnement non ouvert.' );
 			redirect('eleve/');
 		}
 		$eleve_id = $this->session->userdata['id'];

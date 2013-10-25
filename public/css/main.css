@@ -146,11 +146,17 @@ li.highlight:hover {
 .accompagnement{
 	clear:both;
 }
+
+li.unactivated{
+	color:#bababa;
+}
+
 #creation_accompagnement{
 	max-height:350px;
 	overflow-y : scroll;
 	float:left;
 	border:solid 1px;
+	margin-bottom:2em;
 }
 
 #importation{

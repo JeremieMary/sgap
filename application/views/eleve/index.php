@@ -47,12 +47,24 @@
 </div>
 
 <script type='text/javascript'>
+var accompagnement=<?=json_encode( $accompagnement )?>	
+
+function unactivateMatieres(cycle_id){
+	$(".matieres ul li").addClass('unactivated')
+	for (var i in accompagnement) {
+		if (accompagnement[i].cycle_id == cycle_id) {
+			matiere_id=accompagnement[i].matiere_id
+			//$(".matieres ul li[name=]").removeClass('unactivated')
+		} 
+	}
+}
+
 function activateSuscribe(){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
 		$('#inscriptionForm button[name="inscription"]').removeAttr("disabled");
 		cycle_id=$('#inscriptionForm input[name="cycle_id"]').val();
 		matiere_id=$('#inscriptionForm input[name="matiere_id"]').val();
-		myurl = './inscription/getNbPlacesRestantes/'+cycle_id+'/'+matiere_id;
+		myurl = '<?=site_url()?>/inscription/getNbPlacesRestantes/'+cycle_id+'/'+matiere_id;
 		$.ajax({
 			url:myurl, 
 			context: document.body 
@@ -68,16 +80,18 @@ $(document).ready(function() {
 		
 	$(".cycles ul li").click(function(){
 		$('.cycles .highlight').removeClass('highlight')
-		$(this).toggleClass('highlight');
-		$('#inscriptionForm input[name="cycle_id"]').val( $(this).attr('name') );
-		activateSuscribe();
+		$(this).toggleClass('highlight')
+		var cycle_id=$(this).attr('name')
+		$('#inscriptionForm input[name="cycle_id"]').val(cycle_id)
+		unactivateMatieres(cycle_id)
+		activateSuscribe()
 	})
 	
 	$(".matieres ul li").click(function(){
 		$('.matieres .highlight').removeClass('highlight')
-		$(this).toggleClass('highlight');
-		$('#inscriptionForm input[name="matiere_id"]').val( $(this).attr('name') );
-		activateSuscribe();
+		$(this).toggleClass('highlight')
+		$('#inscriptionForm input[name="matiere_id"]').val( $(this).attr('name') )
+		activateSuscribe()
 	})
 	
 	
