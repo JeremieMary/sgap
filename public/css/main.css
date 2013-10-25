@@ -30,7 +30,8 @@
 }
 
 h2 {
-	margin-top:1em;
+	margin-top:1.5em;
+	margin-bottom:0.2em;
 }
 
 /* Arrays */
@@ -40,6 +41,7 @@ table {
     width: 100%;    
 }
 
+
 .bordered {
     border: solid #ccc 1px;
     -moz-border-radius: 6px;
@@ -47,7 +49,8 @@ table {
     border-radius: 6px;
     -webkit-box-shadow: 0 1px 1px #ccc; 
     -moz-box-shadow: 0 1px 1px #ccc; 
-    box-shadow: 0 1px 1px #ccc;         
+    box-shadow: 0 1px 1px #ccc;  
+	clear:both;       
 }
 
 .bordered tr:hover {
@@ -139,6 +142,20 @@ label {
 li.highlight:hover {
 	background:#e1effc !important;
 }
+
+.accompagnement{
+	clear:both;
+}
+#creation_accompagnement{
+	max-height:350px;
+	overflow-y : scroll;
+	float:left;
+	border:solid 1px;
+}
+
+#importation{
+}
+
 
 button[disabled]{
 	color:#bbb;

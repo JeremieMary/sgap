@@ -18,8 +18,12 @@ class Accompagnement extends CI_Controller {
 		return(true);
 	}
 
-	public function creer($cycle_id,$matiere_id,$salle) {
-		$this->session->accompagnement_model->creer($cycle_id,$matiere_id,$salle)
+	public function creer() {
+		$cycle_id=$this->input->post('cycle_id');
+		$matiere_id=$this->input->post('matiere_id');
+		$enseignant_id=$this->input->post('enseignant_id');
+		$salle=$this->input->post('salle');
+		$this->accompagnement_model->creer($cycle_id,$matiere_id,$enseignant_id,$salle);
 		$this->session->set_flashdata('messages', "<p>Accompagnement créé.</p>" );
 		redirect('admin/');
 	}

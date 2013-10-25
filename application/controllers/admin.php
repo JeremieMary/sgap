@@ -7,9 +7,9 @@ class Admin extends CI_Controller {
 		$this->load->helper(array('form'));
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 3 ) {
+			$this->output->enable_profiler(TRUE);
 			return(true);
 		}  
-		
 		$this->session->set_flashdata('messages', "<p>Vos droits actuels sont insuffisants pour afficher la page demandée. Vous avez été redirigé vers l'écran d'authentification.</p>" );
 		redirect('user/login');
 	}
@@ -27,6 +27,7 @@ class Admin extends CI_Controller {
 		$data['cycles']   = $this->cycles_model->getAll();
 		$data['profs']    = $this->users_model->getAllProfs();
 		$data['salles']   = $this->users_model->getAllSalles();
+		$data['accompagnement']   = $this->accompagnement_model->getAllHumanReadable();
 		$this->load->view('templates/header', $data);
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer');

@@ -25,7 +25,8 @@ class Inscriptions_model extends CI_Model {
 		return($res);	
 	}
 	
-	function validate($eleve_id,$accompagnement_id){
+	function validate($eleve_id,$accompagnement_id)
+	{
 		//TODO 
 		return(true);
 	}
