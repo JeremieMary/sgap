@@ -15,6 +15,17 @@ class Cycles_model extends CI_Model {
 		return ( $cycles ); 
 	}
 	
+	function getDates($cycles_id)
+	{
+		$this->db-> select('dates');
+		$this->db-> limit(1);
+		$this->db-> where(array('id'=>$cycles_id));
+		$this->db-> from('cycles');
+		$query=$this->db->get();
+		$cycle=$query->row_array();
+		return(unserialize($cycle['dates']));
+	}
+	
 	function commitCycle( $cycle )
 	{
 		//Ajouter des vérifications de cohérence ? 

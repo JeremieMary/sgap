@@ -6,8 +6,6 @@ class Eleve extends CI_Controller {
 		parent::__construct();
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 0 ) {
-			//$this->load->model('cycles_model');
-			//$this->load->model('matieres_model');
 			$this->load->model('inscriptions_model');
 			$this->load->model('accompagnement_model');
 			$this->load->helper(array('form'));

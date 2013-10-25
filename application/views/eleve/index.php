@@ -23,6 +23,8 @@
 <ul>
 <li> Nombre de places : <span id='nbPlaces'></span> </li>
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+<li> Dates : <span id='dates'></span> </li>
+<li> Salle : <span id='salle'></span> </li>
 </ul>
 </div>
 
@@ -81,6 +83,8 @@ function activateSuscribe(){
 			url:myurl, 
 			context: document.body 
 		}).done(function(data) {
+			$('#salle').html(data.salle);
+			$('#dates').html(data.dates.join(', '));
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);;

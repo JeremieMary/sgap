@@ -27,7 +27,27 @@ class Accompagnement extends CI_Controller {
 		$this->session->set_flashdata('messages', "<p>Accompagnement créé.</p>" );
 		redirect('admin/');
 	}
-
+	
+	public function supprimer($id)
+	{
+		$this->accompagnement_model->supprimer($id);
+		$data['json']=array('success'=>true);
+		$this->load->view('templates/json', $data);
+	}
+	
+	public function inactiver($id)
+	{
+		$this->accompagnement_model->inactiver($id);
+		$data['json']=array('success'=>true);
+		$this->load->view('templates/json', $data);
+	}
+	
+	public function activer($id)
+	{
+		$this->accompagnement_model->activer($id);
+		$data['json']=array('success'=>true);
+		$this->load->view('templates/json', $data);
+	}
 
 
 }

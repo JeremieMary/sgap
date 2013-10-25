@@ -69,6 +69,18 @@ class Accompagnement_model extends CI_Model {
 			return(false);
 		}
 	}
+	
+	function getSalle($cycle_id,$matiere_id)
+	{
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
+		$this->db->select('salle');
+		$this->db->limit(1);
+		$this->db->from('accompagnement');
+		$this->db->where($accompagnement);
+		$query=$this->db->get();
+		$res = $query->row_array();
+		return( $res['salle'] ) ;	
+	}
 
 	function getNbInscrits($cycle_id,$matiere_id)
 	{	
@@ -102,5 +114,21 @@ class Accompagnement_model extends CI_Model {
 		$this->db->insert('accompagnement', $accompagnement);
 	} 	
 	
+	function supprimer($id)
+	{
+		$this->db->delete('accompagnement',array('id'=>$id));
+	}
+	
+	function inactiver($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('accompagnement', array('actif'=>false)); 
+	}
+	
+	function activer($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('accompagnement', array('actif'=>true)); 
+	}
 	
 }

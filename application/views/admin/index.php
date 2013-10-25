@@ -80,18 +80,23 @@
     <thead>
     <tr>
 		<?
-		$keys = array_keys($accompagnement[0]);
+		//$keys = array_keys($accompagnement[0]);
+		$keys = array('Cycle','Matière','Enseignant','Salle');
 		foreach ($keys as $key ) echo "<th>$key</th>";
 		?>
+		<th></th>
+		<th></th>
     </tr>
     </thead>
- 
     <tbody>
             <?php foreach($accompagnement as $field){?>
                 <tr>
-					<?
-					foreach ($keys as $key ) echo "<td>".$field[$key]."</td>";
-					?>
+					<td><?=trim($field['cycle_debut'])?></td>
+					<td><?=trim($field['matiere'])?></td>
+					<td><?=trim(strtoupper($field['nom']))?> <?=trim($field['prenom'])?></td>
+					<td><?=trim($field['salle'])?></td>
+					<td><button accompagnement_id='<?=$field["id"]?>' class='inactivate'>Inactiver</button></td>
+					<td><button accompagnement_id='<?=$field["id"]?>' class='delete'>Supprimer</button></td>
                 </tr>
             <?php }?>
     </tbody>
@@ -104,7 +109,7 @@
 <script type='text/javascript'>
 function activateSuscribe(){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1) && ($('.profs .highlight').length == 1)  && ($('.salles .highlight').length == 1) ) {
-		$('#accompagnementForm button[name="creer"]').removeAttr("disabled");
+		$('#accompagnementForm button[name="creer"]').prop("disabled", false);;
 		/*
 		cycle_id=$('#inscriptionForm input[name="cycle_id"]').val();
 		matiere_id=$('#inscriptionForm input[name="matiere_id"]').val();
@@ -121,6 +126,45 @@ function activateSuscribe(){
 }
 	
 $(document).ready(function() {
+	
+	$(".delete").click(function(){
+		accompagnement_id=$(this).attr('accompagnement_id')
+		that = $(this).closest('tr')
+		myurl='<?=site_url()?>/accompagnement/supprimer/'+accompagnement_id
+		if (confirm('Attention la suppression est irréversible. Souhaitez vous vraiment détruire cet accompagnement de la base de données ?')){
+			$.ajax({
+				url:myurl, 
+				context: document.body 
+			}).done(function(data) {
+				that.remove()
+			});
+		}
+		/*
+		that=$(this).closest('tr')
+		that.fadeOut(1000,function(){that.remove()});*/
+	})
+	
+	$(".inactivate").click(function(){
+		accompagnement_id=$(this).attr('accompagnement_id')
+		that = $(this).closest('tr')
+		if (that.hasClass('unactivated'))
+		{
+			myurl='<?=site_url()?>/accompagnement/activer/'+accompagnement_id		
+		} else {
+			myurl='<?=site_url()?>/accompagnement/inactiver/'+accompagnement_id
+		}
+		$.ajax({
+			url:myurl, 
+			context: document.body 
+		}).done(function(data) {
+			that.toggleClass('unactivated')
+			if (that.hasClass('unactivated')) {
+				that.find('.inactivate').html('Réactiver')
+			} else {
+				that.find('.inactivate').html('Inactiver')	
+			}
+		});
+	})
 		
 	$(".cycles ul li").click(function(){
 		$('.cycles .highlight').removeClass('highlight')

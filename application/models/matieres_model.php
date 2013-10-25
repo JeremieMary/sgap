@@ -14,9 +14,15 @@ class Matieres_model extends CI_Model {
 	
 	function getPlaces($matiere_id)
 	{
+		/*
+		$this->db-> select('id, nom, salle');
+		$this->db-> limit(1);
+		$this->db-> where(array('id'=>$matiere_id));
+		$this->db-> from('matieres');
+		$query = $this -> db -> get();*/
 		$query=$this->db->get_where('matieres',array('id'=>$matiere_id),1);
 		$res=$query->row_array();
-		return($res['places']);
+		return($query->row_array());
 	} 
 	
 	function commitMatiere( $matiere )
