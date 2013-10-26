@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 		$this->load->helper(array('form'));
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 3 ) {
+			$this->load->helper('datefr');
 			$this->output->enable_profiler(TRUE);
 			return(true);
 		}  

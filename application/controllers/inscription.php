@@ -10,6 +10,7 @@ class Inscription extends CI_Controller {
 			$this->load->model('inscriptions_model');
 			$this->load->model('matieres_model');
 			$this->load->model('cycles_model');
+			$this->load->helper(array('datefr'));
 			//$this->load->helper(array('form'));
 			return(true);
 		}  
@@ -24,14 +25,15 @@ class Inscription extends CI_Controller {
 
 	public function getNbPlacesRestantes($cycle_id,$matiere_id) {
 		//Il est possible d'optimiser facilement cette partie en sacrifiant un peu de lisibilité : il ne devrait y avoir qu'une seule requête au modèle des accompagnements.
-		$dates = $this->cycles_model->getDates($cycle_id);
 		if ($this->accompagnement_model->isActif($cycle_id,$matiere_id)){
+			$dates = $this->cycles_model->getDates($cycle_id);
+			foreach ($dates as &$date) $date=datefr($date);
 			$nb_dispo=$this->matieres_model->getPlaces($matiere_id);
 			$nb_inscrits=$this->accompagnement_model->getNbInscrits($cycle_id,$matiere_id);
 			$salle=$this->accompagnement_model->getSalle($cycle_id,$matiere_id);
 			$json=array('places'=>$nb_dispo, 'nb_inscrits'=>$nb_inscrits,'salle'=>$salle, 'dates'=>$dates );
 		} else {
-			$json = array('places'=>'Couple cycle/matière non disponible.', 'nb_inscrits'=>'Couple cycle/matière non disponible.','salle'=>'', 'dates'=>$dates );
+			$json = array('places'=>'Couple cycle/matière non disponible.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.') );
 		}
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);

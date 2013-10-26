@@ -1,6 +1,5 @@
 <div class="cycles">
 <ul>
-	<?setlocale(LC_TIME, "fr_FR"); ?>
 	<? foreach ($cycles as $cycle){?>
 		<li name='<?=$cycle["id"]?>'> <?
 			$date =date_create_from_format("d/m/Y",$cycle['debut']);
@@ -41,7 +40,9 @@
 	</thead>
 	<tbody>
 	<? foreach ($historiques as $historique){?>
-		<tr><td><?=$historique["cycle_debut"]?></td><td><?=$historique['matiere_nom']?></td><td>Boo</td></tr>
+		<tr><td>
+			<?=datefr($historique["cycle_debut"])?>
+		</td><td><?=$historique['matiere_nom']?></td><td>Boo</td></tr>
 	<?}?>
 	</tbody>
 </table>

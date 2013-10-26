@@ -30,12 +30,8 @@
 <div class="cycles">
 	<label> Cycles </label>
 <ul>
-	<?setlocale(LC_TIME, "fr_FR"); ?>
 	<? foreach ($cycles as $cycle){?>
-		<li name='<?=$cycle["id"]?>'> <?
-			$date =date_create_from_format("d/m/Y",$cycle['debut']);
-			$timestamp = $date->getTimestamp(); 
-			echo strftime( "%a %d/%m/%Y", $timestamp ); ?>
+		<li name='<?=$cycle["id"]?>'> <?=datefr($cycle['debut']);?>
 	<?}?>
 </ul>
 </div>
@@ -95,7 +91,9 @@
     <tbody>
             <?php foreach($accompagnement as $field){?>
                 <tr>
-					<td><?=trim($field['cycle_debut'])?></td>
+					<td>
+						<?=datefr($field['cycle_debut'])?>
+					</td>
 					<td><?=trim($field['matiere'])?></td>
 					<td><?=trim(strtoupper($field['nom']))?> <?=trim($field['prenom'])?></td>
 					<td><?=trim($field['salle'])?></td>
