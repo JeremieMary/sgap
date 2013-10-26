@@ -28,7 +28,8 @@
 }
 
 #wrapper{
-	padding-left:2em; 
+	padding-left:2em;
+	padding-bottom:2em; 
 }
 .upload_form form {
 	margin-bottom:0;

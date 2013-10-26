@@ -8,7 +8,7 @@ class Admin extends CI_Controller {
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 3 ) {
 			$this->load->helper('datefr');
-			$this->output->enable_profiler(TRUE);
+			//$this->output->enable_profiler(TRUE);
 			return(true);
 		}  
 		$this->session->set_flashdata('messages', "<p>Vos droits actuels sont insuffisants pour afficher la page demandée. Vous avez été redirigé vers l'écran d'authentification.</p>" );

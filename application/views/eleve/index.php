@@ -1,3 +1,4 @@
+<h2>Inscriptions</h2>
 <div class="cycles">
 <ul>
 	<? foreach ($cycles as $cycle){?>
@@ -33,6 +34,7 @@
 <button type='submit' name='inscription' disabled >inscription</button>
 </form>
 
+<h2>Liste des accompagnements actifs</h2>
 <div class="historique">
 <table class="bordered">
 	<thead>
@@ -47,6 +49,11 @@
 	</tbody>
 </table>
 </div>
+
+<h2>Historique des séances</h2>
+<div class="historique">
+</div>
+
 
 <script type='text/javascript'>
 var accompagnement=<?=json_encode( $accompagnement )?>	

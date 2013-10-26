@@ -8,7 +8,7 @@ class Eleve extends CI_Controller {
 		if ( $this->session->userdata['profil'] > 0 ) {
 			$this->load->model(array('inscriptions_model','accompagnement_model'));
 			$this->load->helper(array('form','datefr'));
-			$this->output->enable_profiler(TRUE);
+			//$this->output->enable_profiler(TRUE);
 			return(true);
 		}  
 		$this->session->set_flashdata('messages', "<p>Vos droits actuels sont insuffisants pour afficher la page demandée. Vous avez été redirigé vers l'écran d'authentification.</p>" );

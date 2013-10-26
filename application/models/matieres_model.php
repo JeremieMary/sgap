@@ -22,7 +22,7 @@ class Matieres_model extends CI_Model {
 		$query = $this -> db -> get();*/
 		$query=$this->db->get_where('matieres',array('id'=>$matiere_id),1);
 		$res=$query->row_array();
-		return($query->row_array());
+		return($res['places']);
 	} 
 	
 	function commitMatiere( $matiere )
