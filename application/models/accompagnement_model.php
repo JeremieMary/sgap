@@ -126,16 +126,9 @@ class Accompagnement_model extends CI_Model {
 		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'salle'=>$salle, 'enseignant_id'=>$enseignant_id);
 		$this->db->insert('accompagnement', $accompagnement);
 		$accompagnement_id = $this->db->insert_id();
-		//Insertion des seances correspondantes. Il aurait été souhaitable de faire un seances_model
-		$this->load->model('cycles_model');
-		$dates = $this->cycles_model->getDates($cycle_id);
-		foreach($dates as $date){
-			$date=date_create_from_format("d/m/Y",$date);
-			$timestamp=$date->getTimestamp(); 
-			$date=strftime( "%Y-%m-%d", $timestamp );
-			$seance = array( 'accompagnement_id'=>$accompagnement_id,'date'=>$date, 'enseignant_id'=>$enseignant_id);
-			$this->db->insert('seances', $seance);
-		}
+		//Insertion des seances correspondantes. 
+		$this->load->model('seances_model');
+		$this->seances_model->creer($accompagnement_id,$cycle_id,$enseignant_id);
 	} 	
 	
 	function supprimer($id)

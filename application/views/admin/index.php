@@ -1,6 +1,8 @@
 <?php 
 /* Admin index	view */
 ?>
+<?=anchor('enseignant','Utiliser la vue enseignant')?>
+
 <h2>Importation de données</h2>
 <div id='importation'>
 <div class="upload_form">

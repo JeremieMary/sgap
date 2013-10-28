@@ -33,7 +33,7 @@ class Inscription extends CI_Controller {
 			$json['logged']=true;
 			$json['inscrits']=$inscrits;
 		} else {
-			$json=array('logged'=>false);
+			$json=array('logged'=>true);
 		}
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);
