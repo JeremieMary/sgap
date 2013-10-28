@@ -28,6 +28,8 @@ class Accompagnement extends CI_Controller {
 		redirect('admin/');
 	}
 	
+	
+	
 	public function supprimer($id)
 	{
 		$this->accompagnement_model->supprimer($id);

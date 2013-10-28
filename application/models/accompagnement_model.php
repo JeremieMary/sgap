@@ -82,6 +82,19 @@ class Accompagnement_model extends CI_Model {
 		return( $res['salle'] ) ;	
 	}
 
+	public function getInscrits($cycle_id,$matiere_id)
+	{
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
+		$this->db->select('users.id AS eleve_id, users.nom AS nom, users.prenom AS prenom, users.classe AS classe');
+		$this->db->from('inscriptions');
+		$this->db->where($accompagnement);
+		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');
+		$this->db->join('users', 'inscriptions.eleve_id = users.id');
+		$query=$this->db->get();	
+		$res=$query->result_array();
+		return($res);	
+	}
+
 	function getNbInscrits($cycle_id,$matiere_id)
 	{	
 		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
@@ -108,21 +121,35 @@ class Accompagnement_model extends CI_Model {
 		}
 	}
 	
-	function creer($cycle_id,$matiere_id,$prof_id,$salle) 
+	function creer($cycle_id,$matiere_id,$enseignant_id,$salle) 
 	{
-		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'salle'=>$salle, 'enseignant_id'=>$prof_id);
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'salle'=>$salle, 'enseignant_id'=>$enseignant_id);
 		$this->db->insert('accompagnement', $accompagnement);
+		$accompagnement_id = $this->db->insert_id();
+		//Insertion des seances correspondantes. Il aurait été souhaitable de faire un seances_model
+		$this->load->model('cycles_model');
+		$dates = $this->cycles_model->getDates($cycle_id);
+		foreach($dates as $date){
+			$date=date_create_from_format("d/m/Y",$date);
+			$timestamp=$date->getTimestamp(); 
+			$date=strftime( "%Y-%m-%d", $timestamp );
+			$seance = array( 'accompagnement_id'=>$accompagnement_id,'date'=>$date, 'enseignant_id'=>$enseignant_id);
+			$this->db->insert('seances', $seance);
+		}
 	} 	
 	
 	function supprimer($id)
 	{
 		$this->db->delete('accompagnement',array('id'=>$id));
+		$this->db->delete('seances',array('accompagnement_id'=>$id));
+		$this->db->delete('inscriptions',array('accompagnement_id'=>$id));
 	}
 	
 	function inactiver($id)
 	{
 		$this->db->where('id', $id);
 		$this->db->update('accompagnement', array('actif'=>false)); 
+		
 	}
 	
 	function activer($id)

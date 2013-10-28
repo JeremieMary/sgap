@@ -6,6 +6,8 @@ class Enseignant extends CI_Controller {
 		parent::__construct();
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 1 ) {
+			$this->load->model(array('inscriptions_model','accompagnement_model'));
+			$this->load->helper(array('form','datefr'));
 			return(true);
 		}  
 		
@@ -16,8 +18,11 @@ class Enseignant extends CI_Controller {
 	public function index()
 	{
 		//echo $this->session->userdata('id');
+		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
 		$data['title']='Enseignant(e)';
-		$data['messages'] = $this->session->flashdata('messages');
+		$data['messages'] = $this->session->flashdata('messages'); 
+		//$eleve_id = $this->session->userdata['id'];
+		//$data['historiques'] = $this->inscriptions_model->getHistory($eleve_id);
 		$this->load->view('templates/header', $data);
 		$this->load->view('enseignant/index', $data);
 		$this->load->view('templates/footer', $data);

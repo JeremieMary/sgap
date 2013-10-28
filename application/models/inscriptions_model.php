@@ -12,6 +12,7 @@ class Inscriptions_model extends CI_Model {
 		return($query->result_array()); 
 	}
 	
+	
 	function getHistory($eleve_id)
 	{
 		$this->db->select('cycles.id AS cycle_id, cycles.debut AS cycle_debut, matieres.id AS matiere_id , matieres.nom AS matiere_nom');

@@ -37,11 +37,14 @@ class Cycles_model extends CI_Model {
 		$dup .= ';';
 		$sql = $this->db->insert_string('cycles', $cycle) . $dup;
 		$this->db->query($sql);
+		//$cycle_id=$this->db->insert_id();
 	}
 		
 	
 	private function formatForDB($cycle) {
-		return ( array( 'debut'=>reset($cycle), 'dates'=>serialize(array_values($cycle) ) ) );
+		$arr = array_values($cycle);
+		$arr = array_diff($arr, array('',' '));
+		return ( array( 'debut'=>reset($cycle), 'dates'=>serialize($arr) ) );
 	}
 	
 	function commitArray($tab)

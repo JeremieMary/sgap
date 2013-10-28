@@ -27,6 +27,10 @@
 	float:left;
 }
 
+.infos{
+	clear:both;
+}
+
 #wrapper{
 	padding-left:2em;
 	padding-bottom:2em; 

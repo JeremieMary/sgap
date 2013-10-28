@@ -4,7 +4,10 @@ class Inscription extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
+		if ( !isset($this->session->userdata['profil']) ) {
+			$data['json']=array('logged'=>false);
+			$this->load->view('templates/json', $data);
+		};
 		if ( $this->session->userdata['profil'] > 0 ) {
 			$this->load->model('accompagnement_model');
 			$this->load->model('inscriptions_model');
@@ -23,6 +26,19 @@ class Inscription extends CI_Controller {
 		return(true);
 	}
 
+	public function getInscrits($cycle_id,$matiere_id) {
+		if ( $this->session->userdata['profil'] == 1 ) return(false);
+		if ($this->accompagnement_model->isActif($cycle_id,$matiere_id)){
+			$inscrits = $this->accompagnement_model->getInscrits($cycle_id,$matiere_id);
+			$json['logged']=true;
+			$json['inscrits']=$inscrits;
+		} else {
+			$json=array('logged'=>false);
+		}
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);
+	}
+
 	public function getNbPlacesRestantes($cycle_id,$matiere_id) {
 		//Il est possible d'optimiser facilement cette partie en sacrifiant un peu de lisibilité : il ne devrait y avoir qu'une seule requête au modèle des accompagnements.
 		if ($this->accompagnement_model->isActif($cycle_id,$matiere_id)){
@@ -35,6 +51,7 @@ class Inscription extends CI_Controller {
 		} else {
 			$json = array('places'=>'Couple cycle/matière non disponible.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.') );
 		}
+		$json['logged']=true;
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);
 	}

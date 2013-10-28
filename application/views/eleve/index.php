@@ -34,17 +34,17 @@
 <button type='submit' name='inscription' disabled >inscription</button>
 </form>
 
-<h2>Liste des accompagnements actifs</h2>
+<h2>Liste des inscriptions courantes</h2>
 <div class="historique">
 <table class="bordered">
 	<thead>
-		<tr><th>Cycle</th><th>Matière</th><th>Commentaire Général</th></tr>
+		<tr><th>Cycle</th><th>Matière</th></tr>
 	</thead>
 	<tbody>
 	<? foreach ($historiques as $historique){?>
 		<tr><td>
 			<?=datefr($historique["cycle_debut"])?>
-		</td><td><?=$historique['matiere_nom']?></td><td>Boo</td></tr>
+		</td><td><?=$historique['matiere_nom']?></td></tr>
 	<?}?>
 	</tbody>
 </table>
@@ -94,7 +94,8 @@ function activateSuscribe(){
 			$('#dates').html(data.dates.join(', '));
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
-			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);;
+			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
+			if (!data.logged) window.location.reload();
 		});
 			
 	}
