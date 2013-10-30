@@ -1,4 +1,4 @@
-<h2>Inscriptions</h2>
+<h2>Sélection du cycle et de la matière</h2>
 <div class="cycles">
 <ul>
 	<? foreach ($cycles as $cycle){?>
@@ -34,10 +34,11 @@
 <input type='hidden' name='cycle_id' value=''>
 </form>
 
+<!--
 <h2>Liste des inscrits à cet accompagnement</h2>
 <div class="inscrits">
 </div>
-
+-->
 
 
 <h2>Séances</h2>
@@ -120,7 +121,8 @@ function dateSelectorHandler(){
 			}
 			
 		});
-	})
+	});
+	$("#datesSelector ul li.nonvalidee:first").trigger('click')
 }
 
 function activateSuscribe(){
@@ -143,6 +145,7 @@ function activateSuscribe(){
 			$("#liste_presence").html("");
 		});
 		
+		/*
 		myurl2 = '<?=site_url()?>/inscription/getInscrits/'+cycle_id+'/'+matiere_id;
 		$.ajax({
 			url:myurl2, 
@@ -150,7 +153,7 @@ function activateSuscribe(){
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$(".inscrits").html(JSON.stringify(data.inscrits))
-		});
+		}); */
 		
 		myurl3 = '<?=site_url()?>/seances/getIdsAndDates/'+cycle_id+'/'+matiere_id;
 		$.ajax({
