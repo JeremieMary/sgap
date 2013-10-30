@@ -188,6 +188,12 @@ li.unactivated{
 #importation{
 }
 
+#datesSelector .validee{
+	color:green;	
+}
+#datesSelector .nonvalidee{
+	color:red;	
+}
 
 button[disabled]{
 	color:#bbb;

@@ -8,7 +8,7 @@ class Seances extends CI_Controller {
 			$data['json']=array('logged'=>false);
 			$this->load->view('templates/json', $data);
 		};
-		if ( $this->session->userdata['profil'] > 0 ) {
+		if ( $this->session->userdata['profil'] > 1 ) {
 			$this->load->model('seances_model');
 			return(true);
 		}  
@@ -33,13 +33,17 @@ class Seances extends CI_Controller {
 
 	public function getPresences($seance_id)
 	{
-		if ( $this->session->userdata['profil'] == 1 ) {
-			$data['json']=array('logged'=>false);
-			$this->load->view('templates/json', $data);
-		}  
 		$presences=$this->seances_model->getPresences($seance_id);
 		$json['presences']=$presences;
 		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);	
+	}
+	
+	public function valider($seance_id){
+		$presences=$this->seances_model->valider($seance_id);
+		$json['logged']=true;
+		$json['success']=true;
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);	
 	}

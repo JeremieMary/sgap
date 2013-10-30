@@ -24,7 +24,7 @@ class Seances_model extends CI_Model {
 	function getIdsAndDates($cycle_id, $matiere_id)
 	{
 		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
-		$this->db->select('seances.id AS seance_id, seances.date AS date');
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee');
 		$this->db->from('seances');
 		$this->db->where($accompagnement);
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
@@ -35,14 +35,19 @@ class Seances_model extends CI_Model {
 	}
 	
 	function getPresences($seance_id){
-		$this->db->select('seances.id AS seance_id, seances.date AS date');
-		$this->db->from('seances');
-		//$this->db->where($accompagnement);
-		//$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent');
+		$this->db->from('inscriptions');
+		$this->db->where(array('seances.id'=>$seance_id));
+		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
+		$this->db->join('presences', 'presences.seance_id = seances.id', 'left');
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
 	}
 	
+	function valider($seance_id){
+		$this->db->where('id', $seance_id);
+		$this->db->update('seances', array("validee"=>true) ); 
+	}
 	
 }

@@ -41,15 +41,17 @@
 
 
 <h2>Séances</h2>
+
 <h3>Dates des séances</h3>
 <div id='datesSelector'>
 </div>
 
+<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
+
 <h3>Présences</h3>
 <div class="presence">
-	<span id='date_seance'></span>
-	<div id='liste_presence'>
-	</div>
+	<div id='date_seance'></span>
+	<div id='liste_presence'></div>
 </div>
 
 
@@ -82,7 +84,8 @@ function unactivateCycles(matiere_id){
 function display_dates(seances){
 	ret='<ul>'
 	for(var i=0;i<seances.length;++i){
-		ret+='<li seance_id='+seances[i].seance_id+'>'+seances[i].date
+		if (seances[i].validee==1) cl='validee'; else cl='nonvalidee';
+		ret+='<li seance_id='+seances[i].seance_id+' class='+cl+'>'+seances[i].date
 	}
 	ret+='</ul>'
 	return(ret);
@@ -92,14 +95,30 @@ function dateSelectorHandler(){
 	$("#datesSelector ul li").click(function(){
 		$('#datesSelector ul li').removeClass('highlight')
 		$(this).toggleClass('highlight')
+		var that=$(this);
 		var seance_id=$(this).attr('seance_id')
 		myurl = '<?=site_url()?>/seances/getPresences/'+seance_id;
 		$.ajax({
-			url:myurl, 
-			context: document.body 
+			url:myurl 
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(JSON.stringify(data.presences))
+			if (data.presences.length && that.hasClass('nonvalidee') ) {
+				$("#validerSeance button").prop("disabled", false);
+				$("#validerSeance button").removeClass("unactivated");
+				$("#validerSeance button").click(function(){
+					$.ajax({
+						url:'<?=site_url()?>/seances/valider/'+seance_id
+					}).done(function(){
+						$("#validerSeance button").prop("disabled", true);
+						$("#validerSeance button").addClass("unactivated");	
+					})
+				})
+			} else {
+				$("#validerSeance button").prop("disabled", true);
+				$("#validerSeance button").addClass("unactivated");	
+			}
+			
 		});
 	})
 }
@@ -119,6 +138,9 @@ function activateSuscribe(){
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
+			$("#validerSeance button").prop("disabled", true);
+			$("#validerSeance button").addClass("unactivated");	
+			$("#liste_presence").html("");
 		});
 		
 		myurl2 = '<?=site_url()?>/inscription/getInscrits/'+cycle_id+'/'+matiere_id;
