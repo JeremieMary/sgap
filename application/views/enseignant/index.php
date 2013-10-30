@@ -34,12 +34,22 @@
 <input type='hidden' name='cycle_id' value=''>
 </form>
 
-<h2>Liste des inscrits</h2>
+<h2>Liste des inscrits à cet accompagnement</h2>
 <div class="inscrits">
 </div>
 
-<h2>Historique des séances</h2>
-<div class="historique">
+
+
+<h2>Séances</h2>
+<h3>Dates des séances</h3>
+<div id='datesSelector'>
+</div>
+
+<h3>Présences</h3>
+<div class="presence">
+	<span id='date_seance'></span>
+	<div id='liste_presence'>
+	</div>
 </div>
 
 
@@ -68,6 +78,32 @@ function unactivateCycles(matiere_id){
 	}
 }
 
+
+function display_dates(seances){
+	ret='<ul>'
+	for(var i=0;i<seances.length;++i){
+		ret+='<li seance_id='+seances[i].seance_id+'>'+seances[i].date
+	}
+	ret+='</ul>'
+	return(ret);
+}
+
+function dateSelectorHandler(){
+	$("#datesSelector ul li").click(function(){
+		$('#datesSelector ul li').removeClass('highlight')
+		$(this).toggleClass('highlight')
+		var seance_id=$(this).attr('seance_id')
+		myurl = '<?=site_url()?>/seances/getPresences/'+seance_id;
+		$.ajax({
+			url:myurl, 
+			context: document.body 
+		}).done(function(data) {
+			if (!data.logged) window.location.reload()
+			$("#liste_presence").html(JSON.stringify(data.presences))
+		});
+	})
+}
+
 function activateSuscribe(){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
 		//$('#inscriptionForm button[name="inscription"]').prop("disabled", false);;
@@ -82,7 +118,7 @@ function activateSuscribe(){
 			$('#dates').html(data.dates.join(', '));
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
-			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);;
+			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
 		});
 		
 		myurl2 = '<?=site_url()?>/inscription/getInscrits/'+cycle_id+'/'+matiere_id;
@@ -92,6 +128,16 @@ function activateSuscribe(){
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$(".inscrits").html(JSON.stringify(data.inscrits))
+		});
+		
+		myurl3 = '<?=site_url()?>/seances/getIdsAndDates/'+cycle_id+'/'+matiere_id;
+		$.ajax({
+			url:myurl3, 
+			context: document.body 
+		}).done(function(data) {
+			if (!data.logged) window.location.reload()
+			$("#datesSelector").html(display_dates(data.seances_ids))
+			dateSelectorHandler()
 		});
 			
 	}

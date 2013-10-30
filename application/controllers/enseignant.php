@@ -17,12 +17,9 @@ class Enseignant extends CI_Controller {
 
 	public function index()
 	{
-		//echo $this->session->userdata('id');
 		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
 		$data['title']='Enseignant(e)';
 		$data['messages'] = $this->session->flashdata('messages'); 
-		//$eleve_id = $this->session->userdata['id'];
-		//$data['historiques'] = $this->inscriptions_model->getHistory($eleve_id);
 		$this->load->view('templates/header', $data);
 		$this->load->view('enseignant/index', $data);
 		$this->load->view('templates/footer', $data);

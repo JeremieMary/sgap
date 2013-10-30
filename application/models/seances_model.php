@@ -21,6 +21,28 @@ class Seances_model extends CI_Model {
 		}
 	} 	
 	
+	function getIdsAndDates($cycle_id, $matiere_id)
+	{
+		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
+		$this->db->select('seances.id AS seance_id, seances.date AS date');
+		$this->db->from('seances');
+		$this->db->where($accompagnement);
+		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$query=$this->db->get();	
+		$res=$query->result_array();
+		return($res);	
+		
+	}
+	
+	function getPresences($seance_id){
+		$this->db->select('seances.id AS seance_id, seances.date AS date');
+		$this->db->from('seances');
+		//$this->db->where($accompagnement);
+		//$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$query=$this->db->get();	
+		$res=$query->result_array();
+		return($res);	
+	}
 	
 	
 }
