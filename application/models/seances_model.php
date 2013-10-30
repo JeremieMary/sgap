@@ -6,8 +6,6 @@ class Seances_model extends CI_Model {
 		$this->load->database();
 	}
 
-	
-	
 	function creer($accompagnement_id,$cycle_id,$enseignant_id) 
 	{
 		$this->load->model('cycles_model');
@@ -35,11 +33,12 @@ class Seances_model extends CI_Model {
 	}
 	
 	function getPresences($seance_id){
-		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent');
+		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, seances.id AS seance_id');
 		$this->db->from('inscriptions');
 		$this->db->where(array('seances.id'=>$seance_id));
 		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
 		$this->db->join('presences', 'presences.seance_id = seances.id', 'left');
+		$this->db->join('users', 'users.id=inscriptions.eleve_id');
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
