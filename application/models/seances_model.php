@@ -32,7 +32,8 @@ class Seances_model extends CI_Model {
 		
 	}
 	
-	function getPresences($seance_id){
+	function getPresences($seance_id)
+	{
 		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, seances.id AS seance_id');
 		$this->db->from('inscriptions');
 		$this->db->where(array('seances.id'=>$seance_id));
@@ -47,6 +48,20 @@ class Seances_model extends CI_Model {
 	function valider($seance_id){
 		$this->db->where('id', $seance_id);
 		$this->db->update('seances', array("validee"=>true) ); 
+	}
+	
+	function historique($eleve_id)
+	{
+		$this->db->select('eleve_id, seances.id AS seance_id');
+		$this->db->from('seances');
+		$this->db->where(array('eleve_id'=>$eleve_id));
+		$this->db->join('inscriptions','inscriptions.accompagnement_id = seances.accompagnement_id');
+		//$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
+		//$this->db->join('presences', 'presences.seance_id = seances.id', 'left');
+		//$this->db->join('users', 'users.id=inscriptions.eleve_id');
+		$query=$this->db->get();	
+		$res=$query->result_array();
+		return($res);	
 	}
 	
 }

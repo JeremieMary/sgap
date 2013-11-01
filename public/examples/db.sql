@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 30 Octobre 2013 à 11:58
+-- Généré le : Ven 01 Novembre 2013 à 17:33
 -- Version du serveur: 5.1.44
 -- Version de PHP: 5.3.2
 
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `accompagnement` (
   `salle` varchar(16) NOT NULL,
   `enseignant_id` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `commentaire` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
@@ -34,48 +35,9 @@ CREATE TABLE IF NOT EXISTS `accompagnement` (
 -- Contenu de la table `accompagnement`
 --
 
-INSERT INTO `accompagnement` VALUES(34, 1, 96, ' 1			', 3, 1);
-INSERT INTO `accompagnement` VALUES(32, 2, 97, ' 2			', 3, 1);
-INSERT INTO `accompagnement` VALUES(37, 3, 98, ' 4			', 5, 1);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `commentaire`
---
-
-DROP TABLE IF EXISTS `commentaire`;
-CREATE TABLE IF NOT EXISTS `commentaire` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accompagnement_id` int(11) NOT NULL,
-  `eleve_id` int(11) NOT NULL,
-  `text` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Contenu de la table `commentaire`
---
-
-
--- --------------------------------------------------------
-
---
--- Structure de la table `commentaireGeneral`
---
-
-DROP TABLE IF EXISTS `commentaireGeneral`;
-CREATE TABLE IF NOT EXISTS `commentaireGeneral` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accompagnement_id` int(11) NOT NULL,
-  `text` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Contenu de la table `commentaireGeneral`
---
-
+INSERT INTO `accompagnement` VALUES(34, 1, 96, ' 1			', 3, 1, '');
+INSERT INTO `accompagnement` VALUES(32, 2, 97, ' 2			', 3, 1, '');
+INSERT INTO `accompagnement` VALUES(37, 3, 98, ' 4			', 5, 1, '');
 
 -- --------------------------------------------------------
 
@@ -113,16 +75,18 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `eleve_id` int(11) NOT NULL,
   `accompagnement_id` int(11) NOT NULL,
+  `commentaire` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `eleve_id` (`eleve_id`),
   KEY `accompagnement_id` (`accompagnement_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Contenu de la table `inscriptions`
 --
 
-INSERT INTO `inscriptions` VALUES(14, 1, 34);
+INSERT INTO `inscriptions` VALUES(15, 4, 34, '');
+INSERT INTO `inscriptions` VALUES(14, 1, 34, '');
 
 -- --------------------------------------------------------
 

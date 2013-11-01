@@ -41,7 +41,7 @@
 		<tr><th>Cycle</th><th>Matière</th></tr>
 	</thead>
 	<tbody>
-	<? foreach ($historiques as $historique){?>
+	<? foreach ($historiqueAccompagnements as $historique){?>
 		<tr><td>
 			<?=datefr($historique["cycle_debut"])?>
 		</td><td><?=$historique['matiere_nom']?></td></tr>
@@ -52,6 +52,16 @@
 
 <h2>Historique des séances</h2>
 <div class="historique">
+	<div class="historique">
+	<table class="bordered">
+		<thead>
+			<tr><th>Cycle</th><th>Matière</th></tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	<? print_r($historiqueSeances) ?>
 </div>
 
 
