@@ -92,6 +92,24 @@ function display_dates(seances){
 	return(ret);
 }
 
+function affichePresences(eleves){
+		ans="<table class='bordered'><thead><tr><th>Nom</th><th>Prénom</th><th></th></tr></thead><tbody>"
+		for(var i=0;i<eleves.length;++i) {
+				ans+= "<tr>"
+				ans+= "<td>"+eleves[i].nom+ "</td>"
+				ans+= "<td>"+eleves[i].prenom+"</td>"
+				if (eleves[i].absent===null) {
+						ans+="<td>"+"present"+"</td>"
+					} else {
+						ans+="<td>"+"Absent"+"</td>"
+					}
+				ans+="</tr>" 
+			}
+		ans+="</tbody></table>"	
+		return(ans)
+	}
+
+
 function dateSelectorHandler(){
 	$("#datesSelector ul li").click(function(){
 		$('#datesSelector ul li').removeClass('highlight')
@@ -103,7 +121,7 @@ function dateSelectorHandler(){
 			url:myurl 
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
-			$("#liste_presence").html(JSON.stringify(data.presences))
+			$("#liste_presence").html(affichePresences(data.presences))
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
