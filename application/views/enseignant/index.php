@@ -93,7 +93,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered'><thead><tr><th>Nom</th><th>Prénom</th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th></th></tr></thead><tbody>"
 		for(var i=0;i<eleves.length;++i) {
 				ans+= "<tr>"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
@@ -103,12 +103,16 @@ function affichePresences(eleves){
 					} else {
 						ans+="<td>"+"Absent"+"</td>"
 					}
+				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' >Modifier</button></td>"	
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"	
 		return(ans)
 	}
 
+function presenceHandler() {
+		alert( $(this).attr('seance_id') );
+	}
 
 function dateSelectorHandler(){
 	$("#datesSelector ul li").click(function(){
@@ -122,6 +126,7 @@ function dateSelectorHandler(){
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
+			$("#liste_presence button").click(presenceHandler)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
