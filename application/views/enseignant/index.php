@@ -94,16 +94,19 @@ function display_dates(seances){
 
 function affichePresences(eleves){
 		ans="<table class='bordered'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th></th></tr></thead><tbody>"
+		var abs;
 		for(var i=0;i<eleves.length;++i) {
 				ans+= "<tr>"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
 				if (eleves[i].absent===null) {
-						ans+="<td>"+"present"+"</td>"
+						ans+="<td>"+"Présent"+"</td>"
+						abs=true
 					} else {
 						ans+="<td>"+"Absent"+"</td>"
+						abs=false
 					}
-				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' >Modifier</button></td>"	
+				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>Modifier</button></td>"	
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"	
@@ -113,8 +116,21 @@ function affichePresences(eleves){
 function presenceHandler() {
 		var seance_id = $(this).attr('seance_id') ;
 		var eleve_id = $(this).attr('eleve_id') ;
-		var myurl = '<?=site_url()?>/seances/setAbscence/'+seance_id+'/'+eleve_id+'/'+true;
-		alert(myurl);
+		var abs = $(this).attr('abs') ;
+		var myurl = '<?=site_url()?>/seances/setAbsence/'+seance_id+'/'+eleve_id+'/'+abs;
+		var that=$(this)
+		$.ajax({
+			url:myurl 
+		}).done(function(data) {
+			if (!data.logged) window.location.reload()
+			if (abs==="true") {
+				that.attr('abs',false)
+				that.parent('td').prev('td').html('Absent')
+			} else {
+				that.attr('abs',true)
+				that.parent('td').prev('td').html('Présent')
+			}
+		})
 	}
 
 function dateSelectorHandler(){
