@@ -107,12 +107,15 @@ function dateSelectorHandler(){
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
+				$("#validerSeance button").unbind( "click" );
 				$("#validerSeance button").click(function(){
 					$.ajax({
 						url:'<?=site_url()?>/seances/valider/'+seance_id
 					}).done(function(){
 						$("#validerSeance button").prop("disabled", true);
 						$("#validerSeance button").addClass("unactivated");	
+						that.addClass("validee");
+						that.removeClass("nonvalidee");
 					})
 				})
 			} else {

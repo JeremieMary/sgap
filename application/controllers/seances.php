@@ -69,4 +69,6 @@ class Seances extends CI_Controller {
 		$this->load->view('templates/json', $data);
 	}
 
+	
+
 }
