@@ -103,7 +103,7 @@ function affichePresences(eleves){
 					} else {
 						ans+="<td>"+"Absent"+"</td>"
 					}
-				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' >Modifier</button></td>"	
+				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' >Modifier</button></td>"	
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"	
@@ -111,7 +111,10 @@ function affichePresences(eleves){
 	}
 
 function presenceHandler() {
-		alert( $(this).attr('seance_id') );
+		var seance_id = $(this).attr('seance_id') ;
+		var eleve_id = $(this).attr('eleve_id') ;
+		var myurl = '<?=site_url()?>/seances/setAbscence/'+seance_id+'/'+eleve_id+'/'+true;
+		alert(myurl);
 	}
 
 function dateSelectorHandler(){
