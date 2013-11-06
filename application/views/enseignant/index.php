@@ -93,19 +93,24 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th></th></tr></thead><tbody>"
 		var abs;
+		var abstxt;
+		var cla;
 		for(var i=0;i<eleves.length;++i) {
-				ans+= "<tr>"
+				if (eleves[i].absent===null) {
+					cla=""
+					abstxt="Présent"
+					abs=true
+				} else {
+					cla="class='absent'"
+					abstxt="Absent"
+					abs=false
+				}
+				ans+= "<tr "+cla+">"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
-				if (eleves[i].absent===null) {
-						ans+="<td>"+"Présent"+"</td>"
-						abs=true
-					} else {
-						ans+="<td>"+"Absent"+"</td>"
-						abs=false
-					}
+				ans+= "<td>"+abstxt+"</td>"
 				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>Modifier</button></td>"	
 				ans+="</tr>" 
 			}
@@ -126,9 +131,11 @@ function presenceHandler() {
 			if (abs==="true") {
 				that.attr('abs',false)
 				that.parent('td').prev('td').html('Absent')
+				that.closest('tr').addClass('absent')
 			} else {
 				that.attr('abs',true)
 				that.parent('td').prev('td').html('Présent')
+				that.closest('tr').removeClass('absent')
 			}
 		})
 	}
@@ -145,6 +152,7 @@ function dateSelectorHandler(){
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
+			$("#liste_presence table.tablesorter").tablesorter();
 			$("#liste_presence button").click(presenceHandler)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
