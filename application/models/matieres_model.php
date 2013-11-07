@@ -30,7 +30,7 @@ class Matieres_model extends CI_Model {
 		//Ajouter des vérifications de cohérence ? 
 		$matiere['actif']=1;
 		$dup ='  ON DUPLICATE KEY UPDATE';
-		$fieldsToUpdate = array('type','niveau','places','actif' );
+		$fieldsToUpdate = array('type','niveau','places','actif','salle' );
 		foreach ( $fieldsToUpdate as $champ ) $dup .= " `$champ`=VALUES(`$champ`)," ;
 		$dup = rtrim($dup, ",");
 		$dup .= ';';
@@ -67,8 +67,8 @@ class Matieres_model extends CI_Model {
 		$dbnoms = array();
 		foreach( $allmatieres as $matiere ){
 			$nom = $row['nom'];
-			array_push( $dbnomss, $nom );
-			if ( ! in_array( $first, $noms ) ) {
+			array_push( $dbnoms, $nom );
+			if ( ! in_array( $nom, $dbnoms ) ) {
 				array_push( $data['desactive'], $matiere );
 			}
 		}

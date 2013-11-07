@@ -12,15 +12,6 @@ class Users_model extends CI_Model {
 		return ($query->num_rows() == 1 ); 
 	}
 	
-	function getAllSalles()
-	{
-		$this->db->distinct();
-		$this->db->select('classe AS salle');
-		$this->db->from('users');
-		$query=$this->db->get();
-		$res=$query->result_array();
-		return($res);	
-	}
 	
 	function getAllProfs()
 	{

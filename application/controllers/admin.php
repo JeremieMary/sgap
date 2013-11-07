@@ -27,7 +27,7 @@ class Admin extends CI_Controller {
 		$data['matieres'] = $this->matieres_model->getAll();
 		$data['cycles']   = $this->cycles_model->getAll();
 		$data['profs']    = $this->users_model->getAllProfs();
-		$data['salles']   = $this->users_model->getAllSalles();
+		$data['salles']   = $this->accompagnement_model->getAllSalles();
 		$data['accompagnement']   = $this->accompagnement_model->getAllActiveHumanReadable();
 		$this->load->view('templates/header', $data);
 		$this->load->view('admin/index', $data);

@@ -22,10 +22,12 @@ class Seances_model extends CI_Model {
 	function getIdsAndDates($cycle_id, $matiere_id)
 	{
 		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
-		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee');
+		// ,'accompagnement.actif'=>1
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire');
 		$this->db->from('seances');
 		$this->db->where($accompagnement);
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
@@ -34,7 +36,7 @@ class Seances_model extends CI_Model {
 	
 	function getPresences($seance_id)
 	{
-		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, seances.id AS seance_id');
+		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, seances.id AS seance_id, inscriptions.commentaire AS commentaire, inscriptions.accompagnement_id' );
 		$this->db->from('inscriptions');
 		$this->db->where(array('seances.id'=>$seance_id));
 		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');

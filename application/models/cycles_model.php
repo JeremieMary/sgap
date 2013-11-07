@@ -31,7 +31,7 @@ class Cycles_model extends CI_Model {
 		//Ajouter des vérifications de cohérence ? 
 		$cycle['actif']=1;
 		$dup ='  ON DUPLICATE KEY UPDATE';
-		$fieldsToUpdate = array('dates','actif' );
+		$fieldsToUpdate = array('dates','actif','horaire' );
 		foreach ( $fieldsToUpdate as $champ ) $dup .= " `$champ`=VALUES(`$champ`)," ;
 		$dup = rtrim($dup, ",");
 		$dup .= ';';
@@ -43,8 +43,9 @@ class Cycles_model extends CI_Model {
 	
 	private function formatForDB($cycle) {
 		$arr = array_values($cycle);
+		$horaire = array_shift($arr);
 		$arr = array_diff($arr, array('',' '));
-		return ( array( 'debut'=>reset($cycle), 'dates'=>serialize($arr) ) );
+		return ( array( 'horaire'=>$horaire,'debut'=>reset($arr), 'dates'=>serialize($arr) ) );
 	}
 	
 	function commitArray($tab)
@@ -73,14 +74,14 @@ class Cycles_model extends CI_Model {
 		$allcycles= $query->result_array();
 		$dbdebuts = array();
 		foreach( $allcycles as $cycle ){
-			$first = reset($cycle);
+			$first = array_slice($cycle, 1, 1, true);
 			array_push( $dbdebuts, $first );
 			if ( ! in_array( $first, $debuts ) ) {
 				array_push( $data['desactive'], $cycle );
 			}
 		}
 		foreach( $tab as $cycle ){
-			$first = reset($cycle);
+			 $first = array_slice($cycle, 1, 1, true); 
 			if (  in_array( $first, $dbdebuts ) ) { 
 				array_push( $data['modifications'], $cycle );
 			} else {

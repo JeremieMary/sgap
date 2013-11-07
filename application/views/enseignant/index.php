@@ -1,3 +1,8 @@
+<? 
+if ($this->session->userdata['profil']>3){
+	echo anchor('admin','Utiliser la vue Administrateur');
+}
+?>
 <h2>Sélection du cycle et de la matière</h2>
 <div class="cycles">
 <ul>
@@ -93,7 +98,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire (commun à toutes les séances)</th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -110,11 +115,13 @@ function affichePresences(eleves){
 				ans+= "<tr "+cla+">"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
-				ans+= "<td>"+abstxt+"</td>"
-				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>Modifier</button></td>"	
+				//ans+= "<td>"+abstxt+"</td>"
+				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"	
+				ans+= "<td><input type='text' value='"+eleves[i].commentaire+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
 				ans+="</tr>" 
 			}
-		ans+="</tbody></table>"	
+		ans+="</tbody></table>"
+		ans+='<button>Sauver</button>'	
 		return(ans)
 	}
 
@@ -130,15 +137,21 @@ function presenceHandler() {
 			if (!data.logged) window.location.reload()
 			if (abs==="true") {
 				that.attr('abs',false)
-				that.parent('td').prev('td').html('Absent')
+				that.html('Absent')
+				//that.parent('td').prev('td').html('Absent')
 				that.closest('tr').addClass('absent')
 			} else {
 				that.attr('abs',true)
-				that.parent('td').prev('td').html('Présent')
+				that.html('Présent')
+				//that.parent('td').prev('td').html('Présent')
 				that.closest('tr').removeClass('absent')
 			}
 		})
 	}
+	
+function saveCommentaire(){
+	alert( $(this).attr('eleve_id') )
+}	
 
 function dateSelectorHandler(){
 	$("#datesSelector ul li").click(function(){
@@ -152,8 +165,9 @@ function dateSelectorHandler(){
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
-			$("#liste_presence table.tablesorter").tablesorter();
-			$("#liste_presence button").click(presenceHandler)
+			$("#liste_presence table.tablesorter").tablesorter()
+			$("#liste_presence table button").click(presenceHandler)
+			$("#liste_presence input.commentaire").change(saveCommentaire)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
@@ -197,16 +211,6 @@ function activateSuscribe(){
 			$("#validerSeance button").addClass("unactivated");	
 			$("#liste_presence").html("");
 		});
-		
-		/*
-		myurl2 = '<?=site_url()?>/inscription/getInscrits/'+cycle_id+'/'+matiere_id;
-		$.ajax({
-			url:myurl2, 
-			context: document.body 
-		}).done(function(data) {
-			if (!data.logged) window.location.reload()
-			$(".inscrits").html(JSON.stringify(data.inscrits))
-		}); */
 		
 		myurl3 = '<?=site_url()?>/seances/getIdsAndDates/'+cycle_id+'/'+matiere_id;
 		$.ajax({
