@@ -26,6 +26,17 @@ class Cycles_model extends CI_Model {
 		return(unserialize($cycle['dates']));
 	}
 	
+	function getDatesAndHoraires($cycles_id)
+	{
+		$this->db-> select('dates, horaire');
+		$this->db-> limit(1);
+		$this->db-> where(array('id'=>$cycles_id));
+		$this->db-> from('cycles');
+		$query=$this->db->get();
+		$cycle=$query->row_array();
+		return(array( 'horaire'=>$cycle['horaire'],'dates'=>unserialize($cycle['dates'])));
+	}
+	
 	function commitCycle( $cycle )
 	{
 		//Ajouter des vérifications de cohérence ? 

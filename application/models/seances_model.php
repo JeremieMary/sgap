@@ -23,7 +23,7 @@ class Seances_model extends CI_Model {
 	{
 		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
 		// ,'accompagnement.actif'=>1
-		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire');
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id');
 		$this->db->from('seances');
 		$this->db->where($accompagnement);
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
@@ -64,6 +64,13 @@ class Seances_model extends CI_Model {
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
+	}
+	
+	function setCommentaire($accompagnement_id, $eleve_id, $commentaire)
+	{
+		$this->db->where(array('accompagnement_id'=>$accompagnement_id, 'eleve_id'=>$eleve_id));
+		$this->db->update('inscriptions', array("commentaire"=>$commentaire) );
+		return(true);
 	}
 	
 }

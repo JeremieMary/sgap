@@ -19,16 +19,23 @@ class Accompagnement extends CI_Controller {
 	}
 
 	public function creer() {
-		$cycle_id=$this->input->post('cycle_id');
-		$matiere_id=$this->input->post('matiere_id');
-		$enseignant_id=$this->input->post('enseignant_id');
+		$cycle_id=$this->input->post('cycle_id',TRUE);
+		$matiere_id=$this->input->post('matiere_id',TRUE);
+		$enseignant_id=$this->input->post('enseignant_id',TRUE);
 		$salle=$this->input->post('salle');
 		$this->accompagnement_model->creer($cycle_id,$matiere_id,$enseignant_id,$salle);
 		$this->session->set_flashdata('messages', "<p>Accompagnement créé.</p>" );
 		redirect('admin/');
 	}
 	
-	
+	public function setCommentaire($id){
+		$commentaire=$this->input->post('commentaire',TRUE);
+		$success=$this->accompagnement_model->setCommentaire($id, $commentaire);
+		$json['logged']=true;
+		$json['success']=$success;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);	
+	}
 	
 	public function supprimer($id)
 	{

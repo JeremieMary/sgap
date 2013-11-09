@@ -30,6 +30,7 @@ if ($this->session->userdata['profil']>3){
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 <li> Dates : <span id='dates'></span> </li>
 <li> Salle : <span id='salle'></span> </li>
+<li> Horaire : <span id='horaire'></span> </li>
 </ul>
 </div>
 
@@ -48,11 +49,18 @@ if ($this->session->userdata['profil']>3){
 
 <h2>Séances</h2>
 
+
 <h3>Dates des séances</h3>
 <div id='datesSelector'>
 </div>
 
 <div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
+
+<h3>Commentaire général</h3>
+<p>Commun à tous les inscrits.</p>
+<div id='AccompagnementCommentaire'>
+</div>
+	
 
 <h3>Présences</h3>
 <div class="presence">
@@ -98,7 +106,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire (commun à toutes les séances)</th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances)</th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -116,8 +124,9 @@ function affichePresences(eleves){
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
 				//ans+= "<td>"+abstxt+"</td>"
-				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"	
-				ans+= "<td><input type='text' value='"+eleves[i].commentaire+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
+				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
+				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
+				ans+= "<td><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"
@@ -149,8 +158,18 @@ function presenceHandler() {
 		})
 	}
 	
-function saveCommentaire(){
-	alert( $(this).attr('eleve_id') )
+function setCommentaire(){
+	var eleve_id = $(this).attr('eleve_id') 
+	var accompagnement_id = $(this).attr('accompagnement_id') 
+	var comment = {commentaire:$(this).val()}
+	var myurl = '<?=site_url()?>/seances/setCommentaire/'+accompagnement_id+'/'+eleve_id;
+	$.ajax({
+		url:myurl,
+		type: "POST",
+		data: comment
+	}).done(function(data) {
+		if (!data.logged) window.location.reload() 
+	})
 }	
 
 function dateSelectorHandler(){
@@ -167,7 +186,7 @@ function dateSelectorHandler(){
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
 			$("#liste_presence table button").click(presenceHandler)
-			$("#liste_presence input.commentaire").change(saveCommentaire)
+			$("#liste_presence input.commentaire").change(setCommentaire)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
@@ -192,6 +211,27 @@ function dateSelectorHandler(){
 	$("#datesSelector ul li.nonvalidee:first").trigger('click')
 }
 
+
+function commentaireGeneralHandler(){
+	var accompagnement_id = $(this).attr('accompagnement_id') 
+	var comment = {commentaire:$(this).val()}
+	var myurl = '<?=site_url()?>/accompagnement/setCommentaire/'+accompagnement_id;
+	$.ajax({
+		url:myurl,
+		type: "POST",
+		data: comment
+	}).done(function(data) {
+		if (!data.logged) window.location.reload() 
+	})
+}
+
+function commentaireGeneral(accompagnement_id,com){
+	if (accompagnement_id=='') return('');
+	com = com.replace(/'/g, '&#39;');
+	ans = "<input type='text' id='submitCommentaireGeneral' accompagnement_id="+accompagnement_id+"  value='"+com+"'/>"
+	return ans
+}
+
 function activateSuscribe(){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
 		//$('#inscriptionForm button[name="inscription"]').prop("disabled", false);;
@@ -206,10 +246,13 @@ function activateSuscribe(){
 			$('#dates').html(data.dates.join(', '));
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
+			$('#horaire').html(data.horaire);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
 			$("#validerSeance button").prop("disabled", true);
 			$("#validerSeance button").addClass("unactivated");	
 			$("#liste_presence").html("");
+			$("#AccompagnementCommentaire").html(commentaireGeneral(data.accompagnement_id,data.commentaire))
+			$("#submitCommentaireGeneral").change(commentaireGeneralHandler)
 		});
 		
 		myurl3 = '<?=site_url()?>/seances/getIdsAndDates/'+cycle_id+'/'+matiere_id;

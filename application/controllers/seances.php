@@ -71,11 +71,19 @@ class Seances extends CI_Controller {
 
 	public function setAbsence($seance_id, $eleve_id, $abs){
 		$this->required(2);
-	
+		//TODO
 		$json['logged']=true;
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);
 	}
 	
-
+	public function setCommentaire($accompagnement_id, $eleve_id){
+		$this->required(2);
+		$commentaire=$this->input->post('commentaire',TRUE);
+		$success=$this->seances_model->setCommentaire($accompagnement_id, $eleve_id, $commentaire);
+		$json['success']=$success;
+		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);
+	}
 }
