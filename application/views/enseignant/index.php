@@ -1,8 +1,8 @@
-<? 
-if ($this->session->userdata['profil']>3){
-	echo anchor('admin','Utiliser la vue Administrateur');
-}
-?>
+<?  if ($this->session->userdata['profil']>3){ ?>
+	<div id="navlinks">
+<?= anchor('admin','Utiliser la vue Administrateur'); ?>
+	</div>
+<? } ?>
 <h2>Sélection du cycle et de la matière</h2>
 <div class="cycles">
 <ul>
@@ -68,6 +68,9 @@ if ($this->session->userdata['profil']>3){
 	<div id='liste_presence'></div>
 </div>
 
+<h3>Liste des élèves sans inscription pour ce cycle</h3>
+<div id="nonInscrits">
+</div>
 
 <script type='text/javascript'>
 var accompagnement=<?=json_encode( $accompagnement )?>	
@@ -267,6 +270,18 @@ function activateSuscribe(){
 			
 	}
 }
+
+function remplirListeDesNonInscrits(cycle_id){
+	myurl = '<?=site_url()?>/inscription/getNonInscrits/'+cycle_id;
+	$.ajax({
+		url:myurl, 
+		context: document.body 
+	}).done(function(data) {
+		if (!data.success) window.location.reload()
+		$('#nonInscrits').html(JSON.stringify(data.liste))
+	})
+}
+
 	
 $(document).ready(function() {
 		
@@ -276,6 +291,7 @@ $(document).ready(function() {
 		var cycle_id=$(this).attr('name')
 		$('#inscriptionForm input[name="cycle_id"]').val(cycle_id)
 		unactivateMatieres(cycle_id)
+		remplirListeDesNonInscrits(cycle_id)
 		activateSuscribe()
 	})
 	
@@ -287,6 +303,7 @@ $(document).ready(function() {
 		unactivateCycles(matiere_id)
 		activateSuscribe()
 	})
+	
 	
 	
 });

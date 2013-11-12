@@ -4,7 +4,16 @@
 	background:#222;
 	text-align:right;
 	color:#eee;
-}		
+	position:fixed; 
+	width:100%;
+	height:1.5em;
+	right: 0px;
+	top: 0px;
+}	
+#navlinks {
+	margin-top:2.5em;
+}
+	
 #top a {
 	color:#eee;
 	text-decoration:none;

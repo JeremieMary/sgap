@@ -26,6 +26,27 @@ class Inscription extends CI_Controller {
 		return(true);
 	}
 
+	public function required($level){
+		if ( (!isset($this->session->userdata['profil']) )or (!($this->session->userdata['profil']>=$level))){
+			$json['logged']=true;
+			$json['success']=false;
+			$data['json']=$json;
+			$this->load->view('templates/json', $data);	
+		} else {
+			return(true);			
+		}
+	}
+	
+	public function getNonInscrits($cycle_id){
+		$this->required(2);
+		$json['liste']=$this->inscriptions_model->getNonInscrits($cycle_id);
+		$json['cycle_id']=$cycle_id;
+		$json['logged']=true;
+		$json['success']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);		
+	}
+
 	public function getInscrits($cycle_id,$matiere_id) {
 		if ( $this->session->userdata['profil'] == 1 ) return(false);
 		if ($this->accompagnement_model->isActif($cycle_id,$matiere_id)){

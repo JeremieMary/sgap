@@ -1,7 +1,10 @@
-<?php 
-/* Admin index	view */
-?>
-<?=anchor('enseignant','Utiliser la vue Enseignant')?>
+<?  if ($this->session->userdata['profil']>3){ ?>
+	<div id="navlinks">
+		<?=anchor('enseignant','Utiliser la vue Enseignant')?>
+	</div>
+<? } ?>
+
+
 
 <h2>Importation de données</h2>
 <div id='importation'>
