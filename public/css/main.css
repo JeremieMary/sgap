@@ -241,5 +241,19 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 background-color: #8dbdd8;
 }	
 	
-	
-	
+#InfosEleves{
+	position:fixed;
+	top:3em;
+	right:2em;
+	width:50%;
+	min-height:10em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+	padding:1em;
+	background:#fbf8e9;
+	opacity:0; 
+}	
+#InfosEleves .closeInfos {
+	float:right;
+	margin-top:-0.8em;
+}

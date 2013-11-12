@@ -64,7 +64,7 @@
 
 <h3>Présences</h3>
 <div class="presence">
-	<div id='date_seance'></span>
+	<div id='date_seance'></span></div>
 	<div id='liste_presence'></div>
 </div>
 
@@ -278,7 +278,11 @@ function activateSuscribe(){
 
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
-	$("#InfosEleves").html(eleve_id)
+	$("#InfosEleves").css('opacity',0.8)
+	infos=''
+	infos+='<span class="closeInfos" onclick="$(\'#InfosEleves\').fadeTo(\'opacity\',0)">Fermer</span>'
+	infos+=eleve_id
+	$("#InfosEleves").html(infos)
 }
 
 function afficheNonInscrits(eleves){
