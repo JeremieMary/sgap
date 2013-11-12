@@ -46,6 +46,7 @@ class Seances extends CI_Controller {
 	{
 		$this->required(2);
 		$this->load->model('inscriptions_model');
+		$this->load->helper(array('datefr'));
 		$data['historiqueAccompagnements'] = $this->inscriptions_model->getHistory($eleve_id);
 		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id);
 		$this->load->view('eleve/infos', $data);

@@ -136,8 +136,9 @@ function affichePresences(eleves){
 					abs=false
 				}
 				ans+= "<tr "+cla+">"
-				ans+= "<td>"+eleves[i].nom+ "</td>"
-				ans+= "<td>"+eleves[i].prenom+"</td>"
+				ans+= "<td>"+eleves[i].nom.toUpperCase()+ "</td>"
+				var prenom = eleves[i].prenom[0].toUpperCase() + eleves[i].prenom.substring(1);
+				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
 				ans+= "<td><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
