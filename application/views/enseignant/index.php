@@ -72,6 +72,9 @@
 <div id="nonInscrits">
 </div>
 
+<div id="InfosEleves">
+</div>
+
 <script type='text/javascript'>
 var accompagnement=<?=json_encode( $accompagnement )?>	
 
@@ -109,7 +112,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances)</th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances)</th><th></th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -127,9 +130,10 @@ function affichePresences(eleves){
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
 				//ans+= "<td>"+abstxt+"</td>"
-				ans+= "<td><button seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
+				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
 				ans+= "<td><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
+				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"
@@ -188,7 +192,8 @@ function dateSelectorHandler(){
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
-			$("#liste_presence table button").click(presenceHandler)
+			$('#liste_presence .infosEleves').click(infosEleve)
+			$("#liste_presence .presenceButton").click(presenceHandler)
 			$("#liste_presence input.commentaire").change(setCommentaire)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
@@ -271,6 +276,25 @@ function activateSuscribe(){
 	}
 }
 
+function infosEleve(){
+	var eleve_id = $(this).attr('eleve_id')
+	$("#InfosEleves").html(eleve_id)
+}
+
+function afficheNonInscrits(eleves){
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th></th></tr></thead><tbody>"
+		for(var i=0;i<eleves.length;++i) {
+				ans+= "<tr>"
+				ans+= "<td>"+eleves[i].nom+ "</td>"
+				ans+= "<td>"+eleves[i].prenom+"</td>"
+				ans+= "<td>"+eleves[i].classe+"</td>"
+				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
+				ans+="</tr>" 
+			}
+		ans+="</tbody></table>"
+		return ans 
+	}
+
 function remplirListeDesNonInscrits(cycle_id){
 	myurl = '<?=site_url()?>/inscription/getNonInscrits/'+cycle_id;
 	$.ajax({
@@ -278,7 +302,9 @@ function remplirListeDesNonInscrits(cycle_id){
 		context: document.body 
 	}).done(function(data) {
 		if (!data.success) window.location.reload()
-		$('#nonInscrits').html(JSON.stringify(data.liste))
+		$('#nonInscrits').html(afficheNonInscrits(data.liste))
+		$('#nonInscrits table').tablesorter()
+		$('#nonInscrits .infosEleves').click(infosEleve)
 	})
 }
 
