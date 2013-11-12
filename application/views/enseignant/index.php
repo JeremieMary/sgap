@@ -73,6 +73,8 @@
 </div>
 
 <div id="InfosEleves">
+	<span class="closeInfos" onclick="$('#InfosEleves').fadeTo('opacity',0)">Fermer</span>
+	<span class="text"></span> 
 </div>
 
 <script type='text/javascript'>
@@ -284,10 +286,14 @@ function activateSuscribe(){
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
 	$("#InfosEleves").css('opacity',0.8)
-	infos=''
-	infos+='<span class="closeInfos" onclick="$(\'#InfosEleves\').fadeTo(\'opacity\',0)">Fermer</span>'
-	infos+=eleve_id
-	$("#InfosEleves").html(infos)
+	var myurl = '<?=site_url()?>/seances/getPresencesOf/'+eleve_id;
+	$.ajax({
+		url:myurl,
+	}).done(function(data) {
+		if (!data.logged) window.location.reload() 
+		$("#InfosEleves .text").html(JSON.stringify(data))
+	})
+	
 }
 
 function afficheNonInscrits(eleves){

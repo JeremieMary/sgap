@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Ven 01 Novembre 2013 à 17:33
+-- Généré le : Mar 12 Novembre 2013 à 15:16
 -- Version du serveur: 5.1.44
 -- Version de PHP: 5.3.2
 
@@ -28,16 +28,40 @@ CREATE TABLE IF NOT EXISTS `accompagnement` (
   `enseignant_id` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT '1',
   `commentaire` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `matiere_id` (`matiere_id`,`cycle_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Contenu de la table `accompagnement`
 --
 
-INSERT INTO `accompagnement` VALUES(34, 1, 96, ' 1			', 3, 1, '');
-INSERT INTO `accompagnement` VALUES(32, 2, 97, ' 2			', 3, 1, '');
-INSERT INTO `accompagnement` VALUES(37, 3, 98, ' 4			', 5, 1, '');
+INSERT INTO `accompagnement` VALUES(40, 1, 110, ' C	', 2, 1, 'Commentaire commun à tous les élèves pour cet accompagnement ');
+INSERT INTO `accompagnement` VALUES(39, 2, 110, ' C	', 3, 1, '');
+INSERT INTO `accompagnement` VALUES(38, 1, 111, ' B			', 2, 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ci_sessions`
+--
+
+DROP TABLE IF EXISTS `ci_sessions`;
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(45) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` text NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `ci_sessions`
+--
+
+INSERT INTO `ci_sessions` VALUES('b43aaf065c3f9ce797e8fdf7c9a88399', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31', 1384265745, 'a:10:{s:9:"user_data";s:0:"";s:2:"id";s:1:"4";s:3:"nom";s:5:"admin";s:6:"prenom";s:5:"admin";s:5:"login";s:5:"admin";s:6:"classe";N;s:6:"profil";s:1:"4";s:6:"groupe";N;s:4:"mail";N;s:11:"mail_parent";N;}');
 
 -- --------------------------------------------------------
 
@@ -51,18 +75,19 @@ CREATE TABLE IF NOT EXISTS `cycles` (
   `debut` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `dates` text COLLATE utf8_unicode_ci,
   `actif` tinyint(1) NOT NULL,
+  `horaire` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `debut` (`debut`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=100 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=112 ;
 
 --
 -- Contenu de la table `cycles`
 --
 
-INSERT INTO `cycles` VALUES(96, '02/03/2013', 'a:4:{i:0;s:10:"02/03/2013";i:1;s:10:"03/09/2013";i:2;s:10:"07/03/2014";i:3;s:10:"08/09/2014";}', 1);
-INSERT INTO `cycles` VALUES(97, '03/03/2013', 'a:3:{i:0;s:10:"03/03/2013";i:1;s:10:"04/03/2013";i:2;s:10:"05/03/2013";}', 1);
-INSERT INTO `cycles` VALUES(98, '10/04/2013', 'a:3:{i:0;s:10:"10/04/2013";i:1;s:10:"17/04/2013";i:2;s:10:"24/04/2013";}', 1);
-INSERT INTO `cycles` VALUES(99, '11/04/2013', 'a:3:{i:0;s:10:"11/04/2013";i:1;s:10:"18/04/2013";i:2;s:10:"25/04/2013";}', 1);
+INSERT INTO `cycles` VALUES(111, '11/04/2013', 'a:3:{i:0;s:10:"11/04/2013";i:1;s:10:"18/04/2013";i:2;s:10:"25/04/2013";}', 1, '09h-10h');
+INSERT INTO `cycles` VALUES(110, '10/04/2013', 'a:3:{i:0;s:10:"10/04/2013";i:1;s:10:"17/04/2013";i:2;s:10:"24/04/2013";}', 1, '17h-18h');
+INSERT INTO `cycles` VALUES(108, '02/03/2013', 'a:4:{i:0;s:10:"02/03/2013";i:1;s:10:"03/09/2013";i:2;s:10:"07/03/2014";i:3;s:10:"08/09/2014";}', 1, '15h-16h');
+INSERT INTO `cycles` VALUES(109, '03/03/2013', 'a:3:{i:0;s:10:"03/03/2013";i:1;s:10:"04/03/2013";i:2;s:10:"05/03/2013";}', 1, '16h-17h');
 
 -- --------------------------------------------------------
 
@@ -77,9 +102,10 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   `accompagnement_id` int(11) NOT NULL,
   `commentaire` text NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `eleve_id_2` (`eleve_id`,`accompagnement_id`),
   KEY `eleve_id` (`eleve_id`),
   KEY `accompagnement_id` (`accompagnement_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- Contenu de la table `inscriptions`
@@ -87,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
 
 INSERT INTO `inscriptions` VALUES(15, 4, 34, '');
 INSERT INTO `inscriptions` VALUES(14, 1, 34, '');
+INSERT INTO `inscriptions` VALUES(16, 4, 40, 'boo');
 
 -- --------------------------------------------------------
 
@@ -102,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `matieres` (
   `niveau` varchar(16) NOT NULL,
   `places` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL,
+  `salle` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nom` (`nom`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
@@ -110,11 +138,11 @@ CREATE TABLE IF NOT EXISTS `matieres` (
 -- Contenu de la table `matieres`
 --
 
-INSERT INTO `matieres` VALUES(1, 'Français', 1, 'yellow', 14, 1);
-INSERT INTO `matieres` VALUES(2, 'Histoire-Geo', 2, 'red', 14, 1);
-INSERT INTO `matieres` VALUES(3, 'Math', 1, 'violet', 14, 1);
-INSERT INTO `matieres` VALUES(4, 'Anglais', 2, 'blue', 13, 1);
-INSERT INTO `matieres` VALUES(5, 'Ballon', 1, 'indigo', 20, 1);
+INSERT INTO `matieres` VALUES(1, 'Français', 1, 'green', 15, 1, 'B');
+INSERT INTO `matieres` VALUES(2, 'Histoire-Geo', 1, 'indigo', 19, 1, 'A');
+INSERT INTO `matieres` VALUES(3, 'Math', 1, 'green', 13, 1, 'C');
+INSERT INTO `matieres` VALUES(4, 'Anglais', 1, 'green', 12, 1, 'A');
+INSERT INTO `matieres` VALUES(5, 'Ballon', 2, 'indigo', 15, 1, 'B');
 
 -- --------------------------------------------------------
 
@@ -155,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `seances` (
   PRIMARY KEY (`id`),
   KEY `enseignant_id` (`enseignant_id`),
   KEY `accompagnement_id` (`accompagnement_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
 --
 -- Contenu de la table `seances`
@@ -172,9 +200,18 @@ INSERT INTO `seances` VALUES(34, 37, 5, '2013-04-24 00:00:00', 0);
 INSERT INTO `seances` VALUES(33, 37, 5, '2013-04-17 00:00:00', 0);
 INSERT INTO `seances` VALUES(32, 37, 5, '2013-04-10 00:00:00', 0);
 INSERT INTO `seances` VALUES(25, 34, 3, '2013-03-02 00:00:00', 1);
-INSERT INTO `seances` VALUES(26, 34, 3, '2013-09-03 00:00:00', 0);
+INSERT INTO `seances` VALUES(26, 34, 3, '2013-09-03 00:00:00', 1);
 INSERT INTO `seances` VALUES(27, 34, 3, '2014-03-07 00:00:00', 0);
 INSERT INTO `seances` VALUES(28, 34, 3, '2014-09-08 00:00:00', 0);
+INSERT INTO `seances` VALUES(35, 38, 2, '2013-04-11 00:00:00', 0);
+INSERT INTO `seances` VALUES(36, 38, 2, '2013-04-18 00:00:00', 0);
+INSERT INTO `seances` VALUES(37, 38, 2, '2013-04-25 00:00:00', 0);
+INSERT INTO `seances` VALUES(38, 39, 3, '2013-04-10 00:00:00', 0);
+INSERT INTO `seances` VALUES(39, 39, 3, '2013-04-17 00:00:00', 0);
+INSERT INTO `seances` VALUES(40, 39, 3, '2013-04-24 00:00:00', 0);
+INSERT INTO `seances` VALUES(41, 40, 2, '2013-04-10 00:00:00', 1);
+INSERT INTO `seances` VALUES(42, 40, 2, '2013-04-17 00:00:00', 0);
+INSERT INTO `seances` VALUES(43, 40, 2, '2013-04-24 00:00:00', 0);
 
 -- --------------------------------------------------------
 

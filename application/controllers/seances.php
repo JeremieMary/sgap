@@ -42,6 +42,17 @@ class Seances extends CI_Controller {
 		$this->load->view('templates/json', $data);
 	}
 
+	public function getPresencesOf($eleve_id)
+	{
+		$this->required(2);
+		//$presences=$this->seances_model->getPresences($seance_id);
+		//$json['presences']=$presences;
+		$json['eleve_id']=$eleve_id;
+		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);	
+	}
+
 	public function getPresences($seance_id)
 	{
 		$this->required(2);

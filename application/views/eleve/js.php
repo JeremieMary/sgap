@@ -23,47 +23,6 @@
 <li> Nombre de places : <span id='nbPlaces'></span> </li>
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 <li> Dates : <span id='dates'></span> </li>
-<li> Salle : <span id='salle'></span> </li>
-</ul>
-</div>
-
-
-<? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
-<input type='hidden' name='matiere_id' value=''>
-<input type='hidden' name='cycle_id' value=''>
-<button type='submit' name='inscription' disabled >inscription</button>
-</form>
-
-<h2>Liste des inscriptions courantes</h2>
-<div class="historique">
-<table class="bordered">
-	<thead>
-		<tr><th>Cycle</th><th>Matière</th></tr>
-	</thead>
-	<tbody>
-	<? foreach ($historiqueAccompagnements as $historique){?>
-		<tr><td>
-			<?=datefr($historique["cycle_debut"])?>
-		</td><td><?=$historique['matiere_nom']?></td></tr>
-	<?}?>
-	</tbody>
-</table>
-</div>
-
-<h2>Historique des séances</h2>
-<div class="historique">
-	<div class="historique">
-	<table class="bordered">
-		<thead>
-			<tr><th>Cycle</th><th>Matière</th></tr>
-		</thead>
-		<tbody>
-		
-		</tbody>
-	</table>
-	<? print_r($historiqueSeances) ?>
-</div>
-
 
 <script type='text/javascript'>
 var accompagnement=<?=json_encode( $accompagnement )?>	
