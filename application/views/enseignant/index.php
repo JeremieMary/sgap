@@ -103,9 +103,15 @@ function unactivateCycles(matiere_id){
 
 function display_dates(seances){
 	ret='<ul>'
+	var dayNames = ['Dimanche','Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
 	for(var i=0;i<seances.length;++i){
+		var d = new Date(seances[i].date)
+		var curr_date = d.getDate();
+		var curr_month = d.getMonth() + 1; //Les mois démarrent à 0
+		var curr_year = d.getFullYear();
+		var ds = dayNames[d.getDay()]+" "+curr_date + "/" + curr_month + "/" + curr_year
 		if (seances[i].validee==1) cl='validee'; else cl='nonvalidee';
-		ret+='<li seance_id='+seances[i].seance_id+' class='+cl+'>'+seances[i].date
+		ret+='<li seance_id='+seances[i].seance_id+' class='+cl+'>'+ ds
 	}
 	ret+='</ul>'
 	return(ret);
@@ -129,7 +135,6 @@ function affichePresences(eleves){
 				ans+= "<tr "+cla+">"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
-				//ans+= "<td>"+abstxt+"</td>"
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
 				ans+= "<td><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
@@ -288,7 +293,7 @@ function infosEleve(){
 function afficheNonInscrits(eleves){
 		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th></th></tr></thead><tbody>"
 		for(var i=0;i<eleves.length;++i) {
-				ans+= "<tr>"
+				ans+= "<tr eleve_id='"+eleves[i].eleve_id+"'>"
 				ans+= "<td>"+eleves[i].nom+ "</td>"
 				ans+= "<td>"+eleves[i].prenom+"</td>"
 				ans+= "<td>"+eleves[i].classe+"</td>"
