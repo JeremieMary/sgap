@@ -28,7 +28,7 @@
 <ul>
 <li> Nombre de places : <span id='nbPlaces'></span> </li>
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
-<li> Dates : <span id='dates'></span> </li>
+<!-- <li> Dates : <span id='dates'></span> </li> -->
 <li> Salle : <span id='salle'></span> </li>
 <li> Horaire : <span id='horaire'></span> </li>
 </ul>
@@ -47,7 +47,7 @@
 -->
 
 
-<h2>Séances</h2>
+<!-- <h2>Séances</h2> -->
 
 
 <h3>Dates des séances</h3>
@@ -256,7 +256,7 @@ function activateSuscribe(){
 			context: document.body 
 		}).done(function(data) {
 			$('#salle').html(data.salle);
-			$('#dates').html(data.dates.join(', '));
+			//$('#dates').html(data.dates.join(', '));
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			$('#horaire').html(data.horaire);

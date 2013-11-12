@@ -257,3 +257,9 @@ background-color: #8dbdd8;
 	float:right;
 	margin-top:-0.8em;
 }
+
+#submitCommentaireGeneral, #liste_presence input {
+	width:90%;
+	border: 1px solid #aaa;
+	color: #444;
+}
