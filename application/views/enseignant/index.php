@@ -74,6 +74,7 @@
 
 <div id="InfosEleves">
 	<span class="closeInfos" onclick="$('#InfosEleves').fadeTo('opacity',0)">Fermer</span>
+	<span class="name"></span>
 	<span class="text"></span> 
 </div>
 
@@ -286,12 +287,16 @@ function activateSuscribe(){
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
 	$("#InfosEleves").css('opacity',0.8)
-	var myurl = '<?=site_url()?>/seances/getPresencesOf/'+eleve_id;
+	var myurl = '<?=site_url()?>/seances/getInfosOf/'+eleve_id;
+	var tr = $(this).closest("tr");
+	var nom = tr.find('td:first-child').text()
+	var prenom = tr.find('td:nth-child(2)').text()
+	$("#InfosEleves .name").html('<h3>'+nom+' '+prenom+'</h3>')
 	$.ajax({
 		url:myurl,
 	}).done(function(data) {
-		if (!data.logged) window.location.reload() 
-		$("#InfosEleves .text").html(JSON.stringify(data))
+		//if (!data.logged) window.location.reload() 
+		$("#InfosEleves .text").html(data)
 	})
 	
 }
@@ -300,8 +305,9 @@ function afficheNonInscrits(eleves){
 		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th></th></tr></thead><tbody>"
 		for(var i=0;i<eleves.length;++i) {
 				ans+= "<tr eleve_id='"+eleves[i].eleve_id+"'>"
-				ans+= "<td>"+eleves[i].nom+ "</td>"
-				ans+= "<td>"+eleves[i].prenom+"</td>"
+				ans+= "<td>"+eleves[i].nom.toUpperCase()+ "</td>"
+				prenom = eleves[i].prenom[0].toUpperCase() + eleves[i].prenom.substring(1);
+				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td>"+eleves[i].classe+"</td>"
 				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
 				ans+="</tr>" 
