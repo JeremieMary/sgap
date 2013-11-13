@@ -42,6 +42,7 @@ class Seances_model extends CI_Model {
 		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
 		$this->db->join('presences', 'presences.seance_id = seances.id', 'left');
 		$this->db->join('users', 'users.id=inscriptions.eleve_id');
+		$this->db->order_by("nom", "asc");
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	

@@ -9,7 +9,13 @@ class Users_model extends CI_Model {
 	function login($login, $password)  
 	{
 		$query = $this -> db -> get_where( 'users', array('login'=> $login, 'passwd'=>$password ), 1 );
-		return ($query->num_rows() == 1 ); 
+		if ($query->num_rows() == 1 ) {
+			$this->db->where('login', $login);
+			$this->db->update('users', array("lastlogin"=>date('Y-m-d H:i:s') ) );
+			return(true);
+		} else {
+			return(false);
+		}
 	}
 	
 	

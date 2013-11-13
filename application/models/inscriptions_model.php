@@ -26,7 +26,8 @@ class Inscriptions_model extends CI_Model {
 		$this->db->from('users');
 		$this->db->where(array('profil'=>1));
 		$this->db->where_not_in(array('users.id'=>$inscrits));
-		$query=$this->db->get();
+		$this->db->order_by("nom", "asc");
+		$query=$this->db->get(); 
 		$res=$query->result_array();
 		return($res);	
 	}
