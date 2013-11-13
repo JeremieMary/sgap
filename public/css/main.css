@@ -263,3 +263,9 @@ background-color: #8dbdd8;
 	border: 1px solid #aaa;
 	color: #444;
 }
+#datesSelector {
+	width:15em;
+}
+#datesSelector li:hover {
+	background: #fbf8e9;
+}	

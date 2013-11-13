@@ -287,17 +287,23 @@ function activateSuscribe(){
 
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
-	$("#InfosEleves").css('opacity',0.8)
+	var opacity = $('#InfosEleves').css('opacity')
+	if ($('#InfosEleves').attr('eleve_id') == eleve_id && opacity>0.5 ) {
+		$('#InfosEleves').fadeTo('opacity',0)
+		return
+	}
+	$('#InfosEleves').css('opacity',0.8)
 	var myurl = '<?=site_url()?>/seances/getInfosOf/'+eleve_id;
 	var tr = $(this).closest("tr");
 	var nom = tr.find('td:first-child').text()
 	var prenom = tr.find('td:nth-child(2)').text()
-	$("#InfosEleves .name").html('<h3>'+nom+' '+prenom+'</h3>')
+	$('#InfosEleves').attr('eleve_id',eleve_id)
+	$('#InfosEleves .name').html('<h3>'+nom+' '+prenom+'</h3>')
 	$.ajax({
 		url:myurl,
 	}).done(function(data) {
 		//if (!data.logged) window.location.reload() 
-		$("#InfosEleves .text").html(data)
+		$('#InfosEleves .text').html(data)
 	})
 	
 }
