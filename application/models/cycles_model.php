@@ -7,7 +7,11 @@ class Cycles_model extends CI_Model {
 	}
 	
 	function getAll(){
-		$query = $this -> db -> get( 'cycles' );
+		//$query = $this -> db -> get( 'cycles' );
+		$this->db-> select('id, debut, dates, actif, horaire');
+		$this->db-> from('cycles');
+		$this->db->order_by("debut", "asc");
+		$query = $this->db->get();
 		$cycles = $query->result_array();
 		for ($i=0; $i<count($cycles); $i++) {
 			$cycles[$i]['dates'] = unserialize($cycles[$i]['dates']);

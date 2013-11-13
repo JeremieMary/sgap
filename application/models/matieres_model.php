@@ -7,7 +7,11 @@ class Matieres_model extends CI_Model {
 	}
 	
 	function getAll(){
-		$query = $this->db->get('matieres');
+		//$query = $this->db->get('matieres');
+		$this->db-> select('id, nom, salle, niveau');
+		$this->db-> from('matieres');
+		$this->db->order_by("nom", "asc");
+		$query = $this -> db -> get();
 		return($query->result_array()); 
 	}
 	
@@ -17,7 +21,6 @@ class Matieres_model extends CI_Model {
 		/*
 		$this->db-> select('id, nom, salle');
 		$this->db-> limit(1);
-		$this->db-> where(array('id'=>$matiere_id));
 		$this->db-> from('matieres');
 		$query = $this -> db -> get();*/
 		$query=$this->db->get_where('matieres',array('id'=>$matiere_id),1);
