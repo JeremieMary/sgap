@@ -9,8 +9,8 @@
 		<tr><td>
 			<?=datefr($historique["cycle_debut"])?>
 		</td><td><?=$historique['matiere_nom']?></td>
-		<td></td>
-		<td></td>
+		<td><?=$historique['commentaire_general']?></td>
+		<td><?=$historique['commentaire_perso']?></td>
 	</tr>
 	<?}?>
 	</tbody>

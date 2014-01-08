@@ -12,6 +12,17 @@ class Accompagnement_model extends CI_Model {
 		return ( $query->result_array() ); 
 	}
 	
+	function getAllHumanReadable()
+	{
+		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle, accompagnement.actif AS actif');
+		$this->db->from('accompagnement');
+		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
+		$this->db->join('users', 'users.id = accompagnement.enseignant_id');
+		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
+		$query=$this->db->get();	
+		return($query->result_array());
+	}
+	
 	function getAllActiveHumanReadable()
 	{
 		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle');
