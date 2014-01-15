@@ -35,7 +35,7 @@ class Inscriptions_model extends CI_Model {
 	
 	function getHistory($eleve_id)
 	{
-		$this->db->select('cycles.id AS cycle_id, cycles.debut AS cycle_debut, matieres.id AS matiere_id , matieres.nom AS matiere_nom');
+		$this->db->select('cycles.id AS cycle_id, cycles.debut AS cycle_debut, matieres.id AS matiere_id , matieres.nom AS matiere_nom, accompagnement.commentaire AS commentaire_general, inscriptions.commentaire AS commentaire_perso');
 		$this->db->from('inscriptions');
 		$this->db->where(array('eleve_id'=>$eleve_id));
 		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');

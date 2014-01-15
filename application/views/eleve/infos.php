@@ -9,8 +9,8 @@
 		<tr><td>
 			<?=datefr($historique["cycle_debut"])?>
 		</td><td><?=$historique['matiere_nom']?></td>
-		<td></td>
-		<td></td>
+		<td><?=$historique['commentaire_general']?></td>
+		<td><?=$historique['commentaire_perso']?></td>
 	</tr>
 	<?}?>
 	</tbody>
@@ -28,5 +28,11 @@
 		
 		</tbody>
 	</table>
-	<? print_r($historiqueSeances) ?>
+	<br/>
+	<table>
+	<? foreach ($historiqueSeances as $historique){?>
+		<tr><td><li><?=$historique['matiere_nom']?><br/>
+		<?=$historique['seance_date']?></td></tr>
+	<?}?>
+	</table>
 </div>

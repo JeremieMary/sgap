@@ -28,7 +28,8 @@ class Admin extends CI_Controller {
 		$data['cycles']   = $this->cycles_model->getAll();
 		$data['profs']    = $this->users_model->getAllProfs();
 		$data['salles']   = $this->accompagnement_model->getAllSalles();
-		$data['accompagnement']   = $this->accompagnement_model->getAllActiveHumanReadable();
+		#$data['accompagnement']   = $this->accompagnement_model->getAllActiveHumanReadable();
+		$data['accompagnement']   = $this->accompagnement_model->getAllHumanReadable();
 		$this->load->view('templates/header', $data);
 		$this->load->view('admin/index', $data);
 		$this->load->view('templates/footer');
@@ -126,9 +127,24 @@ class Admin extends CI_Controller {
 		redirect('admin');
 	}
 	
-	public function exportToCSV($type) {
-		//$this->load->helper('csv');
-		//echo array_to_csv($array);
+	public function exportToCSV() {
+		$this->load->model('rapports_model');
+		$report = $this->rapports_model->getListeElevesCSV();
+	
+		$this->load->dbutil();
+		$this->load->helper('download');
+		$new_report=$this->dbutil->csv_from_result($report, ";", "\n");	
+		force_download('listeEleves.csv', $new_report); 		
 	}
+
+	public function rapportEleves(){
+		$this->load->model('rapports_model');
+		$data['liste'] = $this->rapports_model->getListeElevesCSV();
+		
+		$this->load->view('templates/header',$data);
+		$this->load->view('admin/rapport',$data);
+		$this->load->view('templates/footer');
+	}
+
 
 }

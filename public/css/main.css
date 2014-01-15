@@ -376,3 +376,7 @@ background-color: #8dbdd8;
 	box-shadow: 1px 1px 12px #555;
 	margin-bottom:5%;
 }
+
+#rapports form{
+  display: inline;
+}	

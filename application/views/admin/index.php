@@ -82,7 +82,8 @@
 
 
 <div class="accompagnement">
-<h2>Liste des accompagnements actifs</h2>
+<h2>Liste des accompagnements </h2>
+<p><i> Note : restreindre uniquement aux actifs ?</i></p>
 <? if (count($accompagnement)>0) { ?>	
 <table class="bordered">
     <thead>
@@ -98,14 +99,18 @@
     </thead>
     <tbody>
             <?php foreach($accompagnement as $field){?>
-                <tr>
+                <tr <? if (!$field['actif']) echo 'class="unactivated"' ?> >
 					<td>
 						<?=datefr($field['cycle_debut'])?>
 					</td>
 					<td><?=trim($field['matiere'])?></td>
 					<td><?=trim(strtoupper($field['nom']))?> <?=trim($field['prenom'])?></td>
 					<td><?=trim($field['salle'])?></td>
-					<td><button accompagnement_id='<?=$field["id"]?>' class='inactivate'>Inactiver</button></td>
+					<? if ($field['actif']) { ?>
+						<td><button accompagnement_id='<?=$field["id"]?>' class='inactivate'>Inactiver</button></td>
+					<? } else { ?>
+						<td><button accompagnement_id='<?=$field["id"]?>' class='inactivate'>Réactiver</button></td>
+					<? } ?>
 					<td><button accompagnement_id='<?=$field["id"]?>' class='delete'>Supprimer</button></td>
                 </tr>
             <?php }?>
@@ -114,6 +119,24 @@
 </table>
 </div>
 <?}?>
+
+<h2>Création de rapports</h2> 
+<div id='rapports'> 
+<ul>
+<li> Liste des élèves 
+<?php echo form_open('admin/rapportEleves');?>
+<input type="submit" value="visualiser" />
+</form>
+
+<?php echo form_open('admin/rapportEleves/csv');?>
+<input type="submit" value="exporter le fichier csv" />
+</form>
+</li>
+<li> second rapport
+
+</ul>
+
+</div>
 
 
 <script type='text/javascript'>
