@@ -55,9 +55,34 @@ class Users_model extends CI_Model {
 		$this->db->where('login', $login);
 		$this->db->update('users', array("passwd"=>$passwd) ); 
 	}
+
+	function resetPassword($login) {
+		// On génère un mot de passe aléatoire
+		$password = '';
+		for ($i = 0; $i < 6; $i++) {
+			// On récupère une lettre aléatoire
+			$random = rand(97, 122);
+			// On ajoute la lettre au mot de passe
+			$password = $password . chr($random);
+		}
+		// On met à jour le mot de passe
+		$this->updatePassword($login, $password);
+		// On envoie le mail à l'utilisateur pour lui donner son mot de passe
+	}
 	
 	private function sendPasswordMail( $user ) {
-		
+		// On récupère le mot de passe et le mail de l'utilisateur
+		$this->db->select('mail, password');
+		$this->db->from('users');
+		$this->db->where( array('login'=> $user ) );
+		$this->db->limit(1);
+		$query=$this->db->get();
+		$user = $query->row_array();
+		$password = $user['password'];
+		$mail = $user['mail'];
+
+		// On envoie le mail
+		mail($mail, 'Réinitialisation de mot de passe', 'Votre nouveau mot de passe est : ' . $password);
 	}
 	
 	function commitUser( $user )
