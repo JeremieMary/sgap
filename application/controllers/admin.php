@@ -127,9 +127,24 @@ class Admin extends CI_Controller {
 		redirect('admin');
 	}
 	
-	public function exportToCSV($type) {
-		//$this->load->helper('csv');
-		//echo array_to_csv($array);
+	public function exportToCSV() {
+		$this->load->model('rapports_model');
+		$report = $this->rapports_model->getListeElevesCSV();
+	
+		$this->load->dbutil();
+		$this->load->helper('download');
+		$new_report=$this->dbutil->csv_from_result($report, ";", "\n");	
+		force_download('listeEleves.csv', $new_report); 		
 	}
+
+	public function rapportEleves(){
+		$this->load->model('rapports_model');
+		$data['liste'] = $this->rapports_model->getListeElevesCSV();
+		
+		$this->load->view('templates/header',$data);
+		$this->load->view('admin/rapport',$data);
+		$this->load->view('templates/footer');
+	}
+
 
 }

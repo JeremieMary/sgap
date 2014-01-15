@@ -268,4 +268,8 @@ background-color: #8dbdd8;
 }
 #datesSelector li:hover {
 	background: #fbf8e9;
+}
+
+#rapports form{
+  display: inline;
 }	
