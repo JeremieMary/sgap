@@ -119,13 +119,20 @@
 
 <h2>Création de rapports</h2> 
 <div id='rapports'> 
+<ul>
+<li> Liste des élèves 
 <?php echo form_open('admin/rapportEleves');?>
-<label>Liste des élèves</label>
 <input type="submit" value="visualiser" />
 </form>
-<?php echo form_open('admin/exportToCSV');?>
+
+<?php echo form_open('admin/rapportEleves/csv');?>
 <input type="submit" value="exporter le fichier csv" />
 </form>
+</li>
+<li> second rapport
+
+</ul>
+
 </div>
 
 
