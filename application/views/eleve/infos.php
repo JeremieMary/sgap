@@ -28,5 +28,11 @@
 		
 		</tbody>
 	</table>
-	<? print_r($historiqueSeances) ?>
+	<br/>
+	<table>
+	<? foreach ($historiqueSeances as $historique){?>
+		<tr><td><li><?=$historique['matiere_nom']?><br/>
+		<?=$historique['seance_date']?></td></tr>
+	<?}?>
+	</table>
 </div>

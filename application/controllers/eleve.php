@@ -6,7 +6,7 @@ class Eleve extends CI_Controller {
 		parent::__construct();
 		if ( !isset($this->session->userdata['profil']) ) redirect('user/login');
 		if ( $this->session->userdata['profil'] > 0 ) {
-			$this->load->model(array('inscriptions_model','accompagnement_model','seances_model'));
+			$this->load->model(array('inscriptions_model','accompagnement_model','seances_model', 'cycles_model'));
 			$this->load->helper(array('form','datefr'));
 			//$this->output->enable_profiler(TRUE);
 			return(true);
@@ -22,7 +22,7 @@ class Eleve extends CI_Controller {
 		$data['messages'] = $this->session->flashdata('messages');
 		$eleve_id = $this->session->userdata['id'];
 		$data['historiqueAccompagnements'] = $this->inscriptions_model->getHistory($eleve_id);
-		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id);
+		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id); //<--------------------------------------ICI
 		$this->load->view('templates/header', $data);
 		$this->load->view('eleve/selection', $data);
 		$this->load->view('eleve/infos', $data);
