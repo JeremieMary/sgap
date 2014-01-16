@@ -48,7 +48,7 @@ class Gestionmail extends CI_Controller {
 			$resEchec=array_unique($listeEchec);
 			$resEnvoye=array_unique($listeEnvoye);
 			$this->email->clear();
-			$this->email->from('alice.no@laposte.net', 'Administrateur');
+			$this->email->from('alice.nowicki@etu.univ-lille3.fr', 'Administrateur');
 			$this->email->to('alice.nowicki@etu.univ-lille3.fr');
 			$this->email->subject('Email de rappel aux inscriptions');
 			$this->email->message("echec de l envoie pour les eleves suivants : ".implode(",", $resEchec)."email de rappel envoyes aux eleves suivants : ".implode(",", $resEnvoye));
