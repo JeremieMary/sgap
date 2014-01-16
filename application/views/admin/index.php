@@ -6,8 +6,9 @@
 
 
 
-<h2>Importation de données</h2>
+
 <div id='importation'>
+<h2>Importation de données</h2>
 <div class="upload_form">
 <?php echo form_open_multipart('admin/uploadFile/users', array('name'=>'users') );?>
 <label for="userfile"> Chargement des utilisateurs - CSV : </label>
@@ -30,52 +31,54 @@
 </form>	</div>
 </div>
 
-<h2>Création d'accompagnement</h2>
-<div id='creation_accompagnement'>
-<div class="cycles">
-	<label> Cycles </label>
-<ul>
-	<? foreach ($cycles as $cycle){?>
-		<li name='<?=$cycle["id"]?>'> <?=datefr($cycle['debut']);?>
-	<?}?>
-</ul>
-</div>
+<div id="bloc_accompagnement">
+	<h2>Création d'accompagnement</h2>
+	<div id='creation_accompagnement'>
+	<div class="cycles">
+		<label> Cycles </label>
+	<ul>
+		<? foreach ($cycles as $cycle){?>
+			<li name='<?=$cycle["id"]?>'> <?=datefr($cycle['debut']);?>
+		<?}?>
+	</ul>
+	</div>
 
-<div class="matieres">
-	<label> Matières </label>
-<ul>
-	<? foreach ($matieres as $matiere){?>
-		<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
-	<?}?>
-</ul>
-</div>
+	<div class="matieres">
+		<label> Matières </label>
+	<ul>
+		<? foreach ($matieres as $matiere){?>
+			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
+		<?}?>
+	</ul>
+	</div>
 
-<div class="profs">
-	<label> Enseignant/Intervenant </label>
-<ul>
-	<? foreach ($profs as $prof){?>
-		<li name='<?=$prof["id"]?>'> <?=strtoupper($prof['nom'])?>, <?=$prof['prenom']?>
-	<?}?>
-</ul>
-</div>
+	<div class="profs">
+		<label> Enseignant/Intervenant </label>
+	<ul>
+		<? foreach ($profs as $prof){?>
+			<li name='<?=$prof["id"]?>'> <?=strtoupper($prof['nom'])?>, <?=$prof['prenom']?>
+		<?}?>
+	</ul>
+	</div>
 
-<div class="salles">
-	<label> Salle </label>
-<ul>
-	<? foreach ($salles as $salle){?>
-		<li> <?=$salle['salle']?>
-	<?}?>
-</ul>
-</div>
-</div>
+	<div class="salles">
+		<label> Salle </label>
+	<ul>
+		<? foreach ($salles as $salle){?>
+			<li> <?=$salle['salle']?>
+		<?}?>
+	</ul>
+	</div>
+	</div>
 
-<? echo form_open('accompagnement/creer',array('id' => 'accompagnementForm')); ?>	
-<input type='hidden' name='matiere_id' value=''>
-<input type='hidden' name='cycle_id' value=''>
-<input type='hidden' name='enseignant_id' value=''>
-<input type='hidden' name='salle' value=''>
-<button type='submit' name='creer' disabled >Créer</button>
-</form>
+	<? echo form_open('accompagnement/creer',array('id' => 'accompagnementForm')); ?>	
+	<input type='hidden' name='matiere_id' value=''>
+	<input type='hidden' name='cycle_id' value=''>
+	<input type='hidden' name='enseignant_id' value=''>
+	<input type='hidden' name='salle' value=''>
+	<button type='submit' name='creer' disabled >Créer</button>
+	</form>
+</div>
 
 
 <div class="accompagnement">

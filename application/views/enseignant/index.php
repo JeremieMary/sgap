@@ -3,35 +3,37 @@
 <?= anchor('admin','Utiliser la vue Administrateur'); ?>
 	</div>
 <? } ?>
-<h2>Sélection du cycle et de la matière</h2>
-<div class="cycles">
-<ul>
-	<? foreach ($cycles as $cycle){?>
-		<li name='<?=$cycle["id"]?>'> <?
-			$date =date_create_from_format("d/m/Y",$cycle['debut']);
-			$timestamp = $date->getTimestamp(); 
-			echo strftime( "%a %d/%m/%Y", $timestamp ); ?>
-	<?}?>
-</ul>
-</div>
 
-<div class="matieres">
-<ul>
-	<? foreach ($matieres as $matiere){?>
-		<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
-	<?}?>
-</ul>
+<div id="cycle_matiere">
+	<h2>Sélection du cycle et de la matière</h2>
+	<div class="cycles">
+	<ul>
+		<? foreach ($cycles as $cycle){?>
+			<li name='<?=$cycle["id"]?>'> <?
+				$date =date_create_from_format("d/m/Y",$cycle['debut']);
+				$timestamp = $date->getTimestamp(); 
+				echo strftime( "%a %d/%m/%Y", $timestamp ); ?>
+		<?}?>
+	</ul>
+	</div>
+	<div class="matieres">
+	<ul>
+		<? foreach ($matieres as $matiere){?>
+			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
+		<?}?>
+	</ul>
+	</div>
 </div>
 
 <div class="infos">
 	<h3>Informations</h3>
-<ul>
-<li> Nombre de places : <span id='nbPlaces'></span> </li>
-<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
-<!-- <li> Dates : <span id='dates'></span> </li> -->
-<li> Salle : <span id='salle'></span> </li>
-<li> Horaire : <span id='horaire'></span> </li>
-</ul>
+	<ul>
+	<li> Nombre de places : <span id='nbPlaces'></span> </li>
+	<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+	<!-- <li> Dates : <span id='dates'></span> </li> -->
+	<li> Salle : <span id='salle'></span> </li>
+	<li> Horaire : <span id='horaire'></span> </li>
+	</ul>
 </div>
 
 
@@ -49,33 +51,38 @@
 
 <!-- <h2>Séances</h2> -->
 
+<div id="date">
+	<h3>Dates des séances</h3>
+	<div id='datesSelector'>
+	</div>
 
-<h3>Dates des séances</h3>
-<div id='datesSelector'>
+	<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
 </div>
 
-<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
+<div id="commentaire">
+	<h3>Commentaire général</h3>
+	<p>Commun à tous les inscrits.</p>
+	<div id='AccompagnementCommentaire'>
+	</div>
+</div>	
 
-<h3>Commentaire général</h3>
-<p>Commun à tous les inscrits.</p>
-<div id='AccompagnementCommentaire'>
-</div>
-	
-
-<h3>Présences</h3>
-<div class="presence">
-	<div id='date_seance'></span></div>
-	<div id='liste_presence'></div>
-</div>
-
-<h3>Liste des élèves sans inscription pour ce cycle</h3>
-<div id="nonInscrits">
+<div id="presence">
+	<h3>Présences</h3>
+	<div class="presence">
+		<div id='date_seance'></span></div>
+		<div id='liste_presence'></div>
+	</div>
 </div>
 
-<div id="InfosEleves">
-	<span class="closeInfos" onclick="$('#InfosEleves').fadeTo('opacity',0)">Fermer</span>
-	<span class="name"></span>
-	<span class="text"></span> 
+<div id="liste_inscrits">
+	<h3>Liste des élèves sans inscription pour ce cycle</h3>
+	<div id="nonInscrits">
+	</div>
+	<div id="InfosEleves">
+		<span class="closeInfos" onclick="$('#InfosEleves').fadeTo('opacity',0)">Fermer</span>
+		<span class="name"></span>
+		<span class="text"></span> 
+	</div>
 </div>
 
 <script type='text/javascript'>
