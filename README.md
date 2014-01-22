@@ -3,7 +3,7 @@ sgap
 
 The following holds for public and application directories:
 
-    Copyright (C) 2013  Mary Jeremie, Duthoit Davy, Fostier Laëtitia, Jazwiecki Sophie, La Personne Sophie, Lecomte Manon, Nowicki Alice, Thomas Antoine.
+    Copyright (C) 2014  Mary Jeremie, Duthoit Davy, Fostier Laëtitia, Jazwiecki Sophie, La Personne Sophie, Lecomte Manon, Nowicki Alice, Thomas Antoine.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
