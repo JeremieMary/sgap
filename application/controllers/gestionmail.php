@@ -34,7 +34,7 @@ class Gestionmail extends CI_Controller {
 				$listeNonInscrits=$this->inscriptions_model->getNonInscrits($cycle);
 				foreach ($listeNonInscrits as $eleve){
 					$this->email->clear();
-					$this->email->from('alice.no@laposte.net', 'Administrateur');
+					$this->email->from('alice.nowicki@etu.univ-lille3.fr', 'Administrateur');
 					$this->email->to($eleve['mail']);
 					$this->email->subject('Email');
 					$this->email->message("vous devez vous inscrire ".$eleve['nom']." au cycle ".$cycle);	
