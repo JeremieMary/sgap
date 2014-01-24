@@ -95,20 +95,27 @@ class User extends CI_Controller {
 	}
 	
 	public function reset() {
-//Le formulaire a-t-il ete soumis ?
+		//Le formulaire a-t-il ete soumis ?
 		if (count($_POST) > 0) {		
 			$this->load->library('form_validation');
-//Le login doit correspondre
+			//Le login doit correspondre
 			$this->form_validation->set_rules('login', 'login', 'trim|required|xss_clean');
 			if ($this->form_validation->run() == FALSE) {
-//Message d'erreur si pas
+				//Message d'erreur si pas
 				$this->session->set_flashdata('messages', validation_errors());
 			}
-//Recuperation du login s'il est check
+			//Recuperation du login s'il est check
 			$login = $this->input->post('login');
-//On appelle la fonction pour reinit le mdp
 			$this->users_model->resetPassword($login);
 			$this->session->set_flashdata('messages', 'Votre mot de passe a été réinitialisé et un mail vous a été envoyé.');
+			redirect('user/login');
+		
+		} else { 
+			$data['title'] = "Réinitialisation de mot de passe";
+			$data['messages'] = $this->session->flashdata('messages');
+			$this->load->view('templates/header', $data);
+			$this->load->view('user/reset');
+			$this->load->view('templates/footer');	
 		}
 	}
 }
