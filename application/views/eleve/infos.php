@@ -22,17 +22,19 @@
 	<div class="historique">
 	<table class="bordered">
 		<thead>
-			<tr><th>Cycle</th><th>Matière</th></tr>
+			<tr><th>Cycle</th><th>Matière</th><th>Date</th><th>Présence</th></tr>
 		</thead>
 		<tbody>
-		
+	<? foreach ($historiqueSeances as $historique){?>
+			<tr><td><?=$historique['cycle_debut']?></td>
+			<td><?=$historique['matiere_nom']?></td>
+			<td><?=$historique['seance_date']?></td>
+			<td></td></tr>
+	<?}?>
+
 		</tbody>
 	</table>
-	<br/>
-	<table>
-	<? foreach ($historiqueSeances as $historique){?>
-		<tr><td><li><?=$historique['matiere_nom']?><br/>
-		<?=$historique['seance_date']?></td></tr>
-	<?}?>
-	</table>
+
+
+
 </div>
