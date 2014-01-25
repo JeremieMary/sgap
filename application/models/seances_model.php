@@ -70,17 +70,16 @@ class Seances_model extends CI_Model {
 	
 	function historique($eleve_id)
 	{
-		$this->db->select('eleve_id, seances.id AS seance_id, seances.date AS seance_date, matieres.nom AS matiere_nom, cycles.debut AS cycle_debut, cycles.actif AS actif');
-		$this->db->from('seances','inscriptions','cycles');
-		$this->db->where(array('eleve_id'=>$eleve_id));
-		$this->db->where(array('cycles.actif'=>true));
-		$this->db->join('inscriptions','inscriptions.accompagnement_id = seances.accompagnement_id');
-		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');
-		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
+		$this->db->select('presences.eleve_id AS eleve_id, seances.id AS seance_id, seances.date AS seance_date, matieres.nom AS matiere_nom, cycles.debut AS cycle_debut, cycles.actif AS actif');
+		$this->db->from('presences');
+		$this->db->join('seances', 'presences.seance_id = seances.id');
+		$this->db->join('accompagnement', 'seances.accompagnement_id = accompagnement.id');
 		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
-		//$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
-		//$this->db->join('presences', 'presences.seance_id = seances.id', 'left');
-		//$this->db->join('users', 'users.id=inscriptions.eleve_id');
+		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
+		$this->db->where(array('seances.validee'=>true));
+		$this->db->where(array('cycles.actif'=>true));
+		$this->db->where(array('presences.absent'=>true));
+		$this->db->where(array('presences.eleve_id'=>$eleve_id));
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	

@@ -17,22 +17,25 @@
 </table>
 </div>
 
-<? if (count($historiqueSeances) > 0)  { ?>
+<? if (count($historiqueSeances) >= 1)  { ?>
 <h2>Absences</h2>
 <div class="historique_presence">
 	<table class="bordered">
 		<thead>
-			<tr><th>Cycle</th><th>Matière</th><th>Date</th><th>Présence</th></tr>
+			<tr><!-- <th>Cycle</th> --><th>Matière</th><th>Date</th></tr>
 		</thead>
 		<tbody>
 	<? foreach ($historiqueSeances as $historique){?>
-			<tr><td><?=$historique['cycle_debut']?></td>
+			<tr>
+				<!-- <td><?=$historique['cycle_debut']?></td> -->
 			<td><?=$historique['matiere_nom']?></td>
 			<td><?=$historique['seance_date']?></td>
-			<td></td></tr>
+		</tr>
 	<?}?>
 
 		</tbody>
 	</table>
 </div>
-<? } ?>
+<? } else { ?>
+	<p>Pas d'absences.</p>
+<? }?>

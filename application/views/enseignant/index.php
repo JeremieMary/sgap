@@ -226,7 +226,7 @@ function dateSelectorHandler(){
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
 			tabnav( $("#liste_presence table span") )
-			$('#liste_presence .infosEleves').click(infosEleve)
+			$('#liste_presence .infosEleves').focus(infosEleve)
 			$("#liste_presence .presenceButton").click(presenceHandler)
 			$("#liste_presence input.commentaire").change(setCommentaire)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
@@ -358,7 +358,7 @@ function remplirListeDesNonInscrits(cycle_id){
 		if (!data.success) window.location.reload()
 		$('#nonInscrits').html(afficheNonInscrits(data.liste))
 		$('#nonInscrits table').tablesorter()
-		$('#nonInscrits .infosEleves').click(infosEleve)
+		$('#nonInscrits .infosEleves').focus(infosEleve)
 	})
 }
 
