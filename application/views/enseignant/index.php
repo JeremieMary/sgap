@@ -256,7 +256,11 @@ function dateSelectorHandler(){
 			
 		});
 	});
-	$("#datesSelector ul li.nonvalidee:first").trigger('click')
+	if ( $("#datesSelector ul li.nonvalidee:first").length==0 ){
+		$("#datesSelector ul li:last").trigger('click')
+	 } else {
+	 	$("#datesSelector ul li.nonvalidee:first").trigger('click')
+	 }
 }
 
 
@@ -320,7 +324,7 @@ function activateSuscribe(){
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
 	$('#InfosEleves').fadeIn('fast')
-	$('#InfosEleves').css('opacity',0.8)
+	$('#InfosEleves').css('opacity',0.9)
 	var myurl = '<?=site_url()?>/seances/getInfosOf/'+eleve_id;
 	var tr = $(this).closest("tr");
 	var nom = tr.find('td:first-child').text()
