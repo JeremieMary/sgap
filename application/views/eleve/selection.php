@@ -31,6 +31,8 @@
 <li> Nombre de places : <span id='nbPlaces'></span> </li>
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 <li> Salle : <span id='salle'></span> </li>
+<li> Type : <span id='type'></span><li>
+<li> Horaire : <span id='horaire'></span> </li>	
 <li> Dates : <span id='dates'></span> </li>
 <li> <center><? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
 <input type='hidden' name='matiere_id' value=''>

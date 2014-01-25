@@ -89,7 +89,8 @@ class Accompagnement_model extends CI_Model {
 	function getInfos($cycle_id,$matiere_id)
 	{
 		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
-		$this->db->select('salle, id AS accompagnement_id, commentaire');
+		$this->db->select('accompagnement.salle, accompagnement.id AS accompagnement_id, accompagnement.commentaire, matieres.type AS type');
+		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->limit(1);
 		$this->db->from('accompagnement');
 		$this->db->where($accompagnement);

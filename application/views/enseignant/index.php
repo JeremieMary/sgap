@@ -37,6 +37,7 @@
 		<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 		<li> Salle : <span id='salle'></span> </li>
 		<li> Horaire : <span id='horaire'></span> </li>
+		<li> Parcours : <span id='type'></span></li>
 		</ul>
 	</div>
 	
@@ -300,6 +301,7 @@ function activateSuscribe(){
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			$('#horaire').html(data.horaire);
+			$('#type').html(data.type);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
 			$("#validerSeance button").prop("disabled", true);
 			$("#validerSeance button").addClass("unactivated");	
