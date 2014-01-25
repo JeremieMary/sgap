@@ -73,6 +73,7 @@
 	</div>
 </div>
 
+<? if ($this->session->userdata['profil']>2) {  ?>
 <div id="liste_inscrits">
 	<h3>Liste des élèves sans inscription pour ce cycle</h3>
 	<div id="nonInscrits">
@@ -83,6 +84,7 @@
 		<span class="text"></span> 
 	</div>
 </div>
+<? } ?>
 
 <? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
 <input type='hidden' name='matiere_id' value=''>
@@ -133,7 +135,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances) </th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les dates de l'accompagnement) </th><th></th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -153,7 +155,7 @@ function affichePresences(eleves){
 				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
-				ans+= "<td><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></td>"
+				ans+= "<td><span><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
 				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
 				ans+="</tr>" 
 			}
@@ -213,6 +215,7 @@ function dateSelectorHandler(){
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
+			tabnav( $("#liste_presence table span") )
 			$('#liste_presence .infosEleves').click(infosEleve)
 			$("#liste_presence .presenceButton").click(presenceHandler)
 			$("#liste_presence input.commentaire").change(setCommentaire)
