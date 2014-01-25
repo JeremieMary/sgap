@@ -18,6 +18,14 @@ class Users_model extends CI_Model {
 		}
 	}
 	
+	function getNameOf($user_id){
+		$this->db->select('id, nom, prenom, mail');
+		$this->db->from('users');
+		$this->db->where(array('id'=>$user_id));
+		$query=$this->db->get();
+		$res=$query->result_array();
+		return($res);	
+	}
 	
 	function getAllProfs()
 	{

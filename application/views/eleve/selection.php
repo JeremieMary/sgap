@@ -1,3 +1,9 @@
+<?  if ($this->session->userdata['profil']>2){ ?>
+	<div id="navlinks">
+<?= anchor('enseignant','Retour vers la vue Enseignant'); ?>
+<?if (isset($nom)) echo '<h2>'.$nom.'</h2>'; ?>
+	</div>
+<? } ?>
 
 <div id="cycle_matiere_eleve">
 <div id="cycle_matiere">

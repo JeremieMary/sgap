@@ -15,6 +15,28 @@ class Admin extends CI_Controller {
 		redirect('user/login');
 	}
 
+	public function vueEleve($eleve_id)
+	{
+		$this->load->model('users_model');
+		$this->load->model('accompagnement_model');
+		$this->load->model('inscriptions_model');
+		$this->load->model('seances_model');
+		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
+		$this->session->userdata['forcemode']=true;
+		$this->session->userdata['forced_id']=$eleve_id;
+		$nom_data=$this->users_model->getNameOf($eleve_id)[0];
+		$data['nom']= strtoupper($nom_data['nom']).' '.$nom_data['prenom'];
+		$data['title']='Élève - Mode forcé';
+		$data['messages'] = $this->session->flashdata('messages');
+		$data['historiqueAccompagnements'] = $this->inscriptions_model->getHistory($eleve_id);
+		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id);
+		$this->load->view('templates/header', $data);
+		$this->load->view('eleve/selection', $data);
+		$this->load->view('eleve/infos', $data);
+		$this->load->view('eleve/js', $data);
+		$this->load->view('templates/footer');
+	}
+
 	public function index()
 	{
 		$this->load->model('cycles_model');
