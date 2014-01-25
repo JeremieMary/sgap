@@ -88,7 +88,7 @@ class Seances extends CI_Controller {
 
 	public function setAbsence($seance_id, $eleve_id, $abs){
 		$this->required(2);
-		//TODO
+		$this->seances_model->setAbsence($seance_id, $eleve_id, $abs);
 		$json['logged']=true;
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);

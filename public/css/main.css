@@ -84,6 +84,12 @@ h3 {
 	letter-spacing: -1px;
 }
 
+h4 {
+	font-size: 14px;
+	margin-bottom:0;
+/*	color: #840C83; */
+}
+
 /* Arrays */
 .bordered button {
 	margin:0;
@@ -108,7 +114,7 @@ table {
     -webkit-box-shadow: 0 1px 1px #000; 
     -moz-box-shadow: 0 1px 1px #ccc; 
     box-shadow: 0 1px 1px #ccc;  
-	clear:both;       
+	/*clear:both;      */ 
 }
 
 .bordered tr:hover {
@@ -184,7 +190,7 @@ table {
 	margin-top:0;
 	margin-bottom:0;
 }
-.cycles, .matieres, .profs, .salles {
+.cycles, .matieres, .profs, .salles, .infos, #date {
 	overflow:auto;
 	float:left;
 	min-width : 8em;
@@ -296,15 +302,13 @@ background-color: #8dbdd8;
 	position:fixed;
 	top:3em;
 	right:2em;
-	width:50%;
+	width:0;
 	min-height:10em;
 	-moz-border-radius: 1em;
 	border-radius: 1em;
 	padding:1em;
 	background:#fbf8e9;
 	opacity:0; 
-	z-index:-20;
-	
 }
 	
 #InfosEleves .closeInfos {
@@ -321,9 +325,6 @@ background-color: #8dbdd8;
 	background: #fbf8e9;
 }	
 
-	
-.infos {
-}
 
 #cycle_matiere {
 	overflow:auto;
@@ -332,18 +333,11 @@ background-color: #8dbdd8;
 	
 #date {
 	height:auto;
-}
-
-
-#commentaire {
+	text-align:center;
 }
 
 #presence {
 	height:auto;
-}
-
-
-#liste_inscrits {
 }
 
 #rapports form{
@@ -353,30 +347,55 @@ background-color: #8dbdd8;
 #cycle_matiere{
 	margin:auto;
 	text-align:center;
-	width:20em;
+	width:50em;
 }
 
-div.infos{
-	display:inline-block;
-	width : 14em;
-	background:transparent;
-	padding:1em;
-}
-.infos h3 {
-	text-align:center;
-}
-
-#date{
+#cycle_matiere h3 {
 	display:inline;
-	background:silver;
-	text-align:center;
+	padding-right:1em;
+	padding-left:1em;
+	border-bottom:solid 1px;
+}
+
+h3 {
+	display:inline;
+	padding-right:5em;
+	border-bottom:solid 1px;
 }
 
 #datesSelector ul {
 	padding:0;
 	margin:0;
 }
+
 .infos ul {
 	padding:0;
 	margin:0;
+}
+
+#commentaire{
+	padding-top:1em;
+}
+
+#commentaire textarea {
+	width : 89%;
+}
+
+#presence table{
+	width : 90%;
+}
+
+#liste_inscrits table{
+}
+
+body {
+	padding-left:2em;
+	padding-right:2em;
+}
+
+#presence input[type="text"]{ 
+		height:1.3em;
+		padding:0;
+		margin:0;
+		width:30em;
 }

@@ -4,7 +4,6 @@
 	</div>
 <? } ?>
 
-<center>
 <div id="cycle_matiere">
 	<div class="cycles">
 		<h3>Cycle</h3>
@@ -14,35 +13,37 @@
 				$date =date_create_from_format("d/m/Y",$cycle['debut']);
 				$timestamp = $date->getTimestamp(); 
 				echo strftime( "%a %d/%m/%Y", $timestamp ); ?>
+			</li>
 		<?}?>
 	</ul>
 	</div>
+	
 	<div class="matieres">
 		<h3>Matière</h3>
 	<ul>
 		<? foreach ($matieres as $matiere){?>
-			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
+			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?> </li>
 		<?}?>
 	</ul>
 	</div>
-</div>
-</center>
-
-<div class="infos">
-	<h3>Informations</h3>
-	<ul>
-	<li> Nombre de places : <span id='nbPlaces'></span> </li>
-	<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
-	<!-- <li> Dates : <span id='dates'></span> </li> -->
-	<li> Salle : <span id='salle'></span> </li>
-	<li> Horaire : <span id='horaire'></span> </li>
-	<li> Dates : <div id="date">
-		<div id='datesSelector'>
-		</div>
-		<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
+	
+	<div class="infos">
+		<h3>Informations</h3>
+		<ul>
+		<li> Nombre de places : <span id='nbPlaces'></span> </li>
+		<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+		<li> Salle : <span id='salle'></span> </li>
+		<li> Horaire : <span id='horaire'></span> </li>
+		</ul>
 	</div>
-	</li>
-	</ul>
+	
+	<div id="date">
+		 	<h3>Dates </h3>
+			<div id='datesSelector'>
+			</div>
+			<div id='validerSeance'><button class='unactivated' disabled>Valider tenue de la séance</button></div>
+		</div>
+	
 </div>
 
 
@@ -58,8 +59,8 @@
 
 
 <div id="commentaire">
-	<h3>Commentaire général</h3>
-	<p>Commun à tous les inscrits.</p>
+	<h3>Commentaire de groupe.</h3>
+	<p>Sera lisible et commun à tous les inscrits à cet accompagnement.</p>
 	<div id='AccompagnementCommentaire'>
 	</div>
 </div>	
@@ -77,7 +78,7 @@
 	<div id="nonInscrits">
 	</div>
 	<div id="InfosEleves">
-		<span class="closeInfos" onclick="$('#InfosEleves').fadeTo('opacity',0)">Fermer</span>
+		<span class="closeInfos" onclick="$('#InfosEleves').fadeOut('slow', function(){$('#InfosEleves').width(0)}) ">Fermer</span>
 		<span class="name"></span>
 		<span class="text"></span> 
 	</div>
@@ -132,7 +133,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances)</th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les séances) </th><th></th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -218,6 +219,7 @@ function dateSelectorHandler(){
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
 				$("#validerSeance button").prop("disabled", false);
 				$("#validerSeance button").removeClass("unactivated");
+				//$("#validerSeance button").text("Valider séance");
 				$("#validerSeance button").unbind( "click" );
 				$("#validerSeance button").click(function(){
 					$.ajax({
@@ -225,13 +227,15 @@ function dateSelectorHandler(){
 					}).done(function(){
 						$("#validerSeance button").prop("disabled", true);
 						$("#validerSeance button").addClass("unactivated");	
+						//$("#validerSeance button").text("Invalider séance");
 						that.addClass("validee");
 						that.removeClass("nonvalidee");
 					})
 				})
 			} else {
 				$("#validerSeance button").prop("disabled", true);
-				$("#validerSeance button").addClass("unactivated");	
+				$("#validerSeance button").addClass("unactivated");
+				//$("#validerSeance button").text("Invalider séance");	
 			}
 			
 		});
@@ -256,7 +260,7 @@ function commentaireGeneralHandler(){
 function commentaireGeneral(accompagnement_id,com){
 	if (accompagnement_id=='') return('');
 	com = com.replace(/'/g, '&#39;');
-	ans = "<input type='text' id='submitCommentaireGeneral' accompagnement_id="+accompagnement_id+"  value='"+com+"'/>"
+	ans = "<textarea rows='2' id='submitCommentaireGeneral' accompagnement_id="+accompagnement_id+">"+com+"</textarea>"
 	return ans
 }
 
@@ -298,11 +302,7 @@ function activateSuscribe(){
 
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
-	var opacity = $('#InfosEleves').css('opacity')
-	if ($('#InfosEleves').attr('eleve_id') == eleve_id && opacity>0.5 ) {
-		$('#InfosEleves').fadeTo('opacity',0)
-		return
-	}
+	$('#InfosEleves').fadeIn('fast')
 	$('#InfosEleves').css('opacity',0.8)
 	var myurl = '<?=site_url()?>/seances/getInfosOf/'+eleve_id;
 	var tr = $(this).closest("tr");
@@ -313,7 +313,8 @@ function infosEleve(){
 	$.ajax({
 		url:myurl,
 	}).done(function(data) {
-		//if (!data.logged) window.location.reload() 
+		//if (!data.logged) window.location.reload()
+		$('#InfosEleves').width('50%') 
 		$('#InfosEleves .text').html(data)
 	})
 	
