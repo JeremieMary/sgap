@@ -377,11 +377,13 @@ h3 {
 	margin:0;
 }
 
+
 .infos li {
-	font-weight:bold
+	font-style:normal
+
 }
 .infos li span{
-	font-weight:normal
+	font-style:italic	
 }
 
 #commentaire{

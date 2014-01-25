@@ -75,7 +75,7 @@ class Inscription extends CI_Controller {
 			$salle = $acc['salle'];
 			$json=array('places'=>$nb_dispo, 'nb_inscrits'=>$nb_inscrits,'salle'=>$salle, 'dates'=>$dates, 'horaire'=>$horaire, 'accompagnement_id'=>$acc['accompagnement_id'], 'commentaire'=>$acc['commentaire'],'type'=>$type ); 
 		} else {
-			$json = array('places'=>'.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.'),'horaire'=>'.', 'accompagnement_id'=>'', 'commentaire'=>'', 'type'=>$type );
+			$json = array('places'=>'.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.'),'horaire'=>'.', 'accompagnement_id'=>'', 'commentaire'=>'', 'type'=>'.' );
 		}
 		$json['logged']=true;
 		$data['json']=$json;

@@ -281,8 +281,11 @@ function commentaireGeneralHandler(){
 
 function commentaireGeneral(accompagnement_id,com){
 	if (accompagnement_id=='') return('');
-	com = com.replace(/'/g, '&#39;');
-	ans = "<textarea rows='2' id='submitCommentaireGeneral' accompagnement_id="+accompagnement_id+">"+com+"</textarea>"
+	ans =''
+	if (com!==undefined){
+		com = com.replace(/'/g, '&#39;');
+		ans = "<textarea rows='2' id='submitCommentaireGeneral' accompagnement_id="+accompagnement_id+">"+com+"</textarea>"
+	}
 	return ans
 }
 
