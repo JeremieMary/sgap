@@ -63,6 +63,8 @@
 	<p>Sera lisible et commun à tous les inscrits à cet accompagnement.</p>
 	<div id='AccompagnementCommentaire'>
 	</div>
+
+
 </div>	
 
 <div id="presence">
@@ -72,6 +74,12 @@
 		<div id='liste_presence'></div>
 	</div>
 </div>
+
+<div id='masscom'>
+<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les inscrits à cet accompagnement' id='masstxt' />
+<button type='submit' id='massperso'>Envoyer</button>
+</div>
+
 
 <? if ($this->session->userdata['profil']>2) {  ?>
 <div id="liste_inscrits">
@@ -188,6 +196,7 @@ function presenceHandler() {
 		})
 	}
 	
+
 function setCommentaire(){
 	var eleve_id = $(this).attr('eleve_id') 
 	var accompagnement_id = $(this).attr('accompagnement_id') 
@@ -375,6 +384,17 @@ $(document).ready(function() {
 		activateSuscribe()
 	})
 	
+	$("#massperso").click(function(){
+		var txt = $("#masstxt").val()
+		if (txt != ''){
+			if (confirm("Attention cette action va remplacer tous les commentaires personnalisés de cet accompagnement et est irréversible. Confirmez vous ?")){
+			$("#liste_presence span input").each( function(){ 
+				$(this).val(txt)
+				$(this).trigger('change') 
+			})
+		}
+	}
+	})
 	
 	
 });

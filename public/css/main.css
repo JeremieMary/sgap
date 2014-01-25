@@ -17,7 +17,7 @@
 }	
 
 #navlinks {
-	margin-top:2.5em;
+	line-height:0;
 }
 	
 #top a {
@@ -43,8 +43,10 @@
 }
 
 #wrapper{
+	padding-right:5em;
 	padding-left:2em;
 	padding-bottom:2em; 
+	padding-top:2.2em;
 	
 }
 .upload_form form {
@@ -381,17 +383,13 @@ h3 {
 	width : 100%;
 }
 
-#presence table{
+#presence table, div.historique table{
 	width : 100%;
 }
 
 #liste_inscrits table{
 }
 
-body {
-	padding-left:2em;
-	padding-right:5em;
-}
 
 #presence input[type="text"]{ 
 		height:1.3em;
@@ -410,4 +408,17 @@ body {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+}
+#cycle_matiere_eleve #cycle_matiere ul {
+	text-align : left;
+}
+#cycle_matiere_eleve #cycle_matiere {
+	width:35em;
+}
+#masscom input{
+	display:inline;
+	width:90%;
+}
+#masscom button{
+	display:inline;
 }

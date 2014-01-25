@@ -1,8 +1,8 @@
-<h2>Liste des inscriptions courantes</h2>
+<h2>Liste des inscriptions</h2>
 <div class="historique">
 <table class="bordered">
 	<thead>
-		<tr><th>Cycle</th><th>Matière</th><th>Commentaire général</th><th>Commentaire personnalisé</th></tr>
+		<tr><th>Cycle</th><th>Matière</th><th>Commentaire de groupe</th><th>Commentaire personnalisé</th></tr>
 	</thead>
 	<tbody>
 	<? foreach ($historiqueAccompagnements as $historique){?>
@@ -17,9 +17,9 @@
 </table>
 </div>
 
-<h2>Historique des présences</h2>
-<div class="historique">
-	<div class="historique">
+<? if (count($historiqueSeances) > 0)  { ?>
+<h2>Absences</h2>
+<div class="historique_presence">
 	<table class="bordered">
 		<thead>
 			<tr><th>Cycle</th><th>Matière</th><th>Date</th><th>Présence</th></tr>
@@ -34,7 +34,5 @@
 
 		</tbody>
 	</table>
-
-
-
 </div>
+<? } ?>
