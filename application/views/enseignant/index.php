@@ -198,7 +198,8 @@ function setCommentaire(){
 		type: "POST",
 		data: comment
 	}).done(function(data) {
-		if (!data.logged) window.location.reload() 
+		if (!data.logged) window.location.reload()
+		flashmsg('Sauvegarde commentaire') 
 	})
 }	
 
@@ -257,6 +258,7 @@ function commentaireGeneralHandler(){
 		data: comment
 	}).done(function(data) {
 		if (!data.logged) window.location.reload() 
+		flashmsg('Sauvegarde commentaire général') 
 	})
 }
 

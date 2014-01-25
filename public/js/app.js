@@ -19,3 +19,11 @@ function tabnav( tab ) {
 			  }
 			});
 }
+
+function flashmsg(message) {
+    $('body').prepend('<div id="flash" style="display:none"></div>');
+    $('#flash').html(message);
+    $('#flash').toggleClass('flashmsg');
+    $('#flash').fadeIn('fast');
+    $('#flash').fadeOut(3000,function(){$('#flash').remove()} );
+}

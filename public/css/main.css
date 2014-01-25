@@ -399,3 +399,15 @@ body {
 		margin:0;
 		width:100%;
 }
+
+.flashmsg{
+	position: fixed;
+	background:#eaeaea;
+	color:#999;
+	padding:0.4em;
+	bottom: 0.1em;
+	right: 0.1em;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
