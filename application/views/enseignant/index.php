@@ -328,7 +328,7 @@ function infosEleve(){
 		url:myurl,
 	}).done(function(data) {
 		//if (!data.logged) window.location.reload()
-		$('#InfosEleves').width('50%') 
+		$('#InfosEleves').width('62%') 
 		$('#InfosEleves .text').html(data)
 	})
 	

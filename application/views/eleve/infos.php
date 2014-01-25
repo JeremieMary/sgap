@@ -2,7 +2,7 @@
 <div class="historique">
 <table class="bordered">
 	<thead>
-		<tr><th>Cycle</th><th>Matière</th><th>Commentaire de groupe</th><th>Commentaire personnalisé</th></tr>
+		<tr><th>Date début</th><th>Matière</th><th>Commentaire de groupe</th><th>Commentaire personnalisé</th></tr>
 	</thead>
 	<tbody>
 	<? foreach ($historiqueAccompagnements as $historique){?>
