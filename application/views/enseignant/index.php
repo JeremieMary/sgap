@@ -4,9 +4,10 @@
 	</div>
 <? } ?>
 
+<center>
 <div id="cycle_matiere">
-	<h2>Sélection du cycle et de la matière</h2>
 	<div class="cycles">
+		<h3>Cycle</h3>
 	<ul>
 		<? foreach ($cycles as $cycle){?>
 			<li name='<?=$cycle["id"]?>'> <?
@@ -17,6 +18,7 @@
 	</ul>
 	</div>
 	<div class="matieres">
+		<h3>Matière</h3>
 	<ul>
 		<? foreach ($matieres as $matiere){?>
 			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
@@ -24,6 +26,7 @@
 	</ul>
 	</div>
 </div>
+</center>
 
 <div class="infos">
 	<h3>Informations</h3>
@@ -33,14 +36,16 @@
 	<!-- <li> Dates : <span id='dates'></span> </li> -->
 	<li> Salle : <span id='salle'></span> </li>
 	<li> Horaire : <span id='horaire'></span> </li>
+	<li> Dates : <div id="date">
+		<div id='datesSelector'>
+		</div>
+		<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
+	</div>
+	</li>
 	</ul>
 </div>
 
 
-<? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
-<input type='hidden' name='matiere_id' value=''>
-<input type='hidden' name='cycle_id' value=''>
-</form>
 
 <!--
 <h2>Liste des inscrits à cet accompagnement</h2>
@@ -51,13 +56,6 @@
 
 <!-- <h2>Séances</h2> -->
 
-<div id="date">
-	<h3>Dates des séances</h3>
-	<div id='datesSelector'>
-	</div>
-
-	<div id='validerSeance'><button class='unactivated' disabled>Valider séance</button></div>
-</div>
 
 <div id="commentaire">
 	<h3>Commentaire général</h3>
@@ -84,6 +82,12 @@
 		<span class="text"></span> 
 	</div>
 </div>
+
+<? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
+<input type='hidden' name='matiere_id' value=''>
+<input type='hidden' name='cycle_id' value=''>
+</form>
+
 
 <script type='text/javascript'>
 var accompagnement=<?=json_encode( $accompagnement )?>	

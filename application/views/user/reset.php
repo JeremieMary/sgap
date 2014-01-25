@@ -1,9 +1,9 @@
 <div class="container">
 		<div class="form-bg">
 			<?php echo form_open('user/reset'); ?>
-				<h2>Entrez votre login</h2>
-				<p><input type="text" placeholder="Login" name="login" value="<?= set_value('login'); ?>" /></p>
-				<button type="submit" class='login'></button>
+				<h2>Entrez votre mail</h2>
+				<p><input type="text" placeholder="foo@bar.com" name="mail" value="<?= set_value('mail'); ?>" /></p>
+				<button type="submit">Envoyer</button>
 			</form>
 		</div>
 </div>

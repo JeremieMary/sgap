@@ -95,27 +95,28 @@ class User extends CI_Controller {
 	}
 	
 	public function reset() {
-		//Le formulaire a-t-il ete soumis ?
 		if (count($_POST) > 0) {		
 			$this->load->library('form_validation');
-			//Le login doit correspondre
-			$this->form_validation->set_rules('login', 'login', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('mail', 'mail', 'trim|required|xss_clean');
 			if ($this->form_validation->run() == FALSE) {
-				//Message d'erreur si pas
 				$this->session->set_flashdata('messages', validation_errors());
+			} else {
+				$mail = $this->input->post('mail');
+				$result = $this->users_model->resetPassword($mail);
+				if ($result==false){
+					$this->session->set_flashdata('messages', 'Le mail entré ne trouve aucun homologue dans la base de données');
+				}else{
+					$this->session->set_flashdata('mail', $mail);
+					$this->session->set_flashdata('login', $result['login']);
+					$this->session->set_flashdata('password', $result['password']);
+					redirect('gestionmail/mailreinit');
+				}
 			}
-			//Recuperation du login s'il est check
-			$login = $this->input->post('login');
-			$this->users_model->resetPassword($login);
-			$this->session->set_flashdata('messages', 'Votre mot de passe a été réinitialisé et un mail vous a été envoyé.');
-			redirect('user/login');
-		
-		} else { 
-			$data['title'] = "Réinitialisation de mot de passe";
-			$data['messages'] = $this->session->flashdata('messages');
-			$this->load->view('templates/header', $data);
-			$this->load->view('user/reset');
-			$this->load->view('templates/footer');	
 		}
+		$data['title'] = "Réinitialisation de mot de passe";
+		$data['messages'] = $this->session->flashdata('messages');
+		$this->load->view('templates/header', $data);
+		$this->load->view('user/reset');
+		$this->load->view('templates/footer');	
 	}
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 class Users_model extends CI_Model {
 	
 	public function __construct()
@@ -56,34 +56,26 @@ class Users_model extends CI_Model {
 		$this->db->update('users', array("passwd"=>$passwd) ); 
 	}
 
-	function resetPassword($login) {
-		// On génère un mot de passe aléatoire
-		$password = '';
-		for ($i = 0; $i < 6; $i++) {
-			// On récupère une lettre aléatoire
-			$random = rand(97, 122);
-			// On ajoute la lettre au mot de passe
-			$password = $password . chr($random);
-		}
-		// On met à jour le mot de passe
-		$this->updatePassword($login, $password);
-		// On envoie le mail à l'utilisateur pour lui donner son mot de passe
-	}
-	
-	private function sendPasswordMail( $user ) {
-		// On récupère le mot de passe et le mail de l'utilisateur
-		$this->db->select('mail, password');
+	function resetPassword($mail) {
+		$this->db->select('login');
 		$this->db->from('users');
-		$this->db->where( array('login'=> $user ) );
+		$this->db->where('mail', $mail);
 		$this->db->limit(1);
 		$query=$this->db->get();
-		$user = $query->row_array();
-		$password = $user['password'];
-		$mail = $user['mail'];
-
-		// On envoie le mail
-		mail($mail, 'Réinitialisation de mot de passe', 'Votre nouveau mot de passe est : ' . $password);
+		if ($query->num_rows() == 1) {
+			$resultat = $query->row_array();
+			$resultat['password'] = '';
+			for ($i = 0; $i < 6; $i++) {
+				$random = rand(97, 122);
+				$resultat['password'] = $resultat['password'] . chr($random);
+			}
+			$this->updatePassword($resultat['login'], $resultat['password']);
+			return($resultat);
+		} else {
+			return(false);
+		}
 	}
+	
 	
 	function commitUser( $user )
 	{

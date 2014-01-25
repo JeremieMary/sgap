@@ -8,7 +8,7 @@
 
 
 <div id='importation'>
-<h2>Importation de données</h2>
+<h3>Importation de données</h3>
 <div class="upload_form">
 <?php echo form_open_multipart('admin/uploadFile/users', array('name'=>'users') );?>
 <label for="userfile"> Chargement des utilisateurs - CSV : </label>

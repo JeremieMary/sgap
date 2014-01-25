@@ -69,9 +69,6 @@ h2 {
 	font-size: 24px;
 	color: #840C83;
 	text-decoration: none;
-	border-bottom-width: thin;
-	border-bottom-style: solid;
-	border-bottom-color: #8D218B;
 	font-weight: lighter;
 	letter-spacing: -1px;
 }
@@ -83,9 +80,6 @@ h3 {
 	font-size: 20px;
 	color: #840C83;
 	text-decoration: none;
-	border-bottom-width: thin;
-	border-bottom-style: solid;
-	border-bottom-color: #8D218B;
 	font-weight: lighter;
 	letter-spacing: -1px;
 }
@@ -298,7 +292,6 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }	
-	
 #InfosEleves{
 	position:fixed;
 	top:3em;
@@ -310,7 +303,10 @@ background-color: #8dbdd8;
 	padding:1em;
 	background:#fbf8e9;
 	opacity:0; 
-}	
+	z-index:-20;
+	
+}
+	
 #InfosEleves .closeInfos {
 	float:right;
 	margin-top:-0.8em;
@@ -321,62 +317,66 @@ background-color: #8dbdd8;
 	border: 1px solid #aaa;
 	color: #444;
 }
-#datesSelector {
-	width:15em;
-}
 #datesSelector li:hover {
 	background: #fbf8e9;
 }	
+
 	
 .infos {
-    width:40%;
-	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 
 #cycle_matiere {
 	overflow:auto;
-	width:40%;
 	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 	
 #date {
-	width:40%;
 	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 
+
 #commentaire {
-	width:40%;
-	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 
 #presence {
-	width:40%;
 	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 
+
 #liste_inscrits {
-	width:40%;
-	height:auto;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
-	margin-bottom:5%;
 }
 
 #rapports form{
   display: inline;
 }	
+
+#cycle_matiere{
+	margin:auto;
+	text-align:center;
+	width:20em;
+}
+
+div.infos{
+	display:inline-block;
+	width : 14em;
+	background:transparent;
+	padding:1em;
+}
+.infos h3 {
+	text-align:center;
+}
+
+#date{
+	display:inline;
+	background:silver;
+	text-align:center;
+}
+
+#datesSelector ul {
+	padding:0;
+	margin:0;
+}
+.infos ul {
+	padding:0;
+	margin:0;
+}
