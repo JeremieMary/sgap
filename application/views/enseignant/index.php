@@ -4,6 +4,7 @@
 	</div>
 <? } ?>
 
+
 <div id="cycle_matiere">
 	<div class="cycles">
 		<h3>Cycle</h3>
@@ -21,8 +22,10 @@
 	<div class="matieres">
 		<h3>Matière</h3>
 	<ul>
-		<? foreach ($matieres as $matiere){?>
-			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?> </li>
+		<? foreach ($matieres as $matiere){
+			$class = ($matiere['type']==1 ) ? 'perso' : 'rencontre'
+		?>
+			<li name='<?=$matiere["id"]?>' class='<?=$class?>'> <?=$matiere['nom']?> </li>
 		<?}?>
 	</ul>
 	</div>
@@ -68,7 +71,7 @@
 </div>	
 
 <div id="presence">
-	<h3>Présences</h3>
+	<h3>Présences et commentaires</h3>
 	<div class="presence">
 		<div id='date_seance'></span></div>
 		<div id='liste_presence'></div>
@@ -76,7 +79,7 @@
 </div>
 
 <div id='masscom'>
-<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les inscrits à cet accompagnement' id='masstxt' />
+<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les élèves inscrits à cet accompagnement' id='masstxt' />
 <button type='submit' id='massperso'>Envoyer</button>
 </div>
 

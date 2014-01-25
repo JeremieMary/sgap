@@ -16,8 +16,10 @@
 <div class="matieres">
 	<h3>Matière</h3>
 <ul>
-	<? foreach ($matieres as $matiere){?>
-		<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
+	<? foreach ($matieres as $matiere){ 
+		$class = ($matiere['type']==1 ) ? 'perso' : 'rencontre'
+	?>
+		<li name='<?=$matiere["id"]?>' class='<?=$class?>'> <?=$matiere['nom']?>
 	<?}?>
 </ul>
 </div>

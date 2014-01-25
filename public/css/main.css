@@ -424,3 +424,12 @@ h3 {
 #masscom button{
 	display:inline;
 }
+
+li.rencontre {
+	background:#fdf;
+}
+
+li.rencontre:hover{
+	background:#ffeaff !important;
+}
+

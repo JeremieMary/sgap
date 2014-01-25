@@ -25,12 +25,14 @@ class Accompagnement_model extends CI_Model {
 	
 	function getAllActiveHumanReadable()
 	{
-		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle');
+		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, matieres.type AS matiere_type ,  users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle');
 		$this->db->from('accompagnement');
 		$this->db->where('accompagnement.actif = 1');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->join('users', 'users.id = accompagnement.enseignant_id');
 		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
+		$this->db->order_by("matieres.type", "asc");
+		$this->db->order_by("matieres.nom", "asc"); 
 		$query=$this->db->get();	
 		return($query->result_array());
 	}
@@ -42,7 +44,7 @@ class Accompagnement_model extends CI_Model {
 		$matieres=array();
 		foreach ( $data['accompagnement'] as $acc ){
 			array_push( $cycles, array('id'=>$acc["cycle_id"], 'debut'=>$acc['cycle_debut']) );
-			array_push( $matieres, array('id'=>$acc["matiere_id"], 'nom'=>$acc['matiere']) );
+			array_push( $matieres, array('id'=>$acc["matiere_id"], 'nom'=>$acc['matiere'], 'type'=>$acc['matiere_type']) );
 		}
 		                                                                          
 		$newArr = array();         
