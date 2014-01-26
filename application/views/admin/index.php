@@ -204,7 +204,7 @@ function dateSelectorHandler(){
 		
 		var txt = "Affecter la séance du "+ date+ " à <strong>"+ pr +"</strong> <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
-		var txt2 = "Affecter toutes les séances des "+ dateday+ " de cet accompagnement à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		var txt2 = "Affecter toutes les séances des "+ dateday+"s de cet accompagnement à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
 		$('#reaffecter').html(txt+'<br/>'+txt2)
 		if (!active) {
