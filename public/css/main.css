@@ -467,3 +467,7 @@ td a  {
 p.astuce{
 		font-style:italic	
 }
+
+a.button, button {
+	line-height: 12px;
+}
