@@ -117,9 +117,15 @@ class Seances_model extends CI_Model {
 	
 	function setProfesseurByDay($accompagnement_id, $enseignant_id, $date)
 	{
+		/*
 		$this->db->where(array('accompagnement_id'=>$accompagnement_id ));
-		$this->db->where(array('date'=>$date ));
+		$this->db->where(array('date'=>$date )); //Il faudrait un dayoftheweek => non dispo
 		$this->db->update('seances', array("enseignant_id"=>$enseignant_id) );
+		*/
+		// Manque une sanitization mais vu que c'est une requête admin...
+		$q = "UPDATE seances SET enseignant_id = $enseignant_id WHERE accompagnement_id = $accompagnement_id AND  DAYOFWEEK(date) = DAYOFWEEK('$date')  ";
+		$this->db->query($q);
+		
 		return(true);
 	}
 }
