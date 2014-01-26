@@ -24,7 +24,9 @@ function tabnavi( tab ) {
 			tab.bind('keydown', function(event) {
 			  if(event.keyCode == 9){ //for tab key
 				   $(this).blur();
-				   $(this).parents('tr').next().find('span.inf > button').focus();
+				   var e = $(this).parents('tr').next().find('span.inf > button')
+				   e.focus()
+				   e.trigger("click");
 			    return false; 
 			  }
 			});

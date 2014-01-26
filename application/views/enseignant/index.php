@@ -265,7 +265,7 @@ function dateSelectorHandler(){
 			tabnav( $("#liste_presence table span.com") )
 			tabnavi( $("#liste_presence table span.inf") )
 			tabnavi( $("#nonInscrits table span.inf") )
-			$('#liste_presence .infosEleves').focus(infosEleve)
+			$('#liste_presence .infosEleves').click(infosEleve)
 			$('#liste_presence .deleteInscription').click(deleteInscription)
 			$("#liste_presence .presenceButton").click(presenceHandler)
 			$("#liste_presence input.commentaire").change(setCommentaire)
@@ -370,7 +370,11 @@ function activateSuscribe(){
 
 function infosEleve(){
 	var eleve_id = $(this).attr('eleve_id')
-	$('#InfosEleves').fadeIn('fast')
+	if (eleve_id == $('#InfosEleves').attr('eleve_id') && $('#InfosEleves').is(":visible") ) { 
+		$('#InfosEleves').fadeOut('slow')
+	} else {
+		$('#InfosEleves').fadeIn('fast')	
+	} 
 	$('#InfosEleves').css('opacity',0.9)
 	var myurl = '<?=site_url()?>/seances/getInfosOf/'+eleve_id;
 	var tr = $(this).closest("tr");
@@ -417,7 +421,7 @@ function remplirListeDesNonInscrits(cycle_id){
 		if (!data.success) window.location.reload()
 		$('#nonInscrits').html(afficheNonInscrits(data.liste))
 		$('#nonInscrits table').tablesorter()
-		$('#nonInscrits .infosEleves').focus(infosEleve)
+		$('#nonInscrits .infosEleves').click(infosEleve)
 	})
 }
 
