@@ -73,6 +73,7 @@
 
 <div id="presence">
 	<h3>Présences et commentaires</h3>
+	<p class="astuce">Astuce: La touche <code>tabulation</code> permet de se déplacer dans le tableau en colonne (utile pour visualiser les infos et mettre des commentaires personnalisés)</p>
 	<div class="presence">
 		<div id='date_seance'></span></div>
 		<div id='liste_presence'></div>
