@@ -40,6 +40,19 @@ function activateSuscribe(){
 			$('#type').html(data.type);
 			$('#nbInscrits').html(data.nb_inscrits);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
+			$('#inscriptionForm button[name="inscription"]').text("Demander inscription")
+			<? if ($this->session->userdata['profil']<= 3) { ?>
+			if (data.type=="Rencontre") {
+				$('#inscriptionForm button[name="inscription"]').prop("disabled", true);
+				$('#inscriptionForm button[name="inscription"]').text("Inscription par Professeurs")
+			}
+			if (data.places<=data.nb_inscrits) { 
+				$('#inscriptionForm button[name="inscription"]').prop("disabled", true);
+				$('#inscriptionForm button[name="inscription"]').text("Plus de places")
+			}
+			<? } else { ?>
+				$('#inscriptionForm button[name="inscription"]').text("Forcer inscription")
+			<? }?>
 			if (!data.logged) window.location.reload();
 		});
 			

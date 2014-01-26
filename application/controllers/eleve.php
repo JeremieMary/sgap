@@ -21,8 +21,9 @@ class Eleve extends CI_Controller {
 		$data['title']='Élève';
 		$data['messages'] = $this->session->flashdata('messages');
 		$eleve_id = $this->session->userdata['id'];
+		$data['eleve_id'] = $eleve_id;
 		$data['historiqueAccompagnements'] = $this->inscriptions_model->getHistory($eleve_id);
-		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id); //<--------------------------------------ICI
+		$data['historiqueSeances'] = $this->seances_model->historique($eleve_id);
 		$this->load->view('templates/header', $data);
 		$this->load->view('eleve/selection', $data);
 		$this->load->view('eleve/infos', $data);

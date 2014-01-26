@@ -82,9 +82,9 @@ class Inscriptions_model extends CI_Model {
 		return(true);
 	}
 	
-	function inscrire($eleve_id,$accompagnement_id)
+	function inscrire($eleve_id,$accompagnement_id,$force=false)
 	{
-		if (!$this->validate($eleve_id,$accompagnement_id)){ 
+		if ( (!$force) && (!$this->validate($eleve_id,$accompagnement_id))){ 
 			return(array('success'=>false,'message'=>'<p>Inscription impossible.</p>'));
 		}
 		$inscription=array('accompagnement_id'=>$accompagnement_id,'eleve_id'=>$eleve_id);

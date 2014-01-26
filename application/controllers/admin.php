@@ -38,6 +38,23 @@ class Admin extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 
+	public function inscription() {
+		if (count($_POST)==0) redirect('admin/');
+		$cycle_id = $this->input->post('cycle_id');
+		$matiere_id = $this->input->post('matiere_id');
+		$this->load->model('accompagnement_model');
+		$this->load->model('inscriptions_model');
+		$accompagnement_id = $this->accompagnement_model->getId($cycle_id,$matiere_id);
+		if ($accompagnement_id<0){
+			$this->session->set_flashdata('messages', 'Accompagnement non ouvert.' );
+			redirect('admin/');
+		}
+		$eleve_id = $this->input->post('eleve_id');
+		$ins = $this->inscriptions_model->inscrire($eleve_id,$accompagnement_id,true); 
+		$this->session->set_flashdata('messages', $ins['message'] );
+		redirect('admin/vueEleve/'.$eleve_id);
+	}
+	
 	public function index()
 	{
 		$this->load->model('cycles_model');

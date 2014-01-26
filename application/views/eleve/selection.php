@@ -40,10 +40,20 @@
 <li> Type : <span id='type'></span><li>
 <li> Horaire : <span id='horaire'></span> </li>	
 <li> Dates : <span id='dates'></span> </li>
-<li> <center><? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
+<li> <center>
+	<? if  ($this->session->userdata['profil']> 3) { 
+		echo form_open('admin/inscription',array('id' => 'inscriptionForm')); 
+	} else {
+		echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); 
+	}	?>	
 <input type='hidden' name='matiere_id' value=''>
 <input type='hidden' name='cycle_id' value=''>
-<button type='submit' name='inscription' disabled onclick="return confirm('Les inscriptions ne peuvent être annulées que par les professeurs. Êtes-vous sûr de vouloir cette inscription ?')" >inscription</button>
+<input type='hidden' name='eleve_id' value=<?=$eleve_id?> >
+<? if ($this->session->userdata['profil']> 3) { ?>
+	<button type='submit' name='inscription' disabled >Forcer inscription</button>
+<?} else { ?>
+<button type='submit' name='inscription' disabled onclick="return confirm('Les inscriptions ne peuvent être annulées que par les professeurs. Êtes-vous sûr de vouloir cette inscription ?')" >Demander inscription</button>
+<? } ?>
 </form></center>
 </li>
 </ul>
