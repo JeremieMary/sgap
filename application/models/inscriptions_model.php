@@ -32,6 +32,12 @@ class Inscriptions_model extends CI_Model {
 		return($res);	
 	}
 	
+	function delete( $accompagnement_id, $eleve_id )
+	{
+		$this->db->delete('inscriptions', array('eleve_id' => $eleve_id, 'accompagnement_id'=>$accompagnement_id)); 
+		//Supprimer aussi les absences et commentaires ? 
+	}
+	
 	function rencontre( $classe, $groupe, $accompagnement_id ) {
 		$this->db->select('users.id AS eleve_id');
 		$this->db->from('users');

@@ -80,7 +80,7 @@
 </div>
 
 <div id='masscom'>
-<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les élèves inscrits à cet accompagnement après envoi.' id='masstxt' />
+<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les élèves inscrits à cet accompagnement.' id='masstxt' />
 <button type='submit' id='massperso'>Envoyer</button>
 </div>
 
@@ -180,8 +180,9 @@ function affichePresences(eleves){
 				ans+= "<td>"+eleves[i].classe+ " / "+eleves[i].groupe+ "</td>"
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
-				ans+= "<td><span><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
-				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button>'
+				ans+= "<td><span class='com'><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
+				ans+= '<td><span class="inf"><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></span>'
+				ans+=  '<button class="deleteInscription" eleve_id="'+eleves[i].eleve_id+'" accompagnement_id="'+eleves[i].accompagnement_id+'" >Désinscrire</button></a>'
 				<?if ($this->session->userdata['profil']>3) { ?>
 					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue</button></a>'
 				<?}?>
@@ -233,6 +234,21 @@ function setCommentaire(){
 	})
 }	
 
+function deleteInscription(){
+	if (!confirm('Confirmez-vous la désincription ?')) return;
+	var eleve_id = $(this).attr('eleve_id') 
+	var accompagnement_id = $(this).attr('accompagnement_id') 
+	var myurl = '<?=site_url()?>/inscription/delete/'+accompagnement_id+'/'+eleve_id;
+	$.ajax({
+		url:myurl,
+	}).done(function(data) {
+		if (!data.logged) window.location.reload()
+		flashmsg('Inscription supprimée')
+		activateSuscribe()	 
+	})
+}	
+
+
 function dateSelectorHandler(){
 	$("#datesSelector ul li").click(function(){
 		$('#datesSelector ul li').removeClass('highlight')
@@ -246,8 +262,11 @@ function dateSelectorHandler(){
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
-			tabnav( $("#liste_presence table span") )
+			tabnav( $("#liste_presence table span.com") )
+			tabnavi( $("#liste_presence table span.inf") )
+			tabnavi( $("#nonInscrits table span.inf") )
 			$('#liste_presence .infosEleves').focus(infosEleve)
+			$('#liste_presence .deleteInscription').click(deleteInscription)
 			$("#liste_presence .presenceButton").click(presenceHandler)
 			$("#liste_presence input.commentaire").change(setCommentaire)
 			if (data.presences.length && that.hasClass('nonvalidee') ) {
@@ -378,7 +397,7 @@ function afficheNonInscrits(eleves){
 				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td>"+eleves[i].classe+"</td>"
 				ans+= "<td>"+eleves[i].groupe+"</td>"
-				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button>' 
+				ans+= '<td><span class="inf"><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></span>' 
 				<?if ($this->session->userdata['profil']>3) { ?>
 					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue élève</button></a>'
 				<?}?>	
@@ -409,6 +428,7 @@ function inscriptionRencontre(classe, groupe, accompagnement_id){
 		context: document.body 
 	}).done(function(data) {
 		if (!data.success) window.location.reload()
+		flashmsg('Inscriptions effectuées')
 		activateSuscribe()
 	})
 }

@@ -43,7 +43,7 @@
 <li> <center><? echo form_open('eleve/inscription',array('id' => 'inscriptionForm')); ?>	
 <input type='hidden' name='matiere_id' value=''>
 <input type='hidden' name='cycle_id' value=''>
-<button type='submit' name='inscription' disabled >inscription</button>
+<button type='submit' name='inscription' disabled onclick="return confirm('Les inscriptions ne peuvent être annulées que par les professeurs. Êtes-vous sûr de vouloir cette inscription ?')" >inscription</button>
 </form></center>
 </li>
 </ul>

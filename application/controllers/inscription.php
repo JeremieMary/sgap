@@ -37,6 +37,15 @@ class Inscription extends CI_Controller {
 		}
 	}
 	
+	public function delete($accompagnement_id, $eleve_id){
+		$this->required(2);
+		$this->inscriptions_model->delete( $accompagnement_id, $eleve_id );
+		$json['logged']=true;
+		$json['success']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);	
+	}
+	
 	public function rencontre( $classe, $groupe, $accompagnement_id ) {
 		$this->required(2);
 		$this->inscriptions_model->rencontre( $classe, $groupe, $accompagnement_id );
