@@ -174,7 +174,7 @@ function display_dates(seances){
 		var ds = dayNames[d.getDay()]+" "+curr_date + "/" + curr_month + "/" + curr_year
 		if (seances[i].validee==1) cl='validee'; else cl='nonvalidee';
 		var prof = seances[i].nom_prof +"  "+ seances[i].prenom_prof 
-		ret+='<li date_sql="'+seances[i].date+'" dateday="'+dayNames[d.getDay()]+'" date="'+ds+'" seance_id='+seances[i].seance_id+' class='+cl+'>'+ ds + " - " + prof
+		ret+='<li date_sql="'+seances[i].date+'" dateday="'+dayNames[d.getDay()]+'" date="'+ds+'" seance_id='+seances[i].seance_id+' accompagnement_id="'+seances[i].accompagnement_id+'" class='+cl+'>'+ ds + " - " + prof
 	}
 	ret+='</ul>'
 	return(ret);
@@ -188,6 +188,7 @@ function dateSelectorHandler(){
 		var that=$(this);
 		var seance_id=$(this).attr('seance_id')
 		var date=$(this).attr('date')
+		var accompagnement_id=$(this).attr('accompagnement_id')
 		var date_sql=$(this).attr('date_sql')
 		var dateday=$(this).attr('dateday')
 		var cycle_id=$('.cycles .highlight').attr('name');
@@ -203,7 +204,7 @@ function dateSelectorHandler(){
 		
 		var txt = "Affecter la séance du "+ date+ " à <strong>"+ pr +"</strong> <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
-		var txt2 = "Affecter toutes les séances des "+ dateday+ " de ce cycle à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		var txt2 = "Affecter toutes les séances des "+ dateday+ " de cet accompagnement à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
 		$('#reaffecter').html(txt+'<br/>'+txt2)
 		if (!active) {
@@ -222,7 +223,7 @@ function dateSelectorHandler(){
 			});
 		})
 		
-		myurl2 = '<?=site_url()?>/seances/setProfesseurByDay/'+cycle_id+'/'+prof_id+'/'+date_sql;
+		myurl2 = '<?=site_url()?>/seances/setProfesseurByDay/'+accompagnement_id+'/'+prof_id+'/'+date_sql;
 		$('#submitReaffectMultiple').click(function(){
 			$.ajax({
 				url:myurl2, 

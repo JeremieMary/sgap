@@ -115,11 +115,11 @@ class Seances_model extends CI_Model {
 		return(true);
 	}
 	
-	function setProfesseurByDay($cycle_id, $enseignant_id, $date)
+	function setProfesseurByDay($accompagnement_id, $enseignant_id, $date)
 	{
-	/*	$this->db->where(array('id'=>$cycle_id ));
+		$this->db->where(array('accompagnement_id'=>$accompagnement_id ));
+		$this->db->where(array('date'=>$date ));
 		$this->db->update('seances', array("enseignant_id"=>$enseignant_id) );
-	*/
 		return(true);
 	}
 }
