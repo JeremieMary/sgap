@@ -25,6 +25,7 @@ class Admin extends CI_Controller {
 		$this->session->userdata['forcemode']=true;
 		$this->session->userdata['forced_id']=$eleve_id;
 		$nom_data=$this->users_model->getNameOf($eleve_id)[0];
+		$data['eleve_id']=$eleve_id;
 		$data['nom']= strtoupper($nom_data['nom']).' '.$nom_data['prenom'];
 		$data['title']='Élève - Mode forcé';
 		$data['messages'] = $this->session->flashdata('messages');

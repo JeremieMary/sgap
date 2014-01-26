@@ -203,7 +203,7 @@ table {
 	font-weight: normal;
 	text-decoration: none;
 }
-.cycles ul li:hover, .matieres ul li:hover,  .profs ul li:hover,.salles ul li:hover {
+.cycles ul li:hover, .matieres ul li:hover,  .profs ul li:hover,.salles ul li:hover, #inscriptionRencontre ul li:hover {
 	background:#fbf8e9;
 }
 
@@ -392,6 +392,7 @@ h3 {
 
 #commentaire textarea {
 	width : 100%;
+	min-height:0;
 }
 
 #presence table, div.historique table{
@@ -434,11 +435,22 @@ h3 {
 	display:inline;
 }
 
+#inscriptionRencontre{
+	display:none;
+}
+#inscriptionRencontre ul {
+	width : 15em;
+}
+
 li.rencontre {
 	background:#fdf;
 }
 
 li.rencontre:hover{
 	background:#ffeaff !important;
+}
+
+td a  {
+	text-decoration:none;
 }
 

@@ -80,9 +80,21 @@
 </div>
 
 <div id='masscom'>
-<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les élèves inscrits à cet accompagnement' id='masstxt' />
+<input type='text' placeholder='Cette zone sert à écrire un commentaire personnalisé qui sera affecté à tous les élèves inscrits à cet accompagnement après envoi.' id='masstxt' />
 <button type='submit' id='massperso'>Envoyer</button>
 </div>
+
+<?if (count($cg)>0) {?>
+	<div id='inscriptionRencontre'>
+		<h3>Gestion des inscriptions aux parcours rencontre</h3>
+<ul>
+<? foreach ($cg as $c){ 
+	echo '<li classe="'.$c['classe'].'" groupe="'.$c['groupe'].'"> Classe :'.$c['classe'].', groupe '.$c['groupe'].'</li>';
+}?>	
+</ul>
+<button id="submitRencontre">Inscrire le groupe</button>
+</div>
+<?}?>
 
 
 <? if ($this->session->userdata['profil']>2) {  ?>
@@ -168,7 +180,11 @@ function affichePresences(eleves){
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
 				ans+= "<td><span><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
-				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
+				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button>'
+				<?if ($this->session->userdata['profil']>3) { ?>
+					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue élève</button></a>'
+				<?}?>
+				ans+='</td>'
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"
@@ -305,6 +321,12 @@ function activateSuscribe(){
 			$('#nbInscrits').html(data.nb_inscrits);
 			$('#horaire').html(data.horaire);
 			$('#type').html(data.type);
+			if (data.type=="Rencontre"){
+				$("#submitRencontre").attr('accompagnement_id',data.accompagnement_id)
+				$('#inscriptionRencontre').show('slow')
+			} else {
+				$('#inscriptionRencontre').hide('slow')
+			}
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
 			$("#validerSeance button").prop("disabled", true);
 			$("#validerSeance button").addClass("unactivated");	
@@ -347,14 +369,19 @@ function infosEleve(){
 }
 
 function afficheNonInscrits(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Groupe</th><th></th></tr></thead><tbody>"
 		for(var i=0;i<eleves.length;++i) {
 				ans+= "<tr eleve_id='"+eleves[i].eleve_id+"'>"
 				ans+= "<td>"+eleves[i].nom.toUpperCase()+ "</td>"
 				prenom = eleves[i].prenom[0].toUpperCase() + eleves[i].prenom.substring(1);
 				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td>"+eleves[i].classe+"</td>"
-				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></td>'
+				ans+= "<td>"+eleves[i].groupe+"</td>"
+				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button>' 
+				<?if ($this->session->userdata['profil']>3) { ?>
+					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue élève</button></a>'
+				<?}?>	
+				ans+= '</td>'
 				ans+="</tr>" 
 			}
 		ans+="</tbody></table>"
@@ -371,6 +398,17 @@ function remplirListeDesNonInscrits(cycle_id){
 		$('#nonInscrits').html(afficheNonInscrits(data.liste))
 		$('#nonInscrits table').tablesorter()
 		$('#nonInscrits .infosEleves').focus(infosEleve)
+	})
+}
+
+function inscriptionRencontre(classe, groupe, accompagnement_id){
+	myurl = '<?=site_url()?>/inscription/rencontre/'+classe+'/'+groupe+'/'+accompagnement_id;
+	$.ajax({
+		url:myurl, 
+		context: document.body 
+	}).done(function(data) {
+		if (!data.success) window.location.reload()
+		activateSuscribe()
 	})
 }
 
@@ -394,6 +432,23 @@ $(document).ready(function() {
 		$('#inscriptionForm input[name="matiere_id"]').val(matiere_id)
 		unactivateCycles(matiere_id)
 		activateSuscribe()
+	})
+	
+	$("#inscriptionRencontre ul li").click(function(){
+		$('#inscriptionRencontre .highlight').removeClass('highlight')
+		$(this).toggleClass('highlight')
+	})
+	
+	$('#submitRencontre').click(function(){
+		var s = $("#inscriptionRencontre ul li.highlight")
+		var groupe=s.attr('groupe')
+		var classe=s.attr('classe')
+		if (groupe === undefined ) {
+			alert("Il est nécessaire de sélectioner le groupe à inscrire au parcours rencontre") 
+		} else {
+			var accompagnement_id=$(this).attr('accompagnement_id')
+			inscriptionRencontre(classe, groupe, accompagnement_id)
+		}
 	})
 	
 	$("#massperso").click(function(){

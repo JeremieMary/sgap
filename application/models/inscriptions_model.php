@@ -22,7 +22,7 @@ class Inscriptions_model extends CI_Model {
 		$query=$this->db->get();
 		$inscrits=$query->result_array();
 		
-		$this->db->select('users.id AS eleve_id, nom, prenom, classe');
+		$this->db->select('users.id AS eleve_id, nom, prenom, classe, groupe');
 		$this->db->from('users');
 		$this->db->where(array('profil'=>1));
 		$this->db->where_not_in(array('users.id'=>$inscrits));
@@ -32,6 +32,18 @@ class Inscriptions_model extends CI_Model {
 		return($res);	
 	}
 	
+	
+	function getGroups(){
+		$this->db->select('classe, groupe');
+		$this->db->distinct();
+		$this->db->from('users');
+		$this->db->where(array('profil'=>1));
+		$this->db->order_by("classe", "asc");
+		$this->db->order_by("groupe", "asc");
+		$query=$this->db->get(); 
+		$res=$query->result_array();
+		return($res);	
+	}
 	
 	function getHistory($eleve_id)
 	{
