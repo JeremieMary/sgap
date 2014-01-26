@@ -159,7 +159,7 @@ function display_dates(seances){
 }
 
 function affichePresences(eleves){
-		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Présence</th><th>Commentaire individuel (commun à toutes les dates de l'accompagnement) </th><th></th></tr></thead><tbody>"
+		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe / Groupe</th><th>Présence</th><th>Commentaire individuel (commun à toutes les dates) </th><th></th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
 		var cla;
@@ -177,12 +177,13 @@ function affichePresences(eleves){
 				ans+= "<td>"+eleves[i].nom.toUpperCase()+ "</td>"
 				var prenom = eleves[i].prenom[0].toUpperCase() + eleves[i].prenom.substring(1);
 				ans+= "<td>"+prenom+"</td>"
+				ans+= "<td>"+eleves[i].classe+ " / "+eleves[i].groupe+ "</td>"
 				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
 				ans+= "<td><span><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
 				ans+= '<td><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button>'
 				<?if ($this->session->userdata['profil']>3) { ?>
-					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue élève</button></a>'
+					ans+=   '<a href="<?=site_url()?>/admin/vueEleve/'+eleves[i].eleve_id+'"> <button class="vueEleves" eleve_id="'+eleves[i].eleve_id+'">Vue</button></a>'
 				<?}?>
 				ans+='</td>'
 				ans+="</tr>" 

@@ -32,6 +32,17 @@ class Inscriptions_model extends CI_Model {
 		return($res);	
 	}
 	
+	function rencontre( $classe, $groupe, $accompagnement_id ) {
+		$this->db->select('users.id AS eleve_id');
+		$this->db->from('users');
+		$this->db->where(array('classe'=>$classe, 'groupe'=>$groupe));
+		$query=$this->db->get(); 
+		$inscriptions=$query->result_array();
+		foreach ($inscriptions as &$ins){
+			$ins['accompagnement_id']=$accompagnement_id ;
+		}
+		$this->db->insert_batch('inscriptions', $inscriptions );
+	}
 	
 	function getGroups(){
 		$this->db->select('classe, groupe');

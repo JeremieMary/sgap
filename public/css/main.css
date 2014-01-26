@@ -440,6 +440,7 @@ h3 {
 }
 #inscriptionRencontre ul {
 	width : 15em;
+	line-height:1.1em;
 }
 
 li.rencontre {
@@ -448,6 +449,10 @@ li.rencontre {
 
 li.rencontre:hover{
 	background:#ffeaff !important;
+}
+
+li.rencontre.highlight{
+	background:#eecafe !important;
 }
 
 td a  {

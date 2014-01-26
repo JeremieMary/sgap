@@ -51,7 +51,7 @@ class Seances_model extends CI_Model {
 	
 	function getPresences($seance_id)
 	{
-		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, seances.id AS seance_id, inscriptions.commentaire AS commentaire, inscriptions.accompagnement_id' );
+		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, users.groupe, seances.id AS seance_id, inscriptions.commentaire AS commentaire, inscriptions.accompagnement_id' );
 		$this->db->from('inscriptions');
 		$this->db->where(array('seances.id'=>$seance_id));
 		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');

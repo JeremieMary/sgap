@@ -37,6 +37,15 @@ class Inscription extends CI_Controller {
 		}
 	}
 	
+	public function rencontre( $classe, $groupe, $accompagnement_id ) {
+		$this->required(2);
+		$this->inscriptions_model->rencontre( $classe, $groupe, $accompagnement_id );
+		$json['logged']=true;
+		$json['success']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);	
+	}
+	
 	public function getNonInscrits($cycle_id){
 		$this->required(2);
 		$json['liste']=$this->inscriptions_model->getNonInscrits($cycle_id);
