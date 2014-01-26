@@ -33,7 +33,7 @@
 	<h3>Création d'accompagnement</h3>
 	<div id='creation_accompagnement'>
 	<div class="cycles">
-		<label> Cycles </label>
+		<label> Cycle </label>
 	<ul>
 		<? foreach ($cycles as $cycle){?>
 			<li name='<?=$cycle["id"]?>'> <?=datefr($cycle['debut']);?>
@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="matieres">
-		<label> Matières </label>
+		<label> Matière </label>
 	<ul>
 		<? foreach ($matieres as $matiere){?>
 			<li name='<?=$matiere["id"]?>'> <?=$matiere['nom']?>
