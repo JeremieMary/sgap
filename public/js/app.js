@@ -40,3 +40,5 @@ function flashmsg(message) {
     $('#flash').fadeIn('fast');
     $('#flash').fadeOut(3000,function(){$('#flash').remove()} );
 }
+
+

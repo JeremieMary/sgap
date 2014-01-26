@@ -42,6 +42,16 @@ class Seances extends CI_Controller {
 		$this->load->view('templates/json', $data);
 	}
 
+	public function getIdsAndDatesWithProfs($cycle_id, $matiere_id)
+	{
+		$this->required(2);
+		$ids=$this->seances_model->getIdsAndDatesWithProfs($cycle_id, $matiere_id);
+		$json['seances_ids']=$ids;
+		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);
+	}
+
 	public function getInfosOf($eleve_id)
 	{
 		$this->required(2);
@@ -103,4 +113,14 @@ class Seances extends CI_Controller {
 		$data['json']=$json;
 		$this->load->view('templates/json', $data);
 	}
+	
+	public function setProfesseur( $seance_id, $enseignant_id ){
+		$this->required(3);
+		$success=$this->seances_model->setProfesseur($seance_id, $enseignant_id);	
+		$json['success']=$success;
+		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);
+	}
+	
 }

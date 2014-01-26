@@ -34,6 +34,22 @@ class Seances_model extends CI_Model {
 		
 	}
 	
+	function getIdsAndDatesWithProfs($cycle_id, $matiere_id)
+	{
+		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
+		// ,'accompagnement.actif'=>1
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id, users.nom AS nom_prof, users.prenom AS prenom_prof');
+		$this->db->from('seances');
+		$this->db->where($accompagnement);
+		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
+		$this->db->join('users', 'seances.enseignant_id = users.id');
+		$query=$this->db->get();	
+		$res=$query->result_array();
+		return($res);	
+		
+	}
+	
 	function setAbsence($seance_id, $eleve_id, $abs){
 		if ($abs == 'true'){
 			$data = array(
@@ -89,6 +105,13 @@ class Seances_model extends CI_Model {
 	{
 		$this->db->where(array('accompagnement_id'=>$accompagnement_id, 'eleve_id'=>$eleve_id));
 		$this->db->update('inscriptions', array("commentaire"=>$commentaire) );
+		return(true);
+	}
+	
+	function setProfesseur($seance_id, $enseignant_id)
+	{
+		$this->db->where(array('id'=>$seance_id ));
+		$this->db->update('seances', array("enseignant_id"=>$enseignant_id) );
 		return(true);
 	}
 	

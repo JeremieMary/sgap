@@ -5,8 +5,6 @@
 <? } ?>
 
 
-
-
 <div id='importation'>
 <h3>Importation de données</h3>
 <div class="upload_form">
@@ -32,7 +30,7 @@
 </div>
 
 <div id="bloc_accompagnement">
-	<h2>Création d'accompagnement</h2>
+	<h3>Création d'accompagnement</h3>
 	<div id='creation_accompagnement'>
 	<div class="cycles">
 		<label> Cycles </label>
@@ -53,7 +51,7 @@
 	</div>
 
 	<div class="profs">
-		<label> Enseignant/Intervenant </label>
+		<label> Professeur </label>
 	<ul>
 		<? foreach ($profs as $prof){?>
 			<li name='<?=$prof["id"]?>'> <?=strtoupper($prof['nom'])?>, <?=$prof['prenom']?>
@@ -69,7 +67,7 @@
 		<?}?>
 	</ul>
 	</div>
-	</div>
+	
 
 	<? echo form_open('accompagnement/creer',array('id' => 'accompagnementForm')); ?>	
 	<input type='hidden' name='matiere_id' value=''>
@@ -78,19 +76,35 @@
 	<input type='hidden' name='salle' value=''>
 	<button type='submit' name='creer' disabled >Créer</button>
 	</form>
+	</div>
 </div>
 
+<div id="infos_admin">
+<h3>Informations sur les séances du couple cycle/matière sélectionné</h3> 
+<ul>
+<li> Nombre de places : <span id='nbPlaces'></span> </li>
+<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+<li> Salle : <span id='salle'></span> </li>
+<li> Horaire : <span id='horaire'></span> </li>
+<li> Parcours : <span id='type'></span></li>
+<li> <div id="date_admin">
+		 	Dates :
+			<div id='datesSelector'>
+			</div>
+		</div></li>
+</ul>
+<div id="reaffecter"></div>
+</div>
 
 <div class="accompagnement">
-<h2>Liste des accompagnements </h2>
-<p><i> Note : restreindre uniquement aux actifs ?</i></p>
+<h3>Liste des accompagnements </h3>
 <? if (count($accompagnement)>0) { ?>	
-<table class="bordered">
+<table class="bordered tablesorter">
     <thead>
     <tr>
 		<?
 		//$keys = array_keys($accompagnement[0]);
-		$keys = array('Cycle','Matière','Enseignant','Salle');
+		$keys = array('Cycle','Matière','Horaire','Enseignant responsable','Salle');
 		foreach ($keys as $key ) echo "<th>$key</th>";
 		?>
 		<th></th>
@@ -104,6 +118,7 @@
 						<?=datefr($field['cycle_debut'])?>
 					</td>
 					<td><?=trim($field['matiere'])?></td>
+					<td><?=trim(strtoupper($field['horaire']))?></td>
 					<td><?=trim(strtoupper($field['nom']))?> <?=trim($field['prenom'])?></td>
 					<td><?=trim($field['salle'])?></td>
 					<? if ($field['actif']) { ?>
@@ -120,7 +135,13 @@
 </div>
 <?}?>
 
-<h2>Création de rapports</h2> 
+
+
+<h3>Liste des séances des accompagnements</h3> 
+<p>Todo ? En effet le cahier des charges ne choisit pas entre la présentation par accompagnement (ie un prof est toujours lié à toutes les dates d'un couple cycle/matière et un niveau plus fin ).</p>
+
+
+<h3>Création de rapports</h3> 
 <div id='rapports'> 
 <ul>
 <li> Liste des élèves 
@@ -140,7 +161,102 @@
 
 
 <script type='text/javascript'>
+
+
+function display_dates(seances){
+	ret='<ul>'
+	var dayNames = ['Dimanche','Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+	for(var i=0;i<seances.length;++i){
+		var d = new Date(seances[i].date)
+		var curr_date = d.getDate();
+		var curr_month = d.getMonth() + 1; //Les mois démarrent à 0
+		var curr_year = d.getFullYear();
+		var ds = dayNames[d.getDay()]+" "+curr_date + "/" + curr_month + "/" + curr_year
+		if (seances[i].validee==1) cl='validee'; else cl='nonvalidee';
+		var prof = seances[i].nom_prof +"  "+ seances[i].prenom_prof 
+		ret+='<li date_sql="'+seances[i].date+'" dateday="'+dayNames[d.getDay()]+'" date="'+ds+'" seance_id='+seances[i].seance_id+' class='+cl+'>'+ ds + " - " + prof
+	}
+	ret+='</ul>'
+	return(ret);
+}
+
+
+function dateSelectorHandler(){
+	$("#datesSelector ul li").click(function(){
+		$('#datesSelector ul li').removeClass('highlight')
+		$(this).toggleClass('highlight')
+		var that=$(this);
+		var seance_id=$(this).attr('seance_id')
+		var date=$(this).attr('date')
+		var date_sql=$(this).attr('date_sql')
+		var dateday=$(this).attr('dateday')
+		var pr
+		var prof_id=$('.profs .highlight').attr('name');
+		if (prof_id===undefined){  
+			pr = "Sélectionnez un nom dans la liste des professeurs"
+		} else {
+			pr = $('.profs .highlight').text();
+		}
+		var txt = "Affecter la séance du "+ date+ " à <strong>"+ pr +"</strong> <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		
+		var txt2 = "Affecter toutes les séances des "+ dateday+ " de ce cycle à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		
+		$('#reaffecter').html(txt+'<br/>'+txt2)
+		
+		myurl = '<?=site_url()?>/seances/setProfesseur/'+seance_id+'/'+prof_id;
+		$('#submitReaffect').click(function(){
+			$.ajax({
+				url:myurl, 
+				context: document.body 
+			}).done(function(data) {
+				if (!data.logged) window.location.reload() 
+				activateSuscribe()
+			});
+		})
+		
+		myurl2 = '<?=site_url()?>/seances/setProfesseurByDay/'+seance_id+'/'+prof_id+'/'+date_sql;
+		$('#submitReaffectMultiple').click(function(){
+			$.ajax({
+				url:myurl2, 
+				context: document.body 
+			}).done(function(data) {
+				if (!data.logged) window.location.reload() 
+				activateSuscribe()
+			});
+		})
+		
+		
+	})
+
+}
+
 function activateSuscribe(){
+	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
+		cycle_id=$('.cycles .highlight').attr('name');
+		matiere_id=$('.matieres .highlight').attr('name');
+		myurl = '<?=site_url()?>/inscription/getNbPlacesRestantes/'+cycle_id+'/'+matiere_id;
+		$.ajax({
+			url:myurl, 
+			context: document.body 
+		}).done(function(data) {
+			$('#salle').html(data.salle);
+			$('#nbPlaces').html(data.places);
+			$('#nbInscrits').html(data.nb_inscrits);
+			$('#horaire').html(data.horaire);
+			$('#type').html(data.type);
+		});
+		myurl3 = '<?=site_url()?>/seances/getIdsAndDatesWithProfs/'+cycle_id+'/'+matiere_id;
+		$.ajax({
+			url:myurl3, 
+			context: document.body 
+		}).done(function(data) {
+			if (!data.logged) window.location.reload()
+			$("#datesSelector").html(display_dates(data.seances_ids))
+			dateSelectorHandler()
+		});	
+	}
+	$("#datesSelector ul li.highlight").trigger("click")
+	
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1) && ($('.profs .highlight').length == 1)  && ($('.salles .highlight').length == 1) ) {
 		$('#accompagnementForm button[name="creer"]').prop("disabled", false);;
 		/*
@@ -226,6 +342,10 @@ $(document).ready(function() {
 		$('#accompagnementForm input[name="salle"]').val( $(this).html() );
 		activateSuscribe();
 	})
+	
+	
+	
+	$('div.accompagnement table').tablesorter()
 	
 });
 </script>

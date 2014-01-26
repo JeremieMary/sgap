@@ -219,12 +219,7 @@ li.highlight:hover {
 }
 
 .accompagnement{
-	overflow: auto;
-    width:50%;
-	height:40%;
-	margin-top:5%;
 	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
 }
 
 li.unactivated{
@@ -232,30 +227,26 @@ li.unactivated{
 }
 
 #importation{
-	float:left;
-    width:40%;
-	height:25%;
 	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
 }
 
 #bloc_accompagnement {
-	height:25%;
-	width:45%;
-	margin-left:45%;
-	margin-right:5%;
-	padding:1em 1em 1em 1em;
-	box-shadow: 1px 1px 12px #555;
+	padding:1em 1em 1em 1em;	
 }
 
 #creation_accompagnement{
-	height:35%;
-	width:auto;
+	/* border:solid 1px; */
 	overflow-y: scroll;
-	border:solid 1px;
-	margin-bottom:2em;
 }
 
+#creation_accompagnement div {
+	max-height:20em;
+	overflow-y: scroll;
+}
+
+.profs::-webkit-scrollbar:vertical {
+    width: 11px;
+}
 
 #datesSelector .validee{
 	color:green;	
@@ -342,6 +333,11 @@ background-color: #8dbdd8;
 
 #presence {
 	height:auto;
+}
+
+#rapports {
+	display:block;
+	clear:both;
 }
 
 #rapports form{
@@ -460,4 +456,11 @@ td a  {
 }
 #cycle_matiere_eleve .infos {
 	min-height:22em;
+}
+#infos_admin{
+	padding:1em;
+}
+#date_admin #datesSelector{
+	padding-left:2em;
+	width:20em;
 }
