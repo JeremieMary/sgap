@@ -29,7 +29,8 @@
 }
 
 #top a:hover {
-	color: #840C83;
+	/* color: #840C83; */
+	color: #c45Cc3;
 }	
 
 #top li{
