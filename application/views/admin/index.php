@@ -190,18 +190,26 @@ function dateSelectorHandler(){
 		var date=$(this).attr('date')
 		var date_sql=$(this).attr('date_sql')
 		var dateday=$(this).attr('dateday')
+		var cycle_id=$('.cycles .highlight').attr('name');
 		var pr
+		var active = true
 		var prof_id=$('.profs .highlight').attr('name');
 		if (prof_id===undefined){  
 			pr = "Sélectionnez un nom dans la liste des professeurs"
+			active = false
 		} else {
 			pr = $('.profs .highlight').text();
 		}
+		
 		var txt = "Affecter la séance du "+ date+ " à <strong>"+ pr +"</strong> <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
 		var txt2 = "Affecter toutes les séances des "+ dateday+ " de ce cycle à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
 		$('#reaffecter').html(txt+'<br/>'+txt2)
+		if (!active) {
+			$("#submitReaffect").prop("disabled", true);
+			$("#submitReaffectMultiple").prop("disabled", true);
+		}
 		
 		myurl = '<?=site_url()?>/seances/setProfesseur/'+seance_id+'/'+prof_id;
 		$('#submitReaffect').click(function(){
@@ -214,7 +222,7 @@ function dateSelectorHandler(){
 			});
 		})
 		
-		myurl2 = '<?=site_url()?>/seances/setProfesseurByDay/'+seance_id+'/'+prof_id+'/'+date_sql;
+		myurl2 = '<?=site_url()?>/seances/setProfesseurByDay/'+cycle_id+'/'+prof_id+'/'+date_sql;
 		$('#submitReaffectMultiple').click(function(){
 			$.ajax({
 				url:myurl2, 

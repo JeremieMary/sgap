@@ -123,4 +123,12 @@ class Seances extends CI_Controller {
 		$this->load->view('templates/json', $data);
 	}
 	
+	public function setProfesseurByDay( $cycle_id, $enseignant_id, $date ){
+		$this->required(3);
+		$success=$this->seances_model->setProfesseurByDay($cycle_id, $enseignant_id, $date);	
+		$json['success']=$success;
+		$json['logged']=true;
+		$data['json']=$json;
+		$this->load->view('templates/json', $data);
+	}
 }
