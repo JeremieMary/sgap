@@ -49,19 +49,19 @@
 	}
 	
 	.form-bg {
-		width: 370px;
-		height: 248px;
+		width: 30em;
+		height: 22em;
 		-moz-border-radius:9px;
 		-webkit-border-radius:9px;
 		border-radius:9px;
 		margin: 150px auto 0;
 		background: url(../images/form-bg.png) top left;
-		padding: 8px 0 0 8px; 
+		/* padding: 8px 0 0 8px; */
 		}
 	
 	.form-bg form {
-		width: 360px;
-		height: 239px;
+		width: 30em;
+		height: 20em;
 		background: #fff url(../images/bg_form.jpg) repeat-x top left;		
 		-moz-border-radius:4px;
 		-webkit-border-radius:4px;
@@ -93,6 +93,10 @@
 		color: #aeaeae;
 		border: 1px solid #bec2c4;
 	}
+	
+    #login label {
+    	line-height: 2em;
+    }
 	
 	input[type="text"]:focus, input[type="password"]:focus{
 		box-shadow: 0px 0px 0px 4px #e0f1fc;
@@ -142,11 +146,11 @@
 	p.forgot {
 		text-align: center;
 		margin-top: 10px;
-		margin-left:-55px;
-		color: #fff;
-		font-size: 12px;
+		/* margin-left:-55px; */
+		/* color: #fff; */
+		font-size: 13px;
 		font-weight: bold;
-		text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+		/* text-shadow: 0 1px 0 rgba(0,0,0,0.3); */
 	}
 	
 	p.forgot a {

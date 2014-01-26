@@ -43,13 +43,12 @@
 /* #Basic Styles
 ================================================== */
 	body { 
-		/* background: url(../images/bg.jpg) #10a5d3; */
-		font: 14px/21px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font: 14px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 		color: #444; 
 		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 		-webkit-text-size-adjust: none;
  }
-	
+
 
 /* #Typography
 ================================================== */
@@ -67,6 +66,7 @@
 	.subheader { color: #777; }
 
 	p { margin: 0 0 20px; }
+	#login p { margin: 0 2em 2em 2em; }
 	p img { margin: 0; }
 	p.lead { font-size: 21px; line-height: 27px; color: #777;  }
 	

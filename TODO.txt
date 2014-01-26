@@ -3,6 +3,8 @@
 - Terminer les rapports pour l'administrateur
 - relecture générale pour vérification
 - Ajouter un bouton "reset" de la BD (sauf admins)
+- Du beau CSS pour les boutons ?
+
 
 Pour une V2:
 - Ecrire un système de notification et requêtes uniformisé en javascript
