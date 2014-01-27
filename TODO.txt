@@ -2,7 +2,6 @@
 - les validations d’inscriptions ne sont pas faites (admin à bien un bypass mais il n’y a pas assez de vérifications pour les élèves) 
 - Du beau CSS pour les boutons ?
 - Revoir la présentation dans la page d'administration  ?
-- Crypter les passwords dans la BD
 - relecture générale pour vérification
 
 Pour une V2:
