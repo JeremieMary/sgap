@@ -195,6 +195,14 @@ class Admin extends CI_Controller {
 			$this->load->dbutil();
 			$this->load->helper('download');
 			$new_report=$this->dbutil->csv_from_result($report, ";", "\n");	
+			$new_report=substr( $new_report, strpos($new_report, "\n")+1 );
+			$fl = '';
+			$keys = array_keys($data['json'][0]);
+			foreach ($keys as $key ) {
+				$fl = $fl.'"'.ucfirst($key).'";';
+			}
+			//$fl=rtrim($fl, ";");
+			$new_report=$fl."\n".$new_report;	
 			force_download("$name.csv", $new_report); 
 		} else {
 			$this->load->view('templates/header',$data);
