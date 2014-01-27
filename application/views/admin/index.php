@@ -144,18 +144,32 @@
 <h3>Création de rapports</h3> 
 <div id='rapports'> 
 <ul>
-<li> Liste des élèves 
-<?php echo form_open('admin/rapportEleves');?>
-<input type="submit" value="visualiser" />
-</form>
 
-<?php echo form_open('admin/rapportEleves/csv');?>
-<input type="submit" value="exporter le fichier csv" />
-</form>
+<?
+$rapports = array( 'Eleves'=>'Liste des élèves',
+				   'Inscriptions'=>'Liste des inscriptions',
+				   'Absents'=>'Liste des absents',
+				   'NonInscrits' => 'Liste des non-inscrits',
+				   'Professeurs'=>'Rapport par professeur',
+				   'Matieres'=>'Rapport par matière'
+	  );
+?>
+
+<? foreach ($rapports as $cont=>$text ) { ?>
+<li> <?=$text?>
+	<?= form_open("admin/rapport/$cont/$text/txt");?>
+	<input type="submit" value="visualiser" />
+	</form>
+
+	<?= form_open("admin/rapport/$cont/$text/csv");?>
+	<input type="submit" value="exporter le fichier csv" />
+	</form>
 </li>
-<li> second rapport
+<? } ?>
 
 </ul>
+
+<p class='astuce'>Je ne vois pas l'usage de la liste des non-inscrits en effet j'avais cru comprendre que chaque élève devait avoir une inscription pour chaque cycle ??? Ici l'on affiche que les élève sans aucune inscription conformément au cahier des charges. </p>
 
 </div>
 
@@ -351,8 +365,6 @@ $(document).ready(function() {
 		$('#accompagnementForm input[name="salle"]').val( $(this).html() );
 		activateSuscribe();
 	})
-	
-	
 	
 	$('div.accompagnement table').tablesorter()
 	

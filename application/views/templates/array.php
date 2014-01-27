@@ -1,4 +1,7 @@
-<table class="bordered">
+<? if (isset($title) ) { ?>
+<h3> <?=$title?> </h3>
+<? }?>
+<table class="bordered tablesorter">
     <thead>
     <tr>
 		<?
@@ -19,3 +22,9 @@
     </tbody>
  
 </table>
+
+<script>
+$(document).ready(function() {
+	$('.tablesorter').tablesorter()
+})
+</script>

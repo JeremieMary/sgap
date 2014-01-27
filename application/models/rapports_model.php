@@ -6,7 +6,7 @@ class Rapports_model extends CI_Model {
 		$this->load->database();
 	}
 	
-	function getListeElevesCSV(){
+	function getListeEleves(){
 		$this->db->select('classe, id, nom, prenom');
 		$this->db->from('users');
 		$this->db->where(array('profil'=>1));

@@ -167,24 +167,34 @@ class Admin extends CI_Controller {
 		redirect('admin');
 	}
 	
-	public function exportToCSV() {
+	public function rapport( $cont, $name, $type ){
 		$this->load->model('rapports_model');
-		$report = $this->rapports_model->getListeElevesCSV();
+		$data['title'] = rawurldecode($name);
+		switch($cont) {
+			case 'Eleves': 
+				$report = $this->rapports_model->getListeEleves();
+				break;
+			case 'Inscriptions':
+			break;
+			case 'Absents': break;
+			case 'NonInscrits': break; 
+			case 'Professeurs': break;
+			case 'Matieres': break;	
+		}
+		$data['json'] = $report->result_array();
+		if ( $type == 'csv' ) {
+			$this->load->dbutil();
+			$this->load->helper('download');
+			$new_report=$this->dbutil->csv_from_result($report, ";", "\n");	
+			force_download("$name.csv", $new_report); 
+		} else {
+			$this->load->view('templates/header',$data);
+			$this->load->view('templates/array',$data);
+			$this->load->view('templates/footer');
+		}	
+	}
 	
-		$this->load->dbutil();
-		$this->load->helper('download');
-		$new_report=$this->dbutil->csv_from_result($report, ";", "\n");	
-		force_download('listeEleves.csv', $new_report); 		
-	}
 
-	public function rapportEleves(){
-		$this->load->model('rapports_model');
-		$data['liste'] = $this->rapports_model->getListeElevesCSV();
-		
-		$this->load->view('templates/header',$data);
-		$this->load->view('admin/rapport',$data);
-		$this->load->view('templates/footer');
-	}
 
 
 }
