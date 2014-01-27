@@ -101,6 +101,21 @@ class Seances_model extends CI_Model {
 		return($res);	
 	}
 	
+	function getSeancesOf($prof_id)
+	{
+		$this->db->select('users.nom, prenom AS prénom, matieres.nom AS matière, seances.date, seances.id AS seance_id, matieres.id AS matiere_id, cycle_id, cycles.horaire AS horaire, accompagnement.salle');
+		$this->db->from('users');
+		$this->db->join('seances', 'seances.enseignant_id = users.id');
+		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
+		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
+		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
+		$this->db->where(array('users.id'=>$prof_id));
+		$this->db->order_by("date");
+		$query=$this->db->get();
+		$res=$query->result_array();
+		return($res);	
+	}
+	
 	function setCommentaire($accompagnement_id, $eleve_id, $commentaire)
 	{
 		$this->db->where(array('accompagnement_id'=>$accompagnement_id, 'eleve_id'=>$eleve_id));

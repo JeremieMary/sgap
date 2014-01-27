@@ -4,6 +4,38 @@
 	</div>
 <? } ?>
 
+<? if (count($seancesProf)>0) {?>
+<div id="seancesResume">
+	<h3>Liste des séances vous étant attribuées.</h3>
+	<table class="bordered tablesorter">
+	    <thead>
+	    <tr>
+			<?
+			//$keys_public = array_keys($seancesProf[0]);
+			$keys_public = array('matière','date','salle','horaire');
+			$keys_hidden = array('seance_id', 'matiere_id', 'cycle_id');
+			foreach ($keys_public as $key ) echo "<th>".ucfirst($key)."</th>";
+			?>
+	    </tr>
+	    </thead>
+ 
+	    <tbody>
+	            <?php foreach($seancesProf as $field){?>
+	                <tr <?foreach ($keys_hidden as $key ) {echo $key.'="'.$field[$key].'"';}?> >
+						<?
+						foreach ($keys_public as $key ) {
+							$tmp = $field[$key];
+							//if ($key=='date') $tmp=datefr($tmp);	
+							echo "<td>$tmp</td>";
+						}
+						?>
+	                </tr>
+	            <?php }?>
+	    </tbody>
+	</table>
+</div>
+<? } ?>
+
 
 <div id="cycle_matiere">
 	<div class="cycles">
@@ -49,17 +81,6 @@
 		</div>
 	
 </div>
-
-
-
-<!--
-<h2>Liste des inscrits à cet accompagnement</h2>
-<div class="inscrits">
-</div>
--->
-
-
-<!-- <h2>Séances</h2> -->
 
 
 <div id="commentaire">
@@ -117,7 +138,10 @@
 </form>
 
 
+
+
 <script type='text/javascript'>
+var selected_seance = 0;
 var accompagnement=<?=json_encode( $accompagnement )?>	
 
 function unactivateMatieres(cycle_id){
@@ -294,11 +318,17 @@ function dateSelectorHandler(){
 			
 		});
 	});
-	if ( $("#datesSelector ul li.nonvalidee:first").length==0 ){
-		$("#datesSelector ul li:last").trigger('click')
-	 } else {
+	
+	var d=$("#datesSelector li[seance_id="+selected_seance+"]")
+	if (selected_seance.length === 0 ){
+		if ( $("#datesSelector ul li.nonvalidee:first").length==0 ){
+			$("#datesSelector ul li:last").trigger('click')
+	 	} else {
 	 	$("#datesSelector ul li.nonvalidee:first").trigger('click')
-	 }
+	 	}
+ 	} else {
+ 		d.trigger('click')
+ 	}
 }
 
 
@@ -489,6 +519,17 @@ $(document).ready(function() {
 	}
 	})
 	
+	
+	$("#seancesResume tr").click( function(){
+		var cycle_id=$(this).attr("cycle_id")
+		var matiere_id=$(this).attr("matiere_id")
+		selected_seance=$(this).attr("seance_id")
+		$(".cycles li[name="+cycle_id+"]").trigger('click')
+		$(".matieres li[name="+matiere_id+"]").trigger('click')
+		console.log(cycle_id)
+		console.log(matiere_id)
+		
+	})
 	
 });
 </script>
