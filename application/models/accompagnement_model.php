@@ -20,6 +20,8 @@ class Accompagnement_model extends CI_Model {
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->join('users', 'users.id = accompagnement.enseignant_id');
 		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
+		$this->db->order_by("matieres.nom", "asc"); 
+		$this->db->order_by("cycles.debut", "asc");
 		$query=$this->db->get();	
 		return($query->result_array());
 	}
@@ -32,8 +34,8 @@ class Accompagnement_model extends CI_Model {
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->join('users', 'users.id = accompagnement.enseignant_id');
 		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
-		$this->db->order_by("matieres.type", "asc");
-		$this->db->order_by("matieres.nom", "asc"); 
+		$this->db->order_by("matieres.nom", "asc");
+		$this->db->order_by("cycles.debut", "asc"); 
 		$query=$this->db->get();	
 		return($query->result_array());
 	}
