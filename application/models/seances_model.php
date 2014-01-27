@@ -110,6 +110,7 @@ class Seances_model extends CI_Model {
 		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->where(array('users.id'=>$prof_id));
+		$this->db->where(array('accompagnement.actif'=>1));
 		$this->db->order_by("date");
 		$query=$this->db->get();
 		$res=$query->result_array();
