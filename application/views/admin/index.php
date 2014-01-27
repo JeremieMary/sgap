@@ -136,15 +136,13 @@
 <?}?>
 
 
-
+<div id="listeSeances" class="accompagnement">
 <h3>Liste des séances des accompagnements</h3> 
 <p>Todo ? En effet le cahier des charges ne choisit pas entre la présentation par accompagnement (ie un prof est toujours lié à toutes les dates d'un couple cycle/matière et un niveau plus fin ).</p>
 
-
-<h3>Création de rapports</h3> 
 <div id='rapports'> 
+<h3>Création de rapports</h3> 
 <ul>
-
 <?
 $rapports = array( 'Eleves'=>'Liste des élèves',
 				   'Inscriptions'=>'Liste des inscriptions',
