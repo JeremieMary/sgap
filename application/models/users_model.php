@@ -8,7 +8,8 @@ class Users_model extends CI_Model {
 		
 	function login($login, $password)  
 	{
-		$query = $this -> db -> get_where( 'users', array('login'=> $login, 'passwd'=>$password ), 1 );
+		$this->load->helper('security');
+		$query = $this -> db -> get_where( 'users', array('login'=> $login, 'passwd'=>do_hash($password) ), 1 );
 		if ($query->num_rows() == 1 ) {
 			$this->db->where('login', $login);
 			$this->db->update('users', array("lastlogin"=>date('Y-m-d H:i:s') ) );
@@ -60,8 +61,9 @@ class Users_model extends CI_Model {
 	}
 	
 	function updatePassword($login,$passwd){
+		$this->load->helper('security');
 		$this->db->where('login', $login);
-		$this->db->update('users', array("passwd"=>$passwd) ); 
+		$this->db->update('users', array("passwd"=>do_hash($passwd)) ); 
 	}
 
 	function resetPassword($mail) {
