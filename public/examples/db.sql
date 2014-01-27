@@ -1,23 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.7deb7
+-- version 4.0.6
 -- http://www.phpmyadmin.net
 --
--- Serveur: localhost
--- Généré le : Mer 22 Janvier 2014 à 11:20
--- Version du serveur: 5.1.72
--- Version de PHP: 5.3.3-7+squeeze17
+-- Client: localhost
+-- Généré le: Lun 27 Janvier 2014 à 10:35
+-- Version du serveur: 5.5.33
+-- Version de PHP: 5.5.3
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 --
--- Base de données: `jeremie`
+-- Base de données: `sgap`
 --
+CREATE DATABASE IF NOT EXISTS `sgap` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `sgap`;
 
 -- --------------------------------------------------------
 
@@ -25,7 +22,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Structure de la table `accompagnement`
 --
 
-CREATE TABLE IF NOT EXISTS `accompagnement` (
+DROP TABLE IF EXISTS `accompagnement`;
+CREATE TABLE `accompagnement` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `matiere_id` int(11) NOT NULL,
   `cycle_id` int(11) NOT NULL,
@@ -42,15 +40,15 @@ CREATE TABLE IF NOT EXISTS `accompagnement` (
 --
 
 INSERT INTO `accompagnement` (`id`, `matiere_id`, `cycle_id`, `salle`, `enseignant_id`, `actif`, `commentaire`) VALUES
-(40, 1, 110, ' C	', 2, 1, 'Commentaire commun à tous les élèves pour cet accompagnement '),
-(39, 2, 110, ' C	', 3, 1, 'bbbbbbbbbbbbbbb'),
-(38, 1, 111, ' B			', 2, 1, ''),
-(41, 4, 108, ' A			', 70, 1, 'cfdf'),
-(42, 5, 110, ' C	', 64, 1, 'FOO foo discute trop avec ses camarades.'),
-(43, 3, 111, ' A			', 54, 1, ''),
-(44, 2, 111, ' C	', 6, 1, ''),
-(45, 4, 111, ' C	', 13, 1, ''),
-(46, 5, 108, ' A					', 64, 1, '');
+(40, 1, 110, ' C	', 2, 1, 'Commentaire'),
+(39, 2, 110, ' C	', 3, 1, 'test'),
+(38, 1, 111, ' B			', 2, 1, 'Proches du niveau fin de CP\n'),
+(41, 4, 108, ' A			', 70, 1, 'Groupe de vaches espagnoles'),
+(42, 5, 110, ' C	', 64, 1, ''),
+(43, 3, 111, ' A			', 54, 1, 'a = a + 1'),
+(44, 2, 111, ' C	', 6, 1, 'Graou c''est le minou'),
+(45, 4, 111, ' C	', 13, 1, 'Bon groupe pour des nuls'),
+(46, 5, 108, ' A					', 64, 1, 'C''est dur de courir sous la pluie');
 
 -- --------------------------------------------------------
 
@@ -58,7 +56,8 @@ INSERT INTO `accompagnement` (`id`, `matiere_id`, `cycle_id`, `salle`, `enseigna
 -- Structure de la table `ci_sessions`
 --
 
-CREATE TABLE IF NOT EXISTS `ci_sessions` (
+DROP TABLE IF EXISTS `ci_sessions`;
+CREATE TABLE `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(45) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
@@ -81,7 +80,8 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 -- Structure de la table `cycles`
 --
 
-CREATE TABLE IF NOT EXISTS `cycles` (
+DROP TABLE IF EXISTS `cycles`;
+CREATE TABLE `cycles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `debut` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `dates` text COLLATE utf8_unicode_ci,
@@ -107,7 +107,8 @@ INSERT INTO `cycles` (`id`, `debut`, `dates`, `actif`, `horaire`) VALUES
 -- Structure de la table `inscriptions`
 --
 
-CREATE TABLE IF NOT EXISTS `inscriptions` (
+DROP TABLE IF EXISTS `inscriptions`;
+CREATE TABLE `inscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `eleve_id` int(11) NOT NULL,
   `accompagnement_id` int(11) NOT NULL,
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   UNIQUE KEY `eleve_id_2` (`eleve_id`,`accompagnement_id`),
   KEY `eleve_id` (`eleve_id`),
   KEY `accompagnement_id` (`accompagnement_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- Contenu de la table `inscriptions`
@@ -126,18 +127,29 @@ INSERT INTO `inscriptions` (`id`, `eleve_id`, `accompagnement_id`, `commentaire`
 (15, 4, 34, ''),
 (14, 1, 34, ''),
 (16, 4, 40, 'boo'),
-(17, 4, 41, 'fdfd ffdf '),
+(17, 4, 41, 'Bavarde trop avec ses camarades !'),
 (18, 1, 42, 'Foo sait maintenant tenir un ballon'),
-(19, 1, 41, 'Bavarde trop avec ses camarades.'),
+(19, 1, 41, 'Bavarde trop avec ses camarades !'),
 (20, 1, 39, 'Bravo foo !'),
 (21, 1, 40, ''),
-(22, 89, 42, ''),
+(22, 89, 42, 'chante'),
 (23, 89, 43, ''),
-(24, 90, 44, 'comment'),
-(25, 90, 43, ''),
-(26, 1, 45, ''),
-(27, 1, 46, ''),
-(28, 1, 44, '');
+(25, 90, 43, 'jkjk'),
+(45, 78, 39, ''),
+(27, 1, 46, 'mais foo aime cela...'),
+(28, 1, 44, ''),
+(44, 78, 45, ''),
+(29, 4, 42, ''),
+(30, 61, 42, ''),
+(31, 7, 46, ''),
+(32, 16, 46, ''),
+(33, 43, 46, ''),
+(34, 45, 46, ''),
+(35, 59, 46, ''),
+(36, 78, 46, ''),
+(37, 41, 42, ''),
+(38, 42, 42, ''),
+(39, 63, 42, '');
 
 -- --------------------------------------------------------
 
@@ -145,7 +157,8 @@ INSERT INTO `inscriptions` (`id`, `eleve_id`, `accompagnement_id`, `commentaire`
 -- Structure de la table `matieres`
 --
 
-CREATE TABLE IF NOT EXISTS `matieres` (
+DROP TABLE IF EXISTS `matieres`;
+CREATE TABLE `matieres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(64) NOT NULL,
   `type` tinyint(2) NOT NULL,
@@ -174,21 +187,25 @@ INSERT INTO `matieres` (`id`, `nom`, `type`, `niveau`, `places`, `actif`, `salle
 -- Structure de la table `presences`
 --
 
-CREATE TABLE IF NOT EXISTS `presences` (
+DROP TABLE IF EXISTS `presences`;
+CREATE TABLE `presences` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `eleve_id` int(11) NOT NULL,
   `seance_id` int(11) NOT NULL,
   `absent` tinyint(1) NOT NULL,
-  `commentaire` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `seance_id` (`seance_id`),
   KEY `eleve_id` (`eleve_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- Contenu de la table `presences`
 --
 
+INSERT INTO `presences` (`id`, `eleve_id`, `seance_id`, `absent`) VALUES
+(23, 1, 45, 1),
+(21, 1, 46, 1),
+(22, 1, 58, 1);
 
 -- --------------------------------------------------------
 
@@ -196,7 +213,8 @@ CREATE TABLE IF NOT EXISTS `presences` (
 -- Structure de la table `rappel`
 --
 
-CREATE TABLE IF NOT EXISTS `rappel` (
+DROP TABLE IF EXISTS `rappel`;
+CREATE TABLE `rappel` (
   `daterappel` date NOT NULL,
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -220,7 +238,8 @@ INSERT INTO `rappel` (`daterappel`, `id`) VALUES
 -- Structure de la table `seances`
 --
 
-CREATE TABLE IF NOT EXISTS `seances` (
+DROP TABLE IF EXISTS `seances`;
+CREATE TABLE `seances` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accompagnement_id` int(11) NOT NULL,
   `enseignant_id` int(11) NOT NULL,
@@ -253,29 +272,29 @@ INSERT INTO `seances` (`id`, `accompagnement_id`, `enseignant_id`, `date`, `vali
 (35, 38, 2, '2013-04-11', 0),
 (36, 38, 2, '2013-04-18', 0),
 (37, 38, 2, '2013-04-25', 0),
-(38, 39, 3, '2013-04-10', 1),
-(39, 39, 3, '2013-04-17', 0),
-(40, 39, 3, '2013-04-24', 0),
+(38, 39, 67, '2013-04-10', 1),
+(39, 39, 67, '2013-04-17', 1),
+(40, 39, 67, '2013-04-24', 1),
 (41, 40, 2, '2013-04-10', 1),
 (42, 40, 2, '2013-04-17', 1),
 (43, 40, 2, '2013-04-24', 1),
 (44, 41, 70, '2013-03-02', 1),
-(45, 41, 70, '2013-09-03', 1),
-(46, 41, 70, '2014-03-07', 0),
+(45, 41, 57, '2013-09-03', 1),
+(46, 41, 45, '2014-03-07', 0),
 (47, 41, 70, '2014-09-08', 0),
 (48, 42, 64, '2013-04-10', 1),
 (49, 42, 64, '2013-04-17', 1),
 (50, 42, 64, '2013-04-24', 1),
-(51, 43, 54, '2013-04-11', 0),
+(51, 43, 54, '2013-04-11', 1),
 (52, 43, 54, '2013-04-18', 1),
-(53, 43, 54, '2013-04-25', 0),
+(53, 43, 54, '2013-04-25', 1),
 (54, 44, 6, '2013-04-11', 1),
 (55, 44, 6, '2013-04-18', 1),
-(56, 44, 6, '2013-04-25', 0),
-(57, 45, 13, '2013-04-11', 0),
+(56, 44, 6, '2013-04-25', 1),
+(57, 45, 13, '2013-04-11', 1),
 (58, 45, 13, '2013-04-18', 0),
 (59, 45, 13, '2013-04-25', 0),
-(60, 46, 64, '2013-03-02', 0),
+(60, 46, 64, '2013-03-02', 1),
 (61, 46, 64, '2013-09-03', 0),
 (62, 46, 64, '2014-03-07', 0),
 (63, 46, 64, '2014-09-08', 0);
@@ -286,7 +305,8 @@ INSERT INTO `seances` (`id`, `accompagnement_id`, `enseignant_id`, `date`, `vali
 -- Structure de la table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(32) NOT NULL,
@@ -311,7 +331,7 @@ INSERT INTO `users` (`id`, `nom`, `prenom`, `mail`, `mail_parent`, `profil`, `cl
 (1, 'foo', 'foo', '', '', 1, '', '', 'foo', 'foo', 0, '2014-01-22 10:59:16'),
 (2, 'bar', 'bar', '', '', 2, '', '', 'bar', 'bar', 0, '2014-01-22 11:17:14'),
 (3, 'boz', 'boz', NULL, NULL, 3, NULL, NULL, 'boz', 'boz', 0, '2014-01-22 10:59:28'),
-(4, 'admin', 'admin', NULL, NULL, 4, NULL, NULL, 'admin', 'admin', 0, '2014-01-22 11:15:50'),
+(4, 'admin', 'admin', NULL, NULL, 4, NULL, NULL, 'admin', 'admin', 0, '2014-01-27 09:41:00'),
 (5, 'Vivian', 'Fischer', 'Etiam.bibendum@pellentesqueeget.org', 'dolor.sit@ascelerisque.edu', 2, '1', '8', 'malesuada', '', 1, NULL),
 (6, 'Blair', 'Dale', 'dui@eu.net', 'Etiam.laoreet@nisisem.ca', 2, '2', '3', 'fringilla', '', 1, NULL),
 (7, 'Orson', 'Romero', 'dis@nonenimcommodo.edu', 'magna.a.neque@risus.org', 1, '4', '3', 'Sed', '', 1, NULL),
