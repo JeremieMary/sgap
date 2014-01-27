@@ -161,5 +161,17 @@ class Users_model extends CI_Model {
 		*/
 		return($data);
 	}
-		
+	
+	function resetBD()
+	{
+		$this->db->empty_table('accompagnement');
+		$this->db->empty_table('cycles');
+		$this->db->empty_table('inscriptions');
+		$this->db->empty_table('matieres');
+		$this->db->empty_table('presences');
+		$this->db->empty_table('rappel');
+		$this->db->empty_table('seances');
+		$this->db->where( array( "login !="=>$this->session->userdata['login'] ) );
+		$this->db->delete('users');
+	}	
 }

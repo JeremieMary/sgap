@@ -75,6 +75,13 @@ class Admin extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 	
+	public function resetBD()
+	{
+		$this->load->model('users_model');
+		$this->users_model->resetBD();
+		redirect('admin');
+	}
+	
 	private function prepareArrayforUsers($tab){
 		$this->load->model('users_model');
 		$data = $this->users_model->check($tab);

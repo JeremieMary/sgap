@@ -27,6 +27,13 @@
 <input type="file" name="matieresfile" size="20" onchange="this.form.submit();" />
 <input type="submit" value="upload" />	
 </form>	</div>
+
+<div class="upload_form">
+<?php echo form_open_multipart('admin/resetBD');?>
+<input type="submit" value="Réinitialisation de la base de données" onclick="return confirm('ATTENTION la base de donnée sera réinitialisée. Hormis vous, tous les utilisateurs et accompagnements seront supprimés. Poursuivre ?')"/>	
+</form>
+</div>
+
 </div>
 
 <div id="bloc_accompagnement">
