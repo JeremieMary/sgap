@@ -174,6 +174,7 @@ class Accompagnement_model extends CI_Model {
 		$this->db->distinct();
 		$this->db->select('salle');
 		$this->db->from('matieres');
+		$this->db->order_by("salle"); 
 		$query=$this->db->get();
 		$res=$query->result_array();
 		return($res);	

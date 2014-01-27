@@ -70,7 +70,7 @@
 		<label> Salle </label>
 	<ul>
 		<? foreach ($salles as $salle){?>
-			<li> <?=$salle['salle']?>
+			<li><?=$salle['salle']?></li>
 		<?}?>
 	</ul>
 	</div>
