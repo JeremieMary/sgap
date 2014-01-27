@@ -11,21 +11,21 @@
 <?php echo form_open_multipart('admin/uploadFile/users', array('name'=>'users') );?>
 <label for="userfile"> Chargement des utilisateurs - CSV : </label>
 <input type="file" name="usersfile" size="20" onchange="this.form.submit();" />
-<input type="submit"  value="upload" />
+<input type="submit"  value="Upload" />
 </form>	</div>
 
 <div class="upload_form">
 <?php echo form_open_multipart('admin/uploadFile/cycles', array('name'=>'cycles') );?>
 <label for="cyclesfile"> Chargement des cycles - CSV : </label>
 <input type="file" name="cyclesfile" size="20" onchange="this.form.submit();" />
-<input type="submit" value="upload" />	
+<input type="submit" value="Upload" />	
 </form>	</div>
 
 <div class="upload_form">
 <?php echo form_open_multipart('admin/uploadFile/matieres', array('name'=>'matieres') );?>
 <label for="matieresfile"> Chargement des matières - CSV : </label>
 <input type="file" name="matieresfile" size="20" onchange="this.form.submit();" />
-<input type="submit" value="upload" />	
+<input type="submit" value="Upload" />	
 </form>	</div>
 
 <div class="upload_form">
@@ -37,7 +37,7 @@
 </div>
 
 <div id="bloc_accompagnement">
-	<h3>Création d'accompagnement</h3>
+	<h3>Gestion des accompagnements</h3>
 	<div id='creation_accompagnement'>
 	<div class="cycles">
 		<label> Cycle </label>
@@ -75,6 +75,24 @@
 	</ul>
 	</div>
 	
+	<div id="infos_admin">
+	<label> Informations sur les séances </label>	 
+	<ul>
+	<li> Nombre de places : <span id='nbPlaces'></span> </li>
+	<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
+	<li> Salle : <span id='salle'></span> </li>
+	<li> Horaire : <span id='horaire'></span> </li>
+	<li> Parcours : <span id='type'></span></li>
+	<li> <div id="date_admin">
+			 	Dates :
+				<div id='datesSelector'>
+				</div>
+			</div></li>
+	</ul>
+	<div id="reaffecter"></div>
+	</div>
+	
+</div>
 
 	<? echo form_open('accompagnement/creer',array('id' => 'accompagnementForm')); ?>	
 	<input type='hidden' name='matiere_id' value=''>
@@ -83,25 +101,10 @@
 	<input type='hidden' name='salle' value=''>
 	<button type='submit' name='creer' disabled >Créer</button>
 	</form>
-	</div>
+	
 </div>
 
-<div id="infos_admin">
-<h3>Informations sur les séances du couple cycle/matière sélectionné</h3> 
-<ul>
-<li> Nombre de places : <span id='nbPlaces'></span> </li>
-<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
-<li> Salle : <span id='salle'></span> </li>
-<li> Horaire : <span id='horaire'></span> </li>
-<li> Parcours : <span id='type'></span></li>
-<li> <div id="date_admin">
-		 	Dates :
-			<div id='datesSelector'>
-			</div>
-		</div></li>
-</ul>
-<div id="reaffecter"></div>
-</div>
+
 
 <div class="accompagnement">
 <h3>Liste des accompagnements </h3>
@@ -165,11 +168,11 @@ $rapports = array( 'Eleves'=>'Liste des élèves',
 <tr><td> <?=$text?> </td>
 	<td>
 	<?= form_open("admin/rapport/$cont/$text/txt");?>
-	<input type="submit" value="visualiser" />
+	<input type="submit" value="Visualiser" />
 	</form>
 
 	<?= form_open("admin/rapport/$cont/$text/csv");?>
-	<input type="submit" value="exporter le fichier csv" />
+	<input type="submit" value="Exporter le fichier csv" />
 	</form>
 	</td>
 </tr>
@@ -218,15 +221,15 @@ function dateSelectorHandler(){
 		var active = true
 		var prof_id=$('.profs .highlight').attr('name');
 		if (prof_id===undefined){  
-			pr = "Sélectionnez un nom dans la liste des professeurs"
+			pr = "<i>Choisir un Professeur</i>"
 			active = false
 		} else {
 			pr = $('.profs .highlight').text();
 		}
 		
-		var txt = "Affecter la séance du "+ date+ " à <strong>"+ pr +"</strong> <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		var txt = "Affecter le "+ date+ " à <br/>"+ pr +" <button id='submitReaffect' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
-		var txt2 = "Affecter toutes les séances des "+ dateday+"s de cet accompagnement à <strong>"+ pr +"</strong> <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
+		var txt2 = "Affecter tous les "+ dateday+"s de cet accompagnement à <br/>"+ pr +" <button id='submitReaffectMultiple' prof_id='"+prof_id+" seance_id='"+seance_id+"' ' >Confimer</button>"
 		
 		$('#reaffecter').html(txt+'<br/>'+txt2)
 		if (!active) {
@@ -261,7 +264,8 @@ function dateSelectorHandler(){
 
 }
 
-function activateSuscribe(){
+function activateSuscribe(modif){
+	if (modif!='prof'){
 	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1)) {
 		cycle_id=$('.cycles .highlight').attr('name');
 		matiere_id=$('.matieres .highlight').attr('name');
@@ -285,6 +289,7 @@ function activateSuscribe(){
 			$("#datesSelector").html(display_dates(data.seances_ids))
 			dateSelectorHandler()
 		});	
+	}
 	}
 	$("#datesSelector ul li.highlight").trigger("click")
 	
@@ -364,7 +369,7 @@ $(document).ready(function() {
 		$('.profs .highlight').removeClass('highlight')
 		$(this).toggleClass('highlight');
 		$('#accompagnementForm input[name="enseignant_id"]').val( $(this).attr('name') );
-		activateSuscribe();
+		activateSuscribe('prof');
 	})
 	
 	$(".salles ul li").click(function(){

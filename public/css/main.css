@@ -241,7 +241,7 @@ li.unactivated{
 }
 
 #creation_accompagnement div {
-	max-height:20em;
+	max-height:25em;
 	overflow-y: scroll;
 }
 
@@ -458,9 +458,7 @@ td a  {
 #cycle_matiere_eleve .infos {
 	min-height:22em;
 }
-#infos_admin{
-	padding:1em;
-}
+
 #date_admin #datesSelector{
 	padding-left:2em;
 	width:20em;
@@ -482,3 +480,6 @@ input[type=submit] {
 	padding-right:1em;
 }
  
+#reaffecter {
+	font-size:80%;
+}
