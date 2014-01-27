@@ -348,6 +348,26 @@ background-color: #8dbdd8;
 	height:auto;
 }
 
+
+#seancesResume {
+	margin:auto;
+	text-align:center;
+}
+#seancesResume table{
+	margin:auto;
+}
+
+table.bordered th{
+	padding-top:0;
+	padding-bottom:0;
+}
+
+#seancesResume h3{
+	padding-right:1em;
+	padding-left:1em;
+	border-bottom:solid 1px;	
+}
+
 #cycle_matiere h3 {
 	display:inline;
 	padding-right:1em;

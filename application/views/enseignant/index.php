@@ -6,7 +6,7 @@
 
 <? if (count($seancesProf)>0) {?>
 <div id="seancesResume">
-	<h3>Liste des séances vous étant attribuées.</h3>
+	<h3>Sélection rapide.</h3>
 	<table class="bordered tablesorter">
 	    <thead>
 	    <tr>
