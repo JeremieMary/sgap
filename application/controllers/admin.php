@@ -14,7 +14,8 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('messages', "<p>Vos droits actuels sont insuffisants pour afficher la page demandée. Vous avez été redirigé vers l'écran d'authentification.</p>" );
 		redirect('user/login');
 	}
-
+	
+	
 	public function vueEleve($eleve_id)
 	{
 		$this->load->model('users_model');
@@ -24,7 +25,8 @@ class Admin extends CI_Controller {
 		$data = $this->accompagnement_model->getAllActiveWithCyclesAndMatieres();
 		$this->session->userdata['forcemode']=true;
 		$this->session->userdata['forced_id']=$eleve_id;
-		$nom_data=$this->users_model->getNameOf($eleve_id)[0];
+		$tmp=$this->users_model->getNameOf($eleve_id);
+		$nom_data=$tmp[0];
 		$data['eleve_id']=$eleve_id;
 		$data['nom']= strtoupper($nom_data['nom']).' '.$nom_data['prenom'];
 		$data['title']='Élève - Mode forcé';
@@ -37,7 +39,7 @@ class Admin extends CI_Controller {
 		$this->load->view('eleve/js', $data);
 		$this->load->view('templates/footer');
 	}
-
+	
 	public function inscription() {
 		if (count($_POST)==0) redirect('admin/');
 		$cycle_id = $this->input->post('cycle_id');
@@ -66,9 +68,9 @@ class Admin extends CI_Controller {
 		$data['messages'] = $this->session->flashdata('messages');
 		$data['matieres'] = $this->matieres_model->getAll();
 		$data['cycles']   = $this->cycles_model->getAll();
-		$data['profs']    = $this->users_model->getAllProfs();
+		$data['profs']   = $this->users_model->getAllProfs();
 		$data['salles']   = $this->accompagnement_model->getAllSalles();
-		#$data['accompagnement']   = $this->accompagnement_model->getAllActiveHumanReadable();
+		// $data['accompagnement']   = $this->accompagnement_model->getAllActiveHumanReadable();
 		$data['accompagnement']   = $this->accompagnement_model->getAllHumanReadable();
 		$this->load->view('templates/header', $data);
 		$this->load->view('admin/index', $data);
@@ -139,6 +141,7 @@ class Admin extends CI_Controller {
 	
 	     
 	}
+	
 	
 	public function cancelUpload(){
 		// unlink($this->session->userdata['file'.$type]);
@@ -217,8 +220,5 @@ class Admin extends CI_Controller {
 			$this->load->view('templates/footer');
 		}	
 	}
-	
-
-
 
 }

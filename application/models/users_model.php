@@ -5,7 +5,7 @@ class Users_model extends CI_Model {
 	{
 		$this->load->database();
 	}
-		
+	
 	function login($login, $password)  
 	{
 		$this->load->helper('security');
@@ -32,12 +32,12 @@ class Users_model extends CI_Model {
 	{
 		$this->db->select('id, nom, prenom, mail');
 		$this->db->from('users');
+		$this->db->where( array('profil'=>2) );
+		$this->db->or_where( array('profil'=>3) );
 		$this->db->order_by("nom", "asc");
-		$this->db->where(array('profil'=>2));
-		$this->db->or_where(array('profil'=>3));
 		$query=$this->db->get();
 		$res=$query->result_array();
-		return($res);	
+		return($res);
 	}
 	
 	function getAllEleves()
@@ -147,23 +147,10 @@ class Users_model extends CI_Model {
 				array_push( $data['ajouts'], $user );
 			}
 		}
-		/*
-		$this -> db -> select('*');
-		$this -> db -> from('users');
-		$this -> db -> where_not_in('login', $logins);	
-		$query = $this -> db -> get();
-		$data['desactive']= $query->result_array();
 		
-			
-		$this -> db -> select('*');
-		$this -> db -> from('users');
-		$this -> db -> where_in('login', $logins);
-		$query = $this -> db -> get();
-		$data['modifications']=$query->result_array();
-		*/
 		return($data);
 	}
-	
+
 	function resetBD()
 	{
 		$this->db->empty_table('accompagnement');
@@ -176,4 +163,5 @@ class Users_model extends CI_Model {
 		$this->db->where( array( "login !="=>$this->session->userdata['login'] ) );
 		$this->db->delete('users');
 	}	
+	
 }
