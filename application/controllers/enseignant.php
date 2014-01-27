@@ -22,7 +22,6 @@ class Enseignant extends CI_Controller {
 		$data['title']='Enseignant(e)';
 		$data['messages'] = $this->session->flashdata('messages'); 
 		$prof_id=$this->session->userdata['id']; 
-		$prof_id=6;
 		$data['seancesProf'] = $this->seances_model->getSeancesOf($prof_id);
 		$this->load->view('templates/header', $data);
 		$this->load->view('enseignant/index', $data);
