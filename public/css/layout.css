@@ -154,7 +154,8 @@
 	}
 	
 	p.forgot a {
-		color: #cbebf6;
+		/* color: #cbebf6; */
+		color:#840C83;
 		text-decoration: none;
 		transition: color 0.5s linear;
 		-moz-transition: color 0.5s linear;
@@ -163,7 +164,8 @@
 	}
 
 	p.forgot a:hover {
-		color: #65c4e5;
+		/* color: #65c4e5; */
+		color:#c45Cc3;
 	}
 
 	
