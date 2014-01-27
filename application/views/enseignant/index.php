@@ -287,9 +287,12 @@ function dateSelectorHandler(){
 			if (!data.logged) window.location.reload()
 			$("#liste_presence").html(affichePresences(data.presences))
 			$("#liste_presence table.tablesorter").tablesorter()
-			tabnav( $("#liste_presence table span.com") )
-			tabnavi( $("#liste_presence table span.inf") )
-			tabnavi( $("#nonInscrits table span.inf") )
+			var e = $("#liste_presence table span.com")
+			if (e.length>0) tabnav( e )
+			e = $("#nonInscrits table span.inf")
+			if (e.length>0) tabnavi( e )
+			e = $("#liste_presence table span.inf") 
+			if (e.length>0) tabnavi( e )
 			$('#liste_presence .infosEleves').click(infosEleve)
 			$('#liste_presence .deleteInscription').click(deleteInscription)
 			$("#liste_presence .presenceButton").click(presenceHandler)
@@ -320,7 +323,7 @@ function dateSelectorHandler(){
 	});
 	
 	var d=$("#datesSelector li[seance_id="+selected_seance+"]")
-	if (selected_seance.length === 0 ){
+	if (d.length === 0 ){
 		if ( $("#datesSelector ul li.nonvalidee:first").length==0 ){
 			$("#datesSelector ul li:last").trigger('click')
 	 	} else {
@@ -519,16 +522,23 @@ $(document).ready(function() {
 	}
 	})
 	
-	
 	$("#seancesResume tr").click( function(){
 		var cycle_id=$(this).attr("cycle_id")
-		var matiere_id=$(this).attr("matiere_id")
-		selected_seance=$(this).attr("seance_id")
-		$(".cycles li[name="+cycle_id+"]").trigger('click')
-		$(".matieres li[name="+matiere_id+"]").trigger('click')
-		console.log(cycle_id)
-		console.log(matiere_id)
+		$('.cycles .highlight').removeClass('highlight')
+		$(".cycles li[name="+cycle_id+"]").toggleClass('highlight')
+		$('#inscriptionForm input[name="cycle_id"]').val(cycle_id)
+		unactivateMatieres(cycle_id)
+		remplirListeDesNonInscrits(cycle_id)
 		
+		var matiere_id=$(this).attr("matiere_id")
+		$('.matieres .highlight').removeClass('highlight')
+		$(".matieres li[name="+matiere_id+"]").toggleClass('highlight')
+		$('#inscriptionForm input[name="matiere_id"]').val(matiere_id)
+		unactivateCycles(matiere_id)
+		
+		selected_seance=$(this).attr("seance_id")
+		
+		activateSuscribe()
 	})
 	
 });
