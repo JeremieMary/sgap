@@ -180,9 +180,15 @@ class Admin extends CI_Controller {
 			case 'Absents': 
 				$report = $this->rapports_model->getListeAbsents();
 			break;
-			case 'NonInscrits': break; 
-			case 'Professeurs': break;
-			case 'Matieres': break;	
+			case 'NonInscrits': 
+				$report = $this->rapports_model->getListeNonInscrits();
+			break; 
+			case 'Professeurs':
+				$report = $this->rapports_model->getProfesseurs();
+			break;
+			case 'Matieres': 
+				$report = $this->rapports_model->getMatieres();
+			break;	
 		}
 		$data['json'] = $report->result_array();
 		if ( $type == 'csv' ) {

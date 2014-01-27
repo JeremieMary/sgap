@@ -1,4 +1,15 @@
+<?  if ($this->session->userdata['profil']>3){ ?>
+	<div id="navlinks">
+<?= anchor('admin','Retour Vue Administrateur'); ?>
+	</div>
+<? } else { ?>
+	<div id="navlinks">
+<?= anchor('enseignant','Retour Vue Enseignent'); ?>
+	</div>
+<? }?>
+
 <? if (isset($title) ) { ?>
+	<br/><br/>
 <h3> <?=$title?> </h3>
 <? }?>
 <table class="bordered tablesorter">

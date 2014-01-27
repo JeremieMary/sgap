@@ -149,7 +149,7 @@
 $rapports = array( 'Eleves'=>'Liste des élèves',
 				   'Inscriptions'=>'Liste des inscriptions',
 				   'Absents'=>'Liste des absents',
-				   'NonInscrits' => 'Liste des non-inscrits',
+				   'NonInscrits' => 'Liste des sans-inscription',
 				   'Professeurs'=>'Rapport par professeur',
 				   'Matieres'=>'Rapport par matière'
 	  );
