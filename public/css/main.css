@@ -94,11 +94,11 @@ h4 {
 }
 
 /* Arrays */
-.bordered button {
+table button {
 	margin:0;
 }
 
-.bordered tr.unactivated{
+table tr.unactivated{
 	color:#bcbcbc !important;
 } 
 
@@ -472,3 +472,13 @@ p.astuce{
 a.button, button {
 	line-height: 12px;
 }
+
+input[type=submit] {
+ 	line-height: 12px;
+	margin-bottom:2px;
+ }
+
+#rapports table td {
+	padding-right:1em;
+}
+ 

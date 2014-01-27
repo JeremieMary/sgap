@@ -6,7 +6,7 @@
     <tr>
 		<?
 		$keys = array_keys($json[0]);
-		foreach ($keys as $key ) echo "<th>$key</th>";
+		foreach ($keys as $key ) echo "<th>".ucfirst($key)."</th>";
 		?>
     </tr>
     </thead>

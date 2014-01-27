@@ -175,8 +175,11 @@ class Admin extends CI_Controller {
 				$report = $this->rapports_model->getListeEleves();
 				break;
 			case 'Inscriptions':
+				$report = $this->rapports_model->getListeInscriptions();
 			break;
-			case 'Absents': break;
+			case 'Absents': 
+				$report = $this->rapports_model->getListeAbsents();
+			break;
 			case 'NonInscrits': break; 
 			case 'Professeurs': break;
 			case 'Matieres': break;	

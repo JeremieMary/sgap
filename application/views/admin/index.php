@@ -155,8 +155,10 @@ $rapports = array( 'Eleves'=>'Liste des élèves',
 	  );
 ?>
 
+<table>
 <? foreach ($rapports as $cont=>$text ) { ?>
-<li> <?=$text?>
+<tr><td> <?=$text?> </td>
+	<td>
 	<?= form_open("admin/rapport/$cont/$text/txt");?>
 	<input type="submit" value="visualiser" />
 	</form>
@@ -164,10 +166,11 @@ $rapports = array( 'Eleves'=>'Liste des élèves',
 	<?= form_open("admin/rapport/$cont/$text/csv");?>
 	<input type="submit" value="exporter le fichier csv" />
 	</form>
-</li>
+	</td>
+</tr>
 <? } ?>
 
-</ul>
+</table>
 
 <p class='astuce'>Je ne vois pas l'usage de la liste des non-inscrits en effet j'avais cru comprendre que chaque élève devait avoir une inscription pour chaque cycle ??? Ici l'on affiche que les élève sans aucune inscription conformément au cahier des charges. </p>
 
