@@ -32,7 +32,7 @@ class Users_model extends CI_Model {
 	{
 		$this->db->select('id, nom, prenom, mail');
 		$this->db->from('users');
-		$this->db->where( array('profil >='=>2) );
+		$this->db->where( array('profil >='=>2u) );
 		// $this->db->or_where( array('profil'=>3) );
 		$this->db->order_by("nom", "asc");
 		$query=$this->db->get();

@@ -1,8 +1,10 @@
 - Vérifier (et terminer ?) les envois de  mails automatiques
 - les validations d’inscriptions ne sont pas faites (admin à bien un bypass mais il n’y a pas assez de vérifications pour les élèves) 
+- Définir le comportement en cas de modification du fichier des cycles (actuellement cela ne modifie pas les dates des séances des accompagnement déjà créés).
 - Du beau CSS pour les boutons ?
 - Revoir la présentation dans la page d'administration  ?
 - relecture générale pour vérification
+
 
 Pour une V2:
 - Ecrire un système de notification et requêtes uniformisé en javascript
