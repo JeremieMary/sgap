@@ -25,7 +25,7 @@ class User extends CI_Controller {
 	public function checkLogin(){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('login', 'login', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('passwd', 'passwd','trim|required|xss_clean'); //XSS clean a supprimer quand les passwd seront stockés cryptés
+		$this->form_validation->set_rules('passwd', 'passwd','trim|required'); 
 		if($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('messages', validation_errors());
 			redirect('user/login');
