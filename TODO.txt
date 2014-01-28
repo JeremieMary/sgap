@@ -1,6 +1,10 @@
 - Vérifier (et terminer ?) les envois de  mails automatiques
 - Définir le comportement en cas de modification du fichier des cycles (actuellement cela ne modifie pas les dates des séances des accompagnement déjà créés).
-- Revoir la présentation dans la page d'administration  ?
+
+- Revoir la gestion des accompagnements (cahier des charges faux). Il faut lors de l'introduction de nouveaux cycles pouvoir repprendre les accompagnements de la semaine précédente ou pouvoir affecter un prof pour toute l'année à un créneau horaire. 
+
+- Reconfirmer que les horaires sont dans les matières (ils seraient mieux dans les cycles)
+
 - relecture générale pour vérification
 - Les utilisateurs inactifs doivent-ils pouvoir se connecter ?
 

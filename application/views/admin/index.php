@@ -140,8 +140,8 @@
                 </tr>
             <?php }?>
     </tbody>
- 
 </table>
+<button id='inactiveByCycle'>Inactiver tous les accompagnements correspondant au cycle sélectionné.</button>
 </div>
 <?}?>
 
@@ -380,6 +380,10 @@ $(document).ready(function() {
 	})
 	
 	$('div.accompagnement table').tablesorter()
+	
+	$('#inactiveByCycle').click(function(){
+		alert('Non codé.  Todo ? ')
+	})
 	
 });
 </script>
