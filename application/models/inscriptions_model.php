@@ -38,6 +38,7 @@ class Inscriptions_model extends CI_Model {
 		//Supprimer aussi les absences et commentaires ? 
 	}
 	
+	
 	function rencontre( $classe, $groupe, $accompagnement_id ) {
 		$this->db->select('users.id AS eleve_id');
 		$this->db->from('users');
@@ -46,8 +47,12 @@ class Inscriptions_model extends CI_Model {
 		$inscriptions=$query->result_array();
 		foreach ($inscriptions as &$ins){
 			$ins['accompagnement_id']=$accompagnement_id ;
+			$this->db->where( array('eleve_id'=>$ins['eleve_id'], 'accompagnement_id !='=>$accompagnement_id) );
+			$this->db->delete('inscriptions');
 		}
+
 		$this->db->insert_batch('inscriptions', $inscriptions );
+		//$this->db->update_batch('inscriptions', $inscriptions );
 	}
 	
 	function getGroups(){
