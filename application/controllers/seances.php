@@ -73,6 +73,11 @@ class Seances extends CI_Controller {
 	{
 		$this->required(2);
 		$presences=$this->seances_model->getPresences($seance_id);
+		if ($this->session->userdata['profil']>3 || $presences[0]['enseignant_id']==$this->session->userdata['id'] ) {
+			$json['editable']=true;	
+		} else {
+			$json['editable']=false;
+		}
 		$json['presences']=$presences;
 		$json['logged']=true;
 		$data['json']=$json;

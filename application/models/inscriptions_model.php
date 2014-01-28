@@ -103,9 +103,10 @@ class Inscriptions_model extends CI_Model {
 		//Verification date
 		$date_strfr = $foo['debut'];
 		$date = str_replace('/', '-', $date_strfr);
-		$nbSecAvantDebut = strtotime($date)-time();
+		$limit = strtotime("last Saturday", strtotime($date));
+		$nbSecAvantDebut = $limit-time();
 		if ($nbSecAvantDebut < 0 ) {
-			return ( array( 'valid'=>false, 'msg'=>"<p>Cet accompagnement a déjà commencé. L'inscription ne peut être réalisée que par un administrateur.</p>") );
+			return ( array( 'valid'=>false, 'msg'=>"<p>Le délai d'inscription est dépassé.  L'inscription ne peut être réalisée que par un administrateur.</p>") );
 		}
 		
 		//Verification inscription courante au parcours rencontre pour le cycle sélectionné
@@ -115,13 +116,14 @@ class Inscriptions_model extends CI_Model {
 		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->where(array('cycle_id'=>$cycle_id));
-		$this->db->where(array('matieres.type'=>2));
+		//$this->db->where(array('matieres.type'=>2));
 		$this->db->limit(1);
 		$query=$this->db->get();	
 		$rencontre = ($query->num_rows());
 		
 		if ($rencontre > 0 ) {
-			return ( array( 'valid'=>false, 'msg'=>"<p>Vous êtes inscrit au parcours rencontre pour ce cycle, vous ne pouvez pas suivre un autre accompagnement pour ce cycle. </p>") );
+			//return ( array( 'valid'=>false, 'msg'=>"<p>Vous êtes inscrit au parcours rencontre pour ce cycle, vous ne pouvez pas suivre un autre accompagnement pour ce cycle. </p>") );
+			return ( array( 'valid'=>false, 'msg'=>"<p>Incription impossible car vous avez déjà un autre accompagnement ou parcours rencontre pour ce cycle. </p>") );
 		}
 		
 		return ( array( 'valid'=>true, 'msg'=>'') );

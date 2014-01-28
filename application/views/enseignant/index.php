@@ -183,7 +183,7 @@ function display_dates(seances){
 	return(ret);
 }
 
-function affichePresences(eleves){
+function affichePresences(eleves,editable){
 		ans="<table class='bordered tablesorter'><thead><tr><th>Nom</th><th>Prénom</th><th>Classe / Groupe</th><th>Présence</th><th>Commentaire individuel (commun à toutes les dates) </th><th></th></tr></thead><tbody>"
 		var abs;
 		var abstxt;
@@ -203,9 +203,17 @@ function affichePresences(eleves){
 				var prenom = eleves[i].prenom[0].toUpperCase() + eleves[i].prenom.substring(1);
 				ans+= "<td>"+prenom+"</td>"
 				ans+= "<td>"+eleves[i].classe+ " / "+eleves[i].groupe+ "</td>"
-				ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
+				if (editable) {
+					ans+= "<td><button class='presenceButton' seance_id='"+eleves[i].seance_id+"' eleve_id='"+eleves[i].eleve_id+"' abs='"+abs+"'>"+abstxt+"</button></td>"
+				} else {
+					ans+='<td>'+abstxt+'</td>'
+				}
 				com = eleves[i].commentaire.replace(/'/g, '&#39;');	
-				ans+= "<td><span class='com'><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
+				if (editable) {
+					ans+= "<td><span class='com'><input type='text' value='"+com+"' accompagnement_id='"+eleves[i].accompagnement_id+"' eleve_id='"+eleves[i].eleve_id+"' class='commentaire' /></span></td>"
+				} else {
+					ans+='<td>'+com+'</td>'
+				}
 				ans+= '<td><span class="inf"><button class="infosEleves" eleve_id="'+eleves[i].eleve_id+'">Infos</button></span>'
 				ans+=  '<button class="deleteInscription" eleve_id="'+eleves[i].eleve_id+'" accompagnement_id="'+eleves[i].accompagnement_id+'" >Désinscrire</button></a>'
 				<?if ($this->session->userdata['profil']>3) { ?>
@@ -285,7 +293,7 @@ function dateSelectorHandler(){
 			url:myurl 
 		}).done(function(data) {
 			if (!data.logged) window.location.reload()
-			$("#liste_presence").html(affichePresences(data.presences))
+			$("#liste_presence").html(affichePresences(data.presences,data.editable))
 			$("#liste_presence table.tablesorter").tablesorter()
 			var e = $("#liste_presence table span.com")
 			if (e.length>0) tabnav( e )
@@ -513,7 +521,7 @@ $(document).ready(function() {
 	$("#massperso").click(function(){
 		var txt = $("#masstxt").val()
 		if (txt != ''){
-			if (confirm("Attention cette action va remplacer tous les commentaires personnalisés de cet accompagnement et est irréversible. Confirmez vous ?")){
+			if (confirm("Attention cette action va remplacer tous les commentaires personnalisés de cet accompagnement et est irréversible. Confirmez-vous ?")){
 			$("#liste_presence span input").each( function(){ 
 				$(this).val(txt)
 				$(this).trigger('change') 

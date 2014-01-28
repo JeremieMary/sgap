@@ -145,10 +145,11 @@
 </div>
 <?}?>
 
-
+<!-- 
 <div id="listeSeances" class="accompagnement">
 <h3>Liste des séances des accompagnements</h3> 
 <p>Todo ? En effet le cahier des charges ne choisit pas entre la présentation par accompagnement (ie un prof est toujours lié à toutes les dates d'un couple cycle/matière et un niveau plus fin ).</p>
+-->
 
 <div id='rapports'> 
 <h3>Création de rapports</h3> 
@@ -180,8 +181,7 @@ $rapports = array( 'Eleves'=>'Liste des élèves',
 
 </table>
 
-<p class='astuce'>Je ne vois pas l'usage de la liste des non-inscrits en effet j'avais cru comprendre que chaque élève devait avoir une inscription pour chaque cycle ??? Ici l'on affiche que les élève sans aucune inscription conformément au cahier des charges. </p>
-
+<p class='astuce'>Je ne vois pas l'usage de la liste des non-inscrits en effet j'avais cru comprendre que chaque élève devait avoir une inscription pour chaque cycle ??? Ici l'on affiche que les élèves sans aucune inscription conformément au cahier des charges. </p>
 </div>
 
 
