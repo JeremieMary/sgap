@@ -69,11 +69,13 @@ class Seances_model extends CI_Model {
 	{
 		$this->db->select('inscriptions.eleve_id AS eleve_id, presences.absent AS absent, users.nom, users.prenom, users.classe, users.groupe, seances.id AS seance_id, inscriptions.commentaire AS commentaire, inscriptions.accompagnement_id, seances.enseignant_id' );
 		$this->db->from('inscriptions');
-		$this->db->where(array('seances.id'=>$seance_id));
 		$this->db->join('seances', 'inscriptions.accompagnement_id = seances.accompagnement_id');
 		$this->db->join('presences', 'presences.seance_id = seances.id AND presences.eleve_id = inscriptions.eleve_id', 'left');
 		$this->db->join('users', 'users.id=inscriptions.eleve_id');
-		$this->db->order_by("nom", "asc");
+		$this->db->join('accompagnement', 'accompagnement.id=inscriptions.accompagnement_id');
+		$this->db->where(array('accompagnement.actif'=>true));
+		$this->db->where(array('seances.id'=>$seance_id));
+		$this->db->order_by("nom");
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
@@ -93,7 +95,7 @@ class Seances_model extends CI_Model {
 		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->where(array('seances.validee'=>true));
-		$this->db->where(array('cycles.actif'=>true));
+		$this->db->where(array('accompagnement.actif'=>true));
 		$this->db->where(array('presences.absent'=>true));
 		$this->db->where(array('presences.eleve_id'=>$eleve_id));
 		$query=$this->db->get();	

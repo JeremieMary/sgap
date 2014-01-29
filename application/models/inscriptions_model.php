@@ -75,6 +75,7 @@ class Inscriptions_model extends CI_Model {
 		$this->db->join('accompagnement', 'accompagnement.id = inscriptions.accompagnement_id');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->join('cycles', 'cycles.id = accompagnement.cycle_id');
+		$this->db->where(array('accompagnement.actif'=>true));
 		$query=$this->db->get();
 		$res=$query->result_array();
 		return($res);	
