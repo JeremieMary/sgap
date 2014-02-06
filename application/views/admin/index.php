@@ -66,6 +66,7 @@
 	</ul>
 	</div>
 
+	<!--
 	<div class="salles">
 		<label> Salle </label>
 	<ul>
@@ -74,13 +75,15 @@
 		<?}?>
 	</ul>
 	</div>
+	-->
 	
 	<div id="infos_admin">
 	<label> Informations sur les séances </label>	 
 	<ul>
 	<li> Nombre de places : <span id='nbPlaces'></span> </li>
 	<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
-	<li> Salle : <span id='salle'></span> </li>
+	<li> Parcours : <span id='type'></span></li>
+	<li> Niveau :<span id='niveau'></span> </li>
 	<li> Horaire : <span id='horaire'></span> </li>
 	<li> Parcours : <span id='type'></span></li>
 	<li> <div id="date_admin">
@@ -95,10 +98,10 @@
 </div>
 
 	<? echo form_open('accompagnement/creer',array('id' => 'accompagnementForm')); ?>	
-	<input type='hidden' name='matiere_id' value=''>
+	<input type='hidden' name='matiere_id' value=''> 
 	<input type='hidden' name='cycle_id' value=''>
 	<input type='hidden' name='enseignant_id' value=''>
-	<input type='hidden' name='salle' value=''>
+	<!-- <input type='hidden' name='salle' value=''> -->
 	<button type='submit' name='creer' disabled >Créer</button>
 	</form>
 	
@@ -278,6 +281,7 @@ function activateSuscribe(modif){
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			$('#horaire').html(data.horaire);
+			$('#niveau').html(data.niveau);
 			$('#type').html(data.type);
 		});
 		myurl3 = '<?=site_url()?>/seances/getIdsAndDatesWithProfs/'+cycle_id+'/'+matiere_id;
@@ -293,7 +297,7 @@ function activateSuscribe(modif){
 	}
 	$("#datesSelector ul li.highlight").trigger("click")
 	
-	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1) && ($('.profs .highlight').length == 1)  && ($('.salles .highlight').length == 1) ) {
+	if (($('.cycles .highlight').length == 1) && ($('.matieres .highlight').length == 1) && ($('.profs .highlight').length == 1)   ) {
 		$('#accompagnementForm button[name="creer"]').prop("disabled", false);;
 		/*
 		cycle_id=$('#inscriptionForm input[name="cycle_id"]').val();
@@ -372,12 +376,14 @@ $(document).ready(function() {
 		activateSuscribe('prof');
 	})
 	
+	/*
 	$(".salles ul li").click(function(){
 		$('.salles .highlight').removeClass('highlight')
 		$(this).toggleClass('highlight');
 		$('#accompagnementForm input[name="salle"]').val( $(this).html() );
 		activateSuscribe();
 	})
+	*/
 	
 	$('div.accompagnement table').tablesorter()
 	

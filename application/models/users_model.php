@@ -110,6 +110,7 @@ class Users_model extends CI_Model {
 		if ($nb != $this->db->count_all('users') && ( $user['mail']!=''  ) ) { 
 			//This was a new user 
 			// $this->sendPasswordMail( $user, $clearpwd );		
+			if (false) {
 			$this->load->library('email');
 			$this->email->clear();
 			$this->email->from('nepasrepondre@laprovidence.net', 'Administrateur');
@@ -117,6 +118,7 @@ class Users_model extends CI_Model {
 			$this->email->subject('Initialisation de mot de passe');
 			$this->email->message('Votre compte a été créé sur le site suivi personnalisé de la Providence. Vous pouvez vous connecter sur le site <a href="http://ap.la-providence.net/">http://ap.la-providence.net/</a> grace au login suivant "' . $user['login'] . '" et au mot de passe suivant "' . $clearpwd . '". Vous pourrez changer ce mot de passe une fois connecté sur le site.');
 			
+			}
 			
 		}
 		$id = $this->db->insert_id(); 

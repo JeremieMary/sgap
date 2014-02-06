@@ -23,11 +23,12 @@ class Seances_model extends CI_Model {
 	{
 		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
 		// ,'accompagnement.actif'=>1
-		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id');
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id, matieres.niveau ');
 		$this->db->from('seances');
 		$this->db->where($accompagnement);
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
 		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
+		$this->db->join('matieres', 'accompagnement.matiere_id = matieres.id');
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
@@ -38,12 +39,13 @@ class Seances_model extends CI_Model {
 	{
 		$accompagnement = array('accompagnement.matiere_id'=>$matiere_id,'accompagnement.cycle_id'=>$cycle_id );
 		// ,'accompagnement.actif'=>1
-		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id, users.nom AS nom_prof, users.prenom AS prenom_prof');
+		$this->db->select('seances.id AS seance_id, seances.date AS date, seances.validee, cycles.horaire, accompagnement.id AS accompagnement_id, users.nom AS nom_prof, users.prenom AS prenom_prof, matieres.niveau');
 		$this->db->from('seances');
 		$this->db->where($accompagnement);
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');
 		$this->db->join('cycles', 'accompagnement.cycle_id = cycles.id');
 		$this->db->join('users', 'seances.enseignant_id = users.id');
+		$this->db->join('matieres', 'accompagnement.matiere_id = matieres.id');
 		$query=$this->db->get();	
 		$res=$query->result_array();
 		return($res);	
@@ -88,7 +90,7 @@ class Seances_model extends CI_Model {
 	
 	function historique($eleve_id)
 	{
-		$this->db->select('presences.eleve_id AS eleve_id, seances.id AS seance_id, seances.date AS seance_date, matieres.nom AS matiere_nom, cycles.debut AS cycle_debut, cycles.actif AS actif');
+		$this->db->select('presences.eleve_id AS eleve_id, seances.id AS seance_id, seances.date AS seance_date, matieres.nom AS matiere_nom, cycles.debut AS cycle_debut, cycles.actif AS actif, matieres.niveau');
 		$this->db->from('presences');
 		$this->db->join('seances', 'presences.seance_id = seances.id');
 		$this->db->join('accompagnement', 'seances.accompagnement_id = accompagnement.id');
@@ -105,7 +107,7 @@ class Seances_model extends CI_Model {
 	
 	function getSeancesOf($prof_id)
 	{
-		$this->db->select('users.nom, prenom AS prénom, matieres.nom AS matière, seances.date, seances.id AS seance_id, matieres.id AS matiere_id, cycle_id, cycles.horaire AS horaire, accompagnement.salle');
+		$this->db->select('users.nom, prenom AS prénom, matieres.nom AS matière, seances.date, seances.id AS seance_id, matieres.id AS matiere_id, cycle_id, cycles.horaire AS horaire, matieres.salle, matieres.niveau');
 		$this->db->from('users');
 		$this->db->join('seances', 'seances.enseignant_id = users.id');
 		$this->db->join('accompagnement', 'accompagnement.id = seances.accompagnement_id');

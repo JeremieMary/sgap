@@ -22,8 +22,8 @@ class Accompagnement extends CI_Controller {
 		$cycle_id=$this->input->post('cycle_id',TRUE);
 		$matiere_id=$this->input->post('matiere_id',TRUE);
 		$enseignant_id=$this->input->post('enseignant_id',TRUE);
-		$salle=$this->input->post('salle');
-		$this->accompagnement_model->creer($cycle_id,$matiere_id,$enseignant_id,$salle);
+		/* $salle=$this->input->post('salle'); */
+		$this->accompagnement_model->creer($cycle_id,$matiere_id,$enseignant_id);
 		$this->session->set_flashdata('messages', "<p>Accompagnement créé.</p>" );
 		redirect('admin/');
 	}

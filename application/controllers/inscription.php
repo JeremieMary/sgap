@@ -86,14 +86,15 @@ class Inscription extends CI_Controller {
 			//$dates=$this->cycles_model->getDates($cycle_id);
 			$horaire= $tmp['horaire'];
 			foreach ($dates as &$date) $date=datefr($date);
-			$nb_dispo=$this->matieres_model->getPlaces($matiere_id);
+			//$mat=$this->matieres_model->getPlaces($matiere_id);
+			$mat=$this->matieres_model->get($matiere_id);
 			$nb_inscrits=$this->accompagnement_model->getNbInscrits($cycle_id,$matiere_id);
 			$acc=$this->accompagnement_model->getInfos($cycle_id,$matiere_id);
 			$type = $acc['type']==1 ? "Personnalisé" : "Rencontre";
 			$salle = $acc['salle'];
-			$json=array('places'=>$nb_dispo, 'nb_inscrits'=>$nb_inscrits,'salle'=>$salle, 'dates'=>$dates, 'horaire'=>$horaire, 'accompagnement_id'=>$acc['accompagnement_id'], 'commentaire'=>$acc['commentaire'],'type'=>$type ); 
+			$json=array('places'=>$mat['places'], 'nb_inscrits'=>$nb_inscrits,'salle'=>$salle, 'dates'=>$dates, 'horaire'=>$horaire, 'accompagnement_id'=>$acc['accompagnement_id'], 'commentaire'=>$acc['commentaire'],'type'=>$type, 'niveau'=>$mat['niveau'] ); 
 		} else {
-			$json = array('places'=>'.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.'),'horaire'=>'.', 'accompagnement_id'=>'', 'commentaire'=>'', 'type'=>'.' );
+			$json = array('places'=>'.', 'nb_inscrits'=>'.','salle'=>'.', 'dates'=>array('.'),'horaire'=>'.', 'accompagnement_id'=>'', 'commentaire'=>'', 'type'=>'.', 'niveau'=>'.' );
 		}
 		$json['logged']=true;
 		$data['json']=$json;

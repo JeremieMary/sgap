@@ -70,6 +70,7 @@
 		<li> Salle : <span id='salle'></span> </li>
 		<li> Horaire : <span id='horaire'></span> </li>
 		<li> Parcours : <span id='type'></span></li>
+		<li> Niveau :<span id='niveau'></span> </li>
 		</ul>
 	</div>
 	
@@ -382,6 +383,7 @@ function activateSuscribe(){
 			$('#nbPlaces').html(data.places);
 			$('#nbInscrits').html(data.nb_inscrits);
 			$('#horaire').html(data.horaire);
+			$('#niveau').html(data.niveau);
 			$('#type').html(data.type);
 			if (data.type=="Rencontre"){
 				$("#submitRencontre").attr('accompagnement_id',data.accompagnement_id)

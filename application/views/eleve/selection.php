@@ -38,6 +38,7 @@
 <li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 <li> Salle : <span id='salle'></span> </li>
 <li> Type : <span id='type'></span><li>
+<li> Niveau :<span id='niveau'></span> </li>
 <li> Horaire : <span id='horaire'></span> </li>	
 <li> Dates : <span id='dates'></span> </li>
 <li> <center>

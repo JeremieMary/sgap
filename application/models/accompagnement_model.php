@@ -15,7 +15,7 @@ class Accompagnement_model extends CI_Model {
 	
 	function getAllHumanReadable()
 	{
-		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id , cycles.horaire AS horaire ,matieres.nom AS matiere,matieres.id AS matiere_id, users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle, accompagnement.actif AS actif');
+		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id , cycles.horaire AS horaire ,matieres.nom AS matiere,matieres.id AS matiere_id, users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle, accompagnement.actif AS actif, matieres.niveau');
 		$this->db->from('accompagnement');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->join('users', 'users.id = accompagnement.enseignant_id');
@@ -28,7 +28,7 @@ class Accompagnement_model extends CI_Model {
 	
 	function getAllActiveHumanReadable()
 	{
-		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, matieres.type AS matiere_type ,  users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle');
+		$this->db->select('accompagnement.id AS id, cycles.debut AS cycle_debut, cycles.id AS cycle_id ,matieres.nom AS matiere,matieres.id AS matiere_id, matieres.type AS matiere_type ,  users.nom AS nom , users.prenom AS prenom , matieres.salle AS salle, matieres.niveau');
 		$this->db->from('accompagnement');
 		$this->db->where('accompagnement.actif = 1');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
@@ -92,7 +92,7 @@ class Accompagnement_model extends CI_Model {
 	function getInfos($cycle_id,$matiere_id)
 	{
 		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id );
-		$this->db->select('accompagnement.salle, accompagnement.id AS accompagnement_id, accompagnement.commentaire, matieres.type AS type');
+		$this->db->select('matieres.salle, accompagnement.id AS accompagnement_id, accompagnement.commentaire, matieres.type AS type, matieres.niveau');
 		$this->db->join('matieres', 'matieres.id = accompagnement.matiere_id');
 		$this->db->limit(1);
 		$this->db->from('accompagnement');
@@ -141,9 +141,9 @@ class Accompagnement_model extends CI_Model {
 		}
 	}
 	
-	function creer($cycle_id,$matiere_id,$enseignant_id,$salle) 
+	function creer($cycle_id,$matiere_id,$enseignant_id) 
 	{
-		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'salle'=>$salle, 'enseignant_id'=>$enseignant_id);
+		$accompagnement = array('matiere_id'=>$matiere_id,'cycle_id'=>$cycle_id , 'enseignant_id'=>$enseignant_id);
 		$this->db->insert('accompagnement', $accompagnement);
 		$accompagnement_id = $this->db->insert_id();
 		//Insertion des seances correspondantes. 

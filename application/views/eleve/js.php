@@ -37,6 +37,7 @@ function activateSuscribe(){
 			$('#dates').html(data.dates.join(', <br/>'));
 			$('#nbPlaces').html(data.places);
 			$('#horaire').html(data.horaire);
+			$('#niveau').html(data.niveau);
 			$('#type').html(data.type);
 			$('#nbInscrits').html(data.nb_inscrits);
 			if (isNaN(data.places)) $('#inscriptionForm button[name="inscription"]').prop("disabled", true);
