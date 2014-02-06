@@ -89,9 +89,10 @@ class Users_model extends CI_Model {
 	
 	function commitUser( $user )
 	{
+		//Ajouter des vérifications de cohérence ? 
+	
 		$nb = $this->db->count_all('users');
 		$this->load->helper('security');	
-		//Ajouter des vérifications de cohérence ? 
 		$this->load->helper('string');
 		if ( !isset($user['passwd'] ) ) {
 			$user['passwd'] = random_string('alnum',8);
@@ -106,10 +107,17 @@ class Users_model extends CI_Model {
 		$dup .= ';';
 		$sql = $this->db->insert_string('users', $user) . $dup;
 		$this->db->query($sql);
-		if ($nb != $this->db->count_all('users') ) { 
+		if ($nb != $this->db->count_all('users') && ( $user['mail']!=''  ) ) { 
 			//This was a new user 
-			// $this->sendPasswordMail( $user, $clearpwd );
-			print( 'foo ');
+			// $this->sendPasswordMail( $user, $clearpwd );		
+			$this->load->library('email');
+			$this->email->clear();
+			$this->email->from('nepasrepondre@laprovidence.net', 'Administrateur');
+			$this->email->to($user['mail']);
+			$this->email->subject('Initialisation de mot de passe');
+			$this->email->message('Votre compte a été créé sur le site suivi personnalisé de la Providence. Vous pouvez vous connecter sur le site <a href="http://ap.la-providence.net/">http://ap.la-providence.net/</a> grace au login suivant "' . $user['login'] . '" et au mot de passe suivant "' . $clearpwd . '". Vous pourrez changer ce mot de passe une fois connecté sur le site.');
+			
+			
 		}
 		$id = $this->db->insert_id(); 
 		

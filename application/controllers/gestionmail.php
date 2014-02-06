@@ -33,7 +33,7 @@ class Gestionmail extends CI_Controller {
 					$listeNonInscrits=$this->inscriptions_model->getNonInscrits($cycle);
 					foreach ($listeNonInscrits as $eleve){
 						$message = "vous devez vous inscrire ".$eleve['nom']." au cycle ".$cycle ;
-						$from = 'alice.nowicki0@gmail.com';
+						$from = 'nepasrepondre@laprovidence.net';
 						$to = $eleve['mail'];
 						$listeE = $this->gestionmail_model->sendMail($from,$to,$message);
 					}
@@ -59,8 +59,8 @@ class Gestionmail extends CI_Controller {
 					}
 				$result = array_unique($listeNonInscritsTotal);
 				$message = implode(",",$result) ;
-				$from = 'alice.nowicki0@gmail.com';
-				$to = 'alice.no@laposte.net';
+				$from = 'nepasrepondre@laprovidence.net';
+				$to = 'admin';
 				$listeE = $this->gestionmail_model->sendMail($from,$to,$message);
 				}
 			}	
@@ -73,7 +73,7 @@ class Gestionmail extends CI_Controller {
 		$password = $this->session->flashdata('password');
 		$this->load->library('email');
 		$this->email->clear();
-		$this->email->from('sophie.lapersonne@gmail.com', 'Administrateur');
+		$this->email->from('nepasrepondre@laprovidence.net', 'Administrateur');
 		$this->email->to($mail);
 		$this->email->subject('Réinitialisation de mot de passe');
 		$this->email->message('Votre mot de passe a été réinitialisé. Vous pouvez vous connecter sur le site grace au login suivant "' . $login . '" et au mot de passe suivant "' . $password . '". Vous pourrez changer ce mot de passe une fois connecté sur le site.');
