@@ -242,7 +242,7 @@ li.unactivated{
 
 #creation_accompagnement div {
 	max-height:25em;
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 }
 
 .profs::-webkit-scrollbar:vertical {

@@ -89,10 +89,15 @@ class Users_model extends CI_Model {
 	
 	function commitUser( $user )
 	{
-		$nb = $this->db->count_all('users');	
+		$nb = $this->db->count_all('users');
+		$this->load->helper('security');	
 		//Ajouter des vérifications de cohérence ? 
 		$this->load->helper('string');
-		$user['passwd']=random_string('alnum',8);
+		if ( !isset($user['passwd'] ) ) {
+			$user['passwd'] = random_string('alnum',8);
+		}
+		$clearpwd = $user['passwd'];
+		$user['passwd']=do_hash($user['passwd']) ;
 		$user['actif']=1;
 		$dup ='  ON DUPLICATE KEY UPDATE';
 		$fieldsToUpdate = array('prenom','nom','mail','mail_parent','profil','classe','groupe','actif' );
@@ -103,9 +108,11 @@ class Users_model extends CI_Model {
 		$this->db->query($sql);
 		if ($nb != $this->db->count_all('users') ) { 
 			//This was a new user 
-			$this->sendPasswordMail( $user );
+			// $this->sendPasswordMail( $user, $clearpwd );
+			print( 'foo ');
 		}
-		//$id = $this->db->insert_id();
+		$id = $this->db->insert_id(); 
+		
 	}
 		
 	function commitArray($tab)
