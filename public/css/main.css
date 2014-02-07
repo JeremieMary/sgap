@@ -221,6 +221,7 @@ li.highlight:hover {
 
 .accompagnement{
 	padding:1em 1em 1em 1em;
+	clear:both;
 }
 
 li.unactivated{
@@ -236,8 +237,9 @@ li.unactivated{
 }
 
 #creation_accompagnement{
-	/* border:solid 1px; */
-	overflow-y: scroll;
+	/* border:solid 1px; 
+	overflow-y: scroll; */
+	clear:both;
 }
 
 #creation_accompagnement div {

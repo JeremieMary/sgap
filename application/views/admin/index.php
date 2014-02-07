@@ -83,9 +83,8 @@
 	<li> Nombre de places : <span id='nbPlaces'></span> </li>
 	<li> Nombre d'inscrits : <span id='nbInscrits'></span> </li>
 	<li> Parcours : <span id='type'></span></li>
-	<li> Niveau :<span id='niveau'></span> </li>
+	<li> Niveau : <span id='niveau'></span> </li>
 	<li> Horaire : <span id='horaire'></span> </li>
-	<li> Parcours : <span id='type'></span></li>
 	<li> <div id="date_admin">
 			 	Dates :
 				<div id='datesSelector'>
